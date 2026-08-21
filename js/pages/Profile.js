@@ -1,5 +1,5 @@
 // ========================================
-// Profile.js — Профиль и настройки
+// Profile.js — Профиль с карточками
 // ========================================
 
 function Profile({ data, setData }) {
@@ -16,19 +16,6 @@ function Profile({ data, setData }) {
         }
     };
 
-    const handleResetProgress = () => {
-        if (confirm('Вы уверены, что хотите сбросить весь прогресс? Это действие нельзя отменить.')) {
-            setData(prev => ({
-                ...prev,
-                habits: prev.habits.map(h => ({ ...h, completions: [] })),
-                journal: [],
-                currentDay: 1,
-                goals: prev.goals.map(g => ({ ...g, progress: 0 })),
-                reflections: []
-            }));
-        }
-    };
-
     const totalHabits = data.habits?.length || 0;
     const completedHabits = data.habits?.filter(h => h.completions?.length > 0).length || 0;
     const totalJournalEntries = data.journal?.length || 0;
@@ -38,125 +25,132 @@ function Profile({ data, setData }) {
     }, 0) || 0;
 
     return (
-        <div className="space-y-6">
-            <h2 className="text-3xl font-serif font-medium text-[#3b3b3b]">Profile</h2>
+        <div className="profile-container">
+            <h2 className="page-title">Profile</h2>
 
-            <div className="card p-6">
-                <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-full bg-[#eccacb] flex items-center justify-center text-2xl font-serif text-[#3b3b3b]">
-                        {data.user?.name?.charAt(0) || '?'}
-                    </div>
-                    <div className="flex-1">
-                        {isEditing ? (
-                            <div className="flex gap-2">
-                                <input
-                                    className="input-soft py-1 px-3 text-sm flex-1"
-                                    value={tempName}
-                                    onChange={(e) => setTempName(e.target.value)}
-                                    onKeyPress={(e) => { if (e.key === 'Enter') handleSaveName(); }}
-                                    autoFocus
-                                />
-                                <button className="btn btn-primary text-sm" onClick={handleSaveName}>
-                                    Сохранить
-                                </button>
-                                <button
-                                    className="btn btn-outline text-sm"
-                                    onClick={() => {
-                                        setIsEditing(false);
-                                        setTempName(data.user?.name || '');
-                                    }}
-                                >
-                                    Отмена
-                                </button>
-                            </div>
-                        ) : (
-                            <div className="flex items-center gap-3">
-                                <h3 className="text-xl font-serif text-[#3b3b3b]">{data.user?.name || 'Пользователь'}</h3>
-                                <button
-                                    className="text-xs text-[#6e6e6e] hover:text-[#3b3b3b] transition"
-                                    onClick={() => setIsEditing(true)}
-                                >
-                                    ✏️ Редактировать
-                                </button>
-                            </div>
-                        )}
-                        <p className="text-sm text-[#6e6e6e]">
-                            В DAY 33 с {data.user?.startDate ? new Date(data.user.startDate).toLocaleDateString('ru-RU') : 'недавнего времени'}
-                        </p>
-                    </div>
+            {/* Карточка пользователя */}
+            <div className="profile-user-card">
+                <div className="profile-avatar">
+                    {data.user?.name?.charAt(0) || '?'}
+                </div>
+                <div className="profile-user-info">
+                    {isEditing ? (
+                        <div className="profile-edit">
+                            <input
+                                className="profile-name-input"
+                                value={tempName}
+                                onChange={(e) => setTempName(e.target.value)}
+                                onKeyPress={(e) => { if (e.key === 'Enter') handleSaveName(); }}
+                                autoFocus
+                            />
+                            <button className="btn-save-name" onClick={handleSaveName}>
+                                Сохранить
+                            </button>
+                            <button
+                                className="btn-cancel-edit"
+                                onClick={() => {
+                                    setIsEditing(false);
+                                    setTempName(data.user?.name || '');
+                                }}
+                            >
+                                Отмена
+                            </button>
+                        </div>
+                    ) : (
+                        <>
+                            <h3 className="profile-name">{data.user?.name || 'Пользователь'}</h3>
+                            <p className="profile-since">
+                                В DAY 33 с {data.user?.startDate ? new Date(data.user.startDate).toLocaleDateString('ru-RU') : 'недавнего времени'}
+                            </p>
+                            <button className="btn-edit-profile" onClick={() => setIsEditing(true)}>
+                                ✏️ Редактировать
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="card p-4 text-center">
-                    <div className="text-2xl font-serif text-[#3b3b3b]">{data.currentDay || 1}</div>
-                    <div className="text-xs text-[#6e6e6e]">Текущий день</div>
+            {/* Карточки статистики */}
+            <div className="profile-stats-grid">
+                <div className="profile-stat-card">
+                    <span className="profile-stat-value">{data.currentDay || 1}</span>
+                    <span className="profile-stat-label">Текущий день</span>
                 </div>
-                <div className="card p-4 text-center">
-                    <div className="text-2xl font-serif text-[#3b3b3b]">{totalHabits}</div>
-                    <div className="text-xs text-[#6e6e6e]">Всего привычек</div>
+                <div className="profile-stat-card">
+                    <span className="profile-stat-value">{totalHabits}</span>
+                    <span className="profile-stat-label">Всего привычек</span>
                 </div>
-                <div className="card p-4 text-center">
-                    <div className="text-2xl font-serif text-[#3b3b3b]">{completedHabits}</div>
-                    <div className="text-xs text-[#6e6e6e]">Активных привычек</div>
+                <div className="profile-stat-card">
+                    <span className="profile-stat-value">{completedHabits}</span>
+                    <span className="profile-stat-label">Активных привычек</span>
                 </div>
-                <div className="card p-4 text-center">
-                    <div className="text-2xl font-serif text-[#3b3b3b]">{totalJournalEntries}</div>
-                    <div className="text-xs text-[#6e6e6e]">Записей в дневнике</div>
-                </div>
-            </div>
-
-            <div className="card p-6">
-                <h3 className="font-serif text-lg mb-4 text-[#3b3b3b]">Настройки</h3>
-
-                <div className="space-y-4">
-                    <div className="flex items-center justify-between py-2 border-b border-[#ececec]">
-                        <div>
-                            <p className="text-sm font-medium text-[#3b3b3b]">Тёмная тема</p>
-                            <p className="text-xs text-[#6e6e6e]">Скоро будет доступно</p>
-                        </div>
-                        <div className="w-10 h-5 rounded-full bg-[#ececec] relative">
-                            <div className="w-4 h-4 rounded-full bg-[#3b3b3b] absolute top-0.5 left-0.5"></div>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center justify-between py-2 border-b border-[#ececec]">
-                        <div>
-                            <p className="text-sm font-medium text-[#3b3b3b]">Уведомления</p>
-                            <p className="text-xs text-[#6e6e6e]">Напоминания о привычках</p>
-                        </div>
-                        <div className="w-10 h-5 rounded-full bg-[#eccacb] relative">
-                            <div className="w-4 h-4 rounded-full bg-[#3b3b3b] absolute top-0.5 right-0.5"></div>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center justify-between py-2 border-b border-[#ececec]">
-                        <div>
-                            <p className="text-sm font-medium text-[#3b3b3b]">Язык</p>
-                            <p className="text-xs text-[#6e6e6e]">Русский</p>
-                        </div>
-                        <span className="text-sm text-[#6e6e6e]">🇷🇺</span>
-                    </div>
-
-                    <div className="flex items-center justify-between py-2">
-                        <div>
-                            <p className="text-sm font-medium text-[#3b3b3b]">Версия</p>
-                            <p className="text-xs text-[#6e6e6e]">DAY 33 v1.0</p>
-                        </div>
-                        <span className="text-xs text-[#6e6e6e]">1.0.0</span>
-                    </div>
+                <div className="profile-stat-card">
+                    <span className="profile-stat-value">{totalJournalEntries}</span>
+                    <span className="profile-stat-label">Записей в дневнике</span>
                 </div>
             </div>
 
-            <div className="card p-6 border border-red-200">
-                <h3 className="font-serif text-lg mb-4 text-red-600">Опасная зона</h3>
-                <p className="text-sm text-[#6e6e6e] mb-4">
-                    Сброс всего прогресса удалит все ваши привычки, записи в дневнике и обнулит прогресс. Это действие нельзя отменить.
+            {/* Настройки */}
+            <div className="profile-settings-card">
+                <h3 className="profile-settings-title">Настройки</h3>
+
+                <div className="profile-setting-item">
+                    <div>
+                        <p className="profile-setting-name">Тёмная тема</p>
+                        <p className="profile-setting-desc">Скоро будет доступно</p>
+                    </div>
+                    <div className="profile-toggle disabled">
+                        <div className="profile-toggle-thumb"></div>
+                    </div>
+                </div>
+
+                <div className="profile-setting-item">
+                    <div>
+                        <p className="profile-setting-name">Уведомления</p>
+                        <p className="profile-setting-desc">Напоминания о привычках</p>
+                    </div>
+                    <div className="profile-toggle active">
+                        <div className="profile-toggle-thumb"></div>
+                    </div>
+                </div>
+
+                <div className="profile-setting-item">
+                    <div>
+                        <p className="profile-setting-name">Язык</p>
+                        <p className="profile-setting-desc">Русский</p>
+                    </div>
+                    <span className="profile-setting-value">🇷🇺</span>
+                </div>
+
+                <div className="profile-setting-item">
+                    <div>
+                        <p className="profile-setting-name">Версия</p>
+                        <p className="profile-setting-desc">DAY 33 v1.0</p>
+                    </div>
+                    <span className="profile-setting-value">1.0.0</span>
+                </div>
+            </div>
+
+            {/* Опасная зона */}
+            <div className="profile-danger-card">
+                <h3 className="profile-danger-title">⚠️ Опасная зона</h3>
+                <p className="profile-danger-desc">
+                    Сброс всего прогресса удалит все ваши привычки и записи. Это действие нельзя отменить.
                 </p>
                 <button
-                    className="btn btn-primary text-sm"
-                    style={{ background: '#dc2626', borderColor: '#dc2626', color: 'white' }}
-                    onClick={handleResetProgress}
+                    className="btn-reset-progress"
+                    onClick={() => {
+                        if (confirm('Вы уверены?')) {
+                            setData(prev => ({
+                                ...prev,
+                                habits: prev.habits.map(h => ({ ...h, completions: [] })),
+                                journal: [],
+                                currentDay: 1,
+                                goals: prev.goals.map(g => ({ ...g, progress: 0 })),
+                                reflections: []
+                            }));
+                        }
+                    }}
                 >
                     Сбросить весь прогресс
                 </button>

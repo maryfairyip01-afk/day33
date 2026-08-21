@@ -1,32 +1,45 @@
 // ========================================
-// Habits.js — Управление привычками
+// Habits.js — Привычки с карточками
 // ========================================
 
 function Habits({ todayHabits, today, toggleHabit, setData }) {
     return (
-        <div className="space-y-6">
-            <h2 className="text-3xl font-serif font-medium text-[#3b3b3b]">Habits</h2>
+        <div className="habits-container">
+            <h2 className="page-title">Habits</h2>
 
-            <div className="insight-box">
-                <p className="text-sm font-medium text-[#3b3b3b] opacity-60 mb-1">💡 КАК ВНЕДРИТЬ НОВУЮ ПРИВЫЧКУ В ЖИЗНЬ?</p>
-                <p className="text-sm text-[#3b3b3b]">Каждая привычка следует одному и тому же паттерну: <strong>Сигнал → Действие → Награда</strong>. Понимание своих триггеров помогает формировать полезные привычки.</p>
+            <div className="habits-insight">
+                <p className="insight-label">💡 Как внедрить новую привычку</p>
+                <p className="insight-text">Сигнал → Действие → Награда. Понимание своих триггеров помогает формировать полезные привычки.</p>
             </div>
 
-            <div className="card p-6 space-y-4">
+            <div className="habits-grid">
                 {todayHabits.map(h => {
                     const streak = getStreak(h.completions || []);
+                    const done = h.completions?.includes(today);
                     return (
-                        <div key={h.id} className="border-b border-[#ececec] pb-3 last:border-0 flex flex-wrap items-center gap-3">
-                            <button onClick={() => toggleHabit(h.id)} className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${h.completions?.includes(today) ? 'bg-[#3b3b3b] border-[#3b3b3b]' : 'border-[#ececec]'}`}>
-                                {h.completions?.includes(today) && <span className="text-white text-sm">✓</span>}
+                        <div key={h.id} className="habit-card-item">
+                            <button
+                                onClick={() => toggleHabit(h.id)}
+                                className={`habit-card-check ${done ? 'done' : ''}`}
+                            >
+                                {done && <span>✓</span>}
                             </button>
-                            <span className="font-medium text-[#3b3b3b]">{h.name}</span>
-                            <span className="text-xs text-[#3b3b3b] opacity-70">🔥 {streak}д</span>
-                            <span className="badge-soft ml-auto">{h.category}</span>
+                            <div className="habit-card-info">
+                                <span className={`habit-card-name ${done ? 'done' : ''}`}>{h.name}</span>
+                                <span className="habit-card-category">{h.category}</span>
+                            </div>
+                            <span className="habit-card-streak">🔥 {streak}д</span>
                         </div>
                     );
                 })}
-                <button className="btn btn-outline text-sm" onClick={() => {
+                {!todayHabits.length && (
+                    <p className="no-habits">Нет привычек. Добавь первую!</p>
+                )}
+            </div>
+
+            <button
+                className="btn-add-habit"
+                onClick={() => {
                     const name = prompt('Название новой привычки:');
                     if (name) {
                         setData(prev => ({
@@ -39,8 +52,10 @@ function Habits({ todayHabits, today, toggleHabit, setData }) {
                             }]
                         }));
                     }
-                }}>+ Добавить привычку</button>
-            </div>
+                }}
+            >
+                + Добавить привычку
+            </button>
         </div>
     );
 }

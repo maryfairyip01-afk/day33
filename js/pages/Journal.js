@@ -1,29 +1,56 @@
 // ========================================
-// Journal.js — Дневник
+// Journal.js — Дневник с карточками
 // ========================================
 
 function Journal({ data, addJournal, setMood }) {
-    return (
-        <div className="space-y-6">
-            <h2 className="text-3xl font-serif font-medium text-[#3b3b3b]">Journal</h2>
+    const [newEntry, setNewEntry] = React.useState('');
 
-            <div className="insight-box">
-                <p className="text-sm font-medium text-[#3b3b3b] opacity-60 mb-1">📝 РЕФЛЕКСИЯ</p>
-                <p className="text-sm text-[#3b3b3b]">Записывая свои мысли, ты замечаешь паттерны в поведении и эмоциях. Что ты узнала о себе сегодня?</p>
+    const handleAddEntry = () => {
+        if (newEntry.trim()) {
+            addJournal({
+                content: newEntry.trim(),
+                mood: data.mood || 'good'
+            });
+            setNewEntry('');
+        }
+    };
+
+    return (
+        <div className="journal-container">
+            <h2 className="page-title">Diary</h2>
+
+            <div className="journal-insight">
+                <p className="insight-label">📝 Рефлексия</p>
+                <p className="insight-text">Записывая свои мысли, ты замечаешь паттерны в поведении и эмоциях.</p>
             </div>
 
-            <div className="card p-6 space-y-4">
+            {/* Новая запись */}
+            <div className="journal-entry-card">
+                <textarea
+                    className="journal-input"
+                    placeholder="Что ты узнала о себе сегодня?"
+                    value={newEntry}
+                    onChange={(e) => setNewEntry(e.target.value)}
+                />
+                <button className="btn-save-entry" onClick={handleAddEntry}>
+                    Сохранить запись
+                </button>
+            </div>
+
+            {/* Список записей */}
+            <div className="journal-list">
                 {(data.journal || []).map(j => (
-                    <div key={j.id} className="border-b border-[#ececec] pb-4 last:border-0">
-                        <div className="flex justify-between text-sm text-[#3b3b3b] opacity-70"><span>{j.date}</span><span>{j.mood}</span></div>
-                        <p className="mt-1 text-[#3b3b3b]">{j.content}</p>
+                    <div key={j.id} className="journal-item">
+                        <div className="journal-item-header">
+                            <span className="journal-item-date">{j.date}</span>
+                            <span className="journal-item-mood">{j.mood}</span>
+                        </div>
+                        <p className="journal-item-content">{j.content}</p>
                     </div>
                 ))}
-                {!data.journal?.length && <p className="text-[#3b3b3b] opacity-70">Нет записей пока.</p>}
-                <button className="btn btn-primary text-sm" onClick={() => {
-                    const content = prompt('Твоя запись:');
-                    if (content) addJournal({ content, mood: data.mood || 'good' });
-                }}>+ Новая запись</button>
+                {!data.journal?.length && (
+                    <p className="no-entries">Нет записей. Напиши первую!</p>
+                )}
             </div>
         </div>
     );

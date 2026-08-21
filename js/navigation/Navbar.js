@@ -4,15 +4,15 @@
 
 function Navbar({ page, setPage }) {
     return (
-        <div className="bottom-nav">
+        <div className="navbar-bottom">
             {navItems.map(item => (
                 <button
                     key={item.id}
-                    className={`nav-item ${page === item.id ? 'active' : ''}`}
+                    className={`nav-item-bottom ${page === item.id ? 'active' : ''}`}
                     onClick={() => setPage(item.id)}
                 >
-                    <span className="text-lg">{item.icon}</span>
-                    <span>{item.label}</span>
+                    <span className="nav-icon">{item.icon}</span>
+                    <span className="nav-label">{item.label}</span>
                 </button>
             ))}
         </div>

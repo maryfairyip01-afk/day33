@@ -356,4 +356,549 @@
     font-size: 1.1rem;
     color: #3b3b3b;
     opacity: 0.7;
+}/* ========================================
+   НОВЫЕ СТИЛИ — Карточки, график, навигация
+   ======================================== */
+
+/* ---------- Заголовок страницы ---------- */
+.page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: #3b3b3b;
+    margin-bottom: 1.5rem;
 }
+/* ---------- Карточки и блоки ---------- */
+.habits-container,
+.journal-container,
+.profile-container,
+.progress-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 0 5rem 0;
+}
+
+/* ---------- Insight-блок ---------- */
+.habits-insight,
+.journal-insight {
+    background: rgba(236, 202, 203, 0.15);
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
+    border-left: 4px solid #eccacb;
+    margin-bottom: 1.5rem;
+}
+
+.insight-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #3b3b3b;
+    opacity: 0.5;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.insight-text {
+    font-size: 0.9rem;
+    color: #3b3b3b;
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+/* ---------- Привычки (карточки) ---------- */
+.habits-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+}
+
+.habit-card-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 0.9rem 1.2rem;
+    transition: all 0.2s ease;
+}
+
+.habit-card-item:hover {
+    background: #f8f4f0;
+}
+
+.habit-card-check {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #3b3b3b;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    font-size: 14px;
+    color: #fcfafa;
+}
+
+.habit-card-check.done {
+    background: #3b3b3b;
+    border-color: #3b3b3b;
+}
+
+.habit-card-check.done span {
+    color: #fcfafa;
+}
+
+.habit-card-info {
+    flex: 1;
+}
+
+.habit-card-name {
+    font-size: 0.95rem;
+    color: #3b3b3b;
+    display: block;
+}
+
+.habit-card-name.done {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.habit-card-category {
+    font-size: 0.65rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.habit-card-streak {
+    font-size: 0.8rem;
+    color: #3b3b3b;
+    opacity: 0.6;
+    white-space: nowrap;
+}
+
+.btn-add-habit {
+    width: 100%;
+    padding: 0.9rem;
+    border: 2px dashed #ececec;
+    border-radius: 16px;
+    background: transparent;
+    color: #3b3b3b;
+    opacity: 0.5;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-add-habit:hover {
+    border-color: #eccacb;
+    opacity: 1;
+}
+
+/* ---------- Дневник ---------- */
+.journal-entry-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.journal-input {
+    width: 100%;
+    min-height: 80px;
+    border: none;
+    background: transparent;
+    font-size: 0.95rem;
+    color: #3b3b3b;
+    resize: vertical;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+}
+
+.journal-input::placeholder {
+    color: #3b3b3b;
+    opacity: 0.3;
+}
+
+.btn-save-entry {
+    width: 100%;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 12px;
+    background: #3b3b3b;
+    color: #fcfafa;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 0.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-save-entry:hover {
+    background: #eccacb;
+    color: #3b3b3b;
+}
+
+.journal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.journal-item {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
+}
+
+.journal-item-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+}
+
+.journal-item-date {
+    font-size: 0.75rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+}
+
+.journal-item-mood {
+    font-size: 0.75rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+}
+
+.journal-item-content {
+    font-size: 0.9rem;
+    color: #3b3b3b;
+    line-height: 1.5;
+}
+
+.no-entries {
+    text-align: center;
+    color: #3b3b3b;
+    opacity: 0.3;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+}
+
+/* ---------- Прогресс ---------- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1rem 0.5rem;
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: #3b3b3b;
+    font-weight: 600;
+}
+
+.stat-label {
+    font-size: 0.6rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ---------- График ---------- */
+.chart-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.chart-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: #3b3b3b;
+    margin-bottom: 1rem;
+}
+
+.chart-container {
+    width: 100%;
+    height: 160px;
+}
+
+.chart-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.chart-empty {
+    text-align: center;
+    color: #3b3b3b;
+    opacity: 0.3;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+}
+
+/* ---------- 75-дневный путь ---------- */
+.journey-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.journey-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: #3b3b3b;
+    margin-bottom: 1rem;
+}
+
+.journey-grid {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    gap: 0.3rem;
+}
+
+.journey-dot {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #ececec;
+    transition: all 0.3s ease;
+}
+
+.journey-dot.completed {
+    background: #3b3b3b;
+}
+
+.journey-dot.current {
+    background: #eccacb;
+    border: 2px solid #eccacb;
+    transform: scale(1.1);
+}
+
+.journey-text {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    margin-top: 0.8rem;
+}
+
+/* ---------- Цели ---------- */
+.goals-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.2rem;
+}
+
+.goals-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: #3b3b3b;
+    margin-bottom: 1rem;
+}
+
+.goal-item {
+    margin-bottom: 0.8rem;
+}
+
+.goal-item:last-child {
+    margin-bottom: 0;
+}
+
+.goal-name {
+    font-size: 0.85rem;
+    color: #3b3b3b;
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.goal-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.goal-progress-bar {
+    flex: 1;
+    height: 4px;
+    background: #ececec;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.goal-progress-fill {
+    height: 100%;
+    background: #eccacb;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.goal-percent {
+    font-size: 0.75rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    white-space: nowrap;
+}
+
+.no-goals {
+    text-align: center;
+    color: #3b3b3b;
+    opacity: 0.3;
+    padding: 1rem 0;
+    font-size: 0.9rem;
+}
+
+/* ---------- Профиль ---------- */
+.profile-user-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #eccacb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-family: 'Playfair Display', serif;
+    color: #3b3b3b;
+    flex-shrink: 0;
+}
+
+.profile-user-info {
+    flex: 1;
+}
+
+.profile-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: #3b3b3b;
+}
+
+.profile-since {
+    font-size: 0.75rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+}
+
+.btn-edit-profile {
+    background: none;
+    border: none;
+    color: #3b3b3b;
+    opacity: 0.4;
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    transition: opacity 0.2s ease;
+}
+
+.btn-edit-profile:hover {
+    opacity: 1;
+}
+
+.profile-edit {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.profile-name-input {
+    border: 1px solid #ececec;
+    border-radius: 8px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    color: #3b3b3b;
+    background: #fcfafa;
+    outline: none;
+    flex: 1;
+    min-width: 120px;
+}
+
+.profile-name-input:focus {
+    border-color: #eccacb;
+}
+
+.btn-save-name {
+    padding: 0.3rem 1rem;
+    border: none;
+    border-radius: 20px;
+    background: #3b3b3b;
+    color: #fcfafa;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-save-name:hover {
+    background: #eccacb;
+    color: #3b3b3b;
+}
+
+.btn-cancel-edit {
+    padding: 0.3rem 1rem;
+    border: 1px solid #ececec;
+    border-radius: 20px;
+    background: transparent;
+    color: #3b3b3b;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+
+.profile-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-stat-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1rem 0.5rem;
+    text-align: center;
+}
+
+.profile-stat-value {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: #3b3b3b;
+}
+   
