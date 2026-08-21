@@ -901,4 +901,139 @@
     font-size: 1.6rem;
     color: #3b3b3b;
 }
+/* ========================================
+   НИЖНЯЯ НАВИГАЦИЯ
+   ======================================== */
+
+.navbar-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(236, 236, 236, 0.5);
+    padding: 8px 0 12px 0;
+    height: 68px;
+    z-index: 1000;
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.04);
+}
+
+.nav-item-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    background: none;
+    border: none;
+    padding: 4px 12px;
+    cursor: pointer;
+    flex: 1;
+    max-width: 72px;
+    transition: all 0.2s ease;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+}
+
+.nav-icon {
+    font-size: 22px;
+    line-height: 1;
+    transition: transform 0.2s ease;
+    opacity: 0.5;
+}
+
+.nav-item-bottom.active .nav-icon {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.nav-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: #3b3b3b;
+    opacity: 0.4;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+}
+
+.nav-item-bottom.active .nav-label {
+    opacity: 1;
+    font-weight: 600;
+    color: #3b3b3b;
+}
+
+/* Активный индикатор (точка под иконкой) */
+.nav-item-bottom.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 3px;
+    border-radius: 10px;
+    background: #eccacb;
+    transition: all 0.3s ease;
+}
+
+/* Hover-эффект */
+.nav-item-bottom:hover .nav-icon {
+    opacity: 0.8;
+    transform: scale(1.02);
+}
+
+.nav-item-bottom:hover .nav-label {
+    opacity: 0.7;
+}
+
+.nav-item-bottom.active:hover .nav-icon {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.nav-item-bottom.active:hover .nav-label {
+    opacity: 1;
+}
+
+/* Отступ для контента, чтобы не перекрывался навигацией */
+.habits-container,
+.journal-container,
+.profile-container,
+.progress-container,
+.landing-container {
+    padding-bottom: 80px;
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 380px) {
+    .navbar-bottom {
+        padding: 6px 0 10px 0;
+        height: 62px;
+    }
+    
+    .nav-item-bottom {
+        padding: 2px 6px;
+        max-width: 60px;
+    }
+    
+    .nav-icon {
+        font-size: 19px;
+    }
+    
+    .nav-label {
+        font-size: 9px;
+    }
+}
+
+/* Адаптивность для планшетов */
+@media (min-width: 768px) {
+    .navbar-bottom {
+        display: none;
+    }
+}
    
