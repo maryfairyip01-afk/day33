@@ -1,0 +1,63 @@
+/* ========================================
+   styles.css — Глобальные стили и переменные
+   ======================================== */
+
+/* ---------- Переменные ---------- */
+:root {
+    --cream: #FCFAFA;
+    --sand: #ECECEC;
+    --rose: #ECCACB;
+    --dark: #3B3B3B;
+    --graphite2: #6E6E6E;
+}
+
+/* ---------- Сброс и общие стили ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #fcfafa;
+    color: #3b3b3b;
+}
+
+/* ---------- Шрифты ---------- */
+.font-serif {
+    font-family: 'Playfair Display', serif;
+}
+
+/* ---------- Утилиты ---------- */
+.text-muted {
+    color: #3b3b3b;
+    opacity: 0.7;
+}
+.text-primary {
+    color: #3b3b3b;
+}
+.bg-soft {
+    background: #eccacb;
+}
+.border-soft {
+    border-color: #ececec;
+}
+.hover-bg-soft:hover {
+    background: #eccacb;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ---------- Скриптовый текст ---------- */
+.script {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+}
+
+/* ---------- Корневой контейнер ---------- */
+#root {
+    min-height: 100vh;
+}
