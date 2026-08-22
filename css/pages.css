@@ -1368,4 +1368,198 @@
         font-size: 1.5rem;
     }
 }
+/* ========================================
+   АВТОРИЗАЦИЯ — Стили для входа/регистрации
+   ======================================== */
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #fcfafa 0%, #f5eeec 100%);
+}
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 24px;
+    padding: 2rem 1.5rem;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(236, 202, 203, 0.2);
+}
+
+.auth-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: #3b3b3b;
+    text-align: center;
+    margin-bottom: 0.3rem;
+}
+
+.auth-subtitle {
+    font-size: 0.9rem;
+    color: #3b3b3b;
+    opacity: 0.5;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.auth-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.auth-field label {
+    font-size: 0.8rem;
+    color: #3b3b3b;
+    opacity: 0.6;
+    font-weight: 500;
+}
+
+.auth-field input {
+    padding: 0.7rem 1rem;
+    border: 1px solid rgba(236, 202, 203, 0.3);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    color: #3b3b3b;
+    background: #fcfafa;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.auth-field input:focus {
+    border-color: #eccacb;
+    box-shadow: 0 0 0 3px rgba(236, 202, 203, 0.1);
+}
+
+.auth-field input::placeholder {
+    color: #3b3b3b;
+    opacity: 0.25;
+}
+
+.auth-hint {
+    font-size: 0.7rem;
+    color: #3b3b3b;
+    opacity: 0.3;
+    margin-top: 2px;
+}
+
+.auth-error {
+    background: rgba(231, 76, 60, 0.08);
+    color: #e74c3c;
+    padding: 0.7rem 1rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.auth-btn {
+    padding: 0.8rem;
+    border: none;
+    border-radius: 14px;
+    background: #3b3b3b;
+    color: #fcfafa;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+    margin-top: 0.5rem;
+}
+
+.auth-btn:hover {
+    background: #eccacb;
+    color: #3b3b3b;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(236, 202, 203, 0.2);
+}
+
+.auth-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.auth-switch {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: #3b3b3b;
+    opacity: 0.5;
+}
+
+.auth-switch-btn {
+    background: none;
+    border: none;
+    color: #3b3b3b;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+    padding: 0;
+    opacity: 0.7;
+}
+
+.auth-switch-btn:hover {
+    opacity: 1;
+    color: #eccacb;
+}
+
+/* Стили для кнопки выхода */
+.btn-logout {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(231, 76, 60, 0.2);
+    border-radius: 20px;
+    background: transparent;
+    color: #e74c3c;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+    background: #e74c3c;
+    color: #fcfafa;
+    border-color: #e74c3c;
+}
+
+/* Email в профиле */
+.profile-email {
+    font-size: 0.75rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    margin: 2px 0 0 0;
+}
+
+/* Загрузочный экран */
+.loading-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: #3b3b3b;
+    opacity: 0.5;
+}
    

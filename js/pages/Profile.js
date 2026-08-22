@@ -2,7 +2,7 @@
 // Profile.js — Профиль с карточками
 // ========================================
 
-function Profile({ data, setData }) {
+function Profile({ data, setData, onLogout, user }) {
     const [isEditing, setIsEditing] = React.useState(false);
     const [tempName, setTempName] = React.useState(data.user?.name || '');
 
@@ -56,6 +56,7 @@ function Profile({ data, setData }) {
                     ) : (
                         <>
                             <h3 className="profile-name">{data.user?.name || 'Пользователь'}</h3>
+                            <p className="profile-email">{user?.email || ''}</p>
                             <p className="profile-since">
                                 В DAY 33 с {data.user?.startDate ? new Date(data.user.startDate).toLocaleDateString('ru-RU') : 'недавнего времени'}
                             </p>
@@ -125,6 +126,17 @@ function Profile({ data, setData }) {
                         <p className="profile-setting-desc">DAY 33 v1.0</p>
                     </div>
                     <span className="profile-setting-value">1.0.0</span>
+                </div>
+
+                {/* Кнопка выхода */}
+                <div className="profile-setting-item" style={{ borderTop: '1px solid rgba(236,202,203,0.3)', paddingTop: '1rem', marginTop: '0.5rem' }}>
+                    <div>
+                        <p className="profile-setting-name" style={{ color: '#e74c3c' }}>Выйти из аккаунта</p>
+                        <p className="profile-setting-desc">Выйти и вернуться на экран входа</p>
+                    </div>
+                    <button className="btn-logout" onClick={onLogout}>
+                        <i className="fas fa-sign-out-alt"></i> Выйти
+                    </button>
                 </div>
             </div>
 
