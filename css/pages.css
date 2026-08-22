@@ -1035,5 +1035,337 @@
     .navbar-bottom {
         display: none;
     }
+}/* ========================================
+   ПРОФИЛЬ — Стили для страницы Profile
+   ======================================== */
+
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 16px 80px 16px;
+}
+
+/* Карточка пользователя */
+.profile-user-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #eccacb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-family: 'Playfair Display', serif;
+    color: #3b3b3b;
+    flex-shrink: 0;
+}
+
+.profile-user-info {
+    flex: 1;
+}
+
+.profile-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: #3b3b3b;
+    margin: 0;
+}
+
+.profile-since {
+    font-size: 0.75rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    margin: 4px 0 0 0;
+}
+
+.btn-edit-profile {
+    background: none;
+    border: none;
+    color: #3b3b3b;
+    opacity: 0.4;
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    transition: opacity 0.2s ease;
+    margin-top: 4px;
+}
+
+.btn-edit-profile:hover {
+    opacity: 1;
+}
+
+.profile-edit {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.profile-name-input {
+    border: 1px solid #ececec;
+    border-radius: 8px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    color: #3b3b3b;
+    background: #fcfafa;
+    outline: none;
+    flex: 1;
+    min-width: 120px;
+}
+
+.profile-name-input:focus {
+    border-color: #eccacb;
+}
+
+.btn-save-name {
+    padding: 0.3rem 1rem;
+    border: none;
+    border-radius: 20px;
+    background: #3b3b3b;
+    color: #fcfafa;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.btn-save-name:hover {
+    background: #eccacb;
+    color: #3b3b3b;
+}
+
+.btn-cancel-edit {
+    padding: 0.3rem 1rem;
+    border: 1px solid #ececec;
+    border-radius: 20px;
+    background: transparent;
+    color: #3b3b3b;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel-edit:hover {
+    background: #f5f0ed;
+}
+
+/* 4 информационных блока - ГОРИЗОНТАЛЬНО, НЕЖНО-РОЗОВЫЕ */
+.profile-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-stat-card {
+    background: #fcf5f4;
+    border: 1px solid rgba(236, 202, 203, 0.3);
+    border-radius: 16px;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.profile-stat-card:hover {
+    background: #faf0ee;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(236, 202, 203, 0.15);
+}
+
+.profile-stat-value {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: #3b3b3b;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.profile-stat-label {
+    font-size: 0.6rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-top: 2px;
+}
+
+/* Настройки */
+.profile-settings-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-settings-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: #3b3b3b;
+    margin-bottom: 1rem;
+}
+
+.profile-setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(236, 202, 203, 0.2);
+}
+
+.profile-setting-item:last-child {
+    border-bottom: none;
+}
+
+.profile-setting-name {
+    font-size: 0.9rem;
+    color: #3b3b3b;
+    font-weight: 500;
+    margin: 0;
+}
+
+.profile-setting-desc {
+    font-size: 0.7rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    margin: 2px 0 0 0;
+}
+
+.profile-toggle {
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    background: #ececec;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.profile-toggle.active {
+    background: #3b3b3b;
+}
+
+.profile-toggle.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.profile-toggle-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.profile-toggle.active .profile-toggle-thumb {
+    left: 22px;
+}
+
+.profile-setting-value {
+    font-size: 0.9rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+}
+
+/* Опасная зона */
+.profile-danger-card {
+    background: rgba(255, 245, 245, 0.6);
+    border: 1px solid rgba(236, 202, 203, 0.3);
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-danger-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: #3b3b3b;
+    margin-bottom: 0.5rem;
+}
+
+.profile-danger-desc {
+    font-size: 0.8rem;
+    color: #3b3b3b;
+    opacity: 0.5;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.btn-reset-progress {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #eccacb;
+    border-radius: 12px;
+    background: transparent;
+    color: #3b3b3b;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-reset-progress:hover {
+    background: #eccacb;
+    color: #fcfafa;
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 480px) {
+    .profile-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .profile-stat-card {
+        padding: 0.8rem 0.3rem;
+    }
+    
+    .profile-stat-value {
+        font-size: 1.3rem;
+    }
+    
+    .profile-stat-label {
+        font-size: 0.55rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .profile-stat-value {
+        font-size: 1.1rem;
+    }
+    
+    .profile-user-card {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .profile-avatar {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
 }
    

@@ -19,10 +19,7 @@ function Profile({ data, setData }) {
     const totalHabits = data.habits?.length || 0;
     const completedHabits = data.habits?.filter(h => h.completions?.length > 0).length || 0;
     const totalJournalEntries = data.journal?.length || 0;
-    const currentStreak = data.habits?.reduce((max, h) => {
-        const streak = getStreak(h.completions || []);
-        return Math.max(max, streak);
-    }, 0) || 0;
+    const currentDay = data.currentDay || 1;
 
     return (
         <div className="profile-container">
@@ -70,10 +67,10 @@ function Profile({ data, setData }) {
                 </div>
             </div>
 
-            {/* Карточки статистики */}
+            {/* 4 информационных блока - ГОРИЗОНТАЛЬНО */}
             <div className="profile-stats-grid">
                 <div className="profile-stat-card">
-                    <span className="profile-stat-value">{data.currentDay || 1}</span>
+                    <span className="profile-stat-value">{currentDay}</span>
                     <span className="profile-stat-label">Текущий день</span>
                 </div>
                 <div className="profile-stat-card">
