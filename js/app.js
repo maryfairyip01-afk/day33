@@ -102,9 +102,7 @@ const WEEKLY_PLANS = [
     { week: 3, title: 'BUILD', goal: 'Постепенно увеличить устойчивость поведения', action: 'Увеличивай сложность постепенно' },
     { week: 4, title: 'STRENGTHEN', goal: 'Сделать привычку более естественной частью дня', action: 'Интегрируй в ежедневный распорядок' },
     { week: 5, title: 'INTEGRATE', goal: 'Интегрировать привычку в образ жизни', action: 'Привычка стала частью тебя' }
-];
-
-// ---------- Система авторизации ----------
+];// ---------- СИСТЕМА АВТОРИЗАЦИИ ----------
 const AuthSystem = {
     register(username, email, password, confirmPassword) {
         if (!username || !email || !password || !confirmPassword) {
@@ -228,99 +226,174 @@ const AuthSystem = {
         }
         saveData(`${STORAGE_KEY}_${userId}`, data);
     }
-};// ---------- КОМПОНЕНТЫ ONBOARDING ----------
+};
 
-// 1. Concept Screen - знакомство с концепцией
+// ---------- КОМПОНЕНТ AUTHSCREEN ----------
+function AuthScreen({ onLogin }) {
+    const [isLogin, setIsLogin] = useState(true);
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+
+        setTimeout(() => {
+            let result;
+            if (isLogin) {
+                result = AuthSystem.login(email, password);
+            } else {
+                result = AuthSystem.register(username, email, password, confirmPassword);
+            }
+
+            if (result.success) {
+                onLogin();
+            } else {
+                setError(result.error || 'Что-то пошло не так');
+            }
+            setLoading(false);
+        }, 300);
+    };
+
+    const switchMode = () => {
+        setIsLogin(!isLogin);
+        setError('');
+        setUsername('');
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+    };
+
+    return (
+        React.createElement('div', { className: 'auth-container' },
+            React.createElement('div', { className: 'auth-card' },
+                React.createElement('h1', { className: 'auth-title' }, 'DAY 33'),
+                React.createElement('p', { className: 'auth-subtitle' },
+                    isLogin ? 'Войди в свой аккаунт' : 'Создай новый аккаунт'
+                ),
+                React.createElement('form', { onSubmit: handleSubmit, className: 'auth-form' },
+                    !isLogin && React.createElement('div', { className: 'auth-field' },
+                        React.createElement('label', null, 'Имя пользователя'),
+                        React.createElement('input', {
+                            type: 'text',
+                            value: username,
+                            onChange: (e) => setUsername(e.target.value),
+                            placeholder: 'Введите имя',
+                            required: true
+                        })
+                    ),
+                    React.createElement('div', { className: 'auth-field' },
+                        React.createElement('label', null, 'Email'),
+                        React.createElement('input', {
+                            type: 'email',
+                            value: email,
+                            onChange: (e) => setEmail(e.target.value),
+                            placeholder: 'Введите email',
+                            required: true
+                        })
+                    ),
+                    React.createElement('div', { className: 'auth-field' },
+                        React.createElement('label', null, 'Пароль'),
+                        React.createElement('input', {
+                            type: 'password',
+                            value: password,
+                            onChange: (e) => setPassword(e.target.value),
+                            placeholder: 'Введите пароль',
+                            required: true
+                        }),
+                        !isLogin && React.createElement('span', { className: 'auth-hint' }, 'Минимум 6 символов')
+                    ),
+                    !isLogin && React.createElement('div', { className: 'auth-field' },
+                        React.createElement('label', null, 'Подтверждение пароля'),
+                        React.createElement('input', {
+                            type: 'password',
+                            value: confirmPassword,
+                            onChange: (e) => setConfirmPassword(e.target.value),
+                            placeholder: 'Повторите пароль',
+                            required: true
+                        })
+                    ),
+                    error && React.createElement('div', { className: 'auth-error' }, error),
+                    React.createElement('button', { type: 'submit', className: 'auth-btn', disabled: loading },
+                        loading ? '⏳ Загрузка...' : (isLogin ? 'Войти' : 'Зарегистрироваться')
+                    )
+                ),
+                React.createElement('div', { className: 'auth-switch' },
+                    React.createElement('span', null, isLogin ? 'Нет аккаунта?' : 'Уже есть аккаунт?'),
+                    React.createElement('button', { onClick: switchMode, className: 'auth-switch-btn' },
+                        isLogin ? 'Зарегистрироваться' : 'Войти'
+                    )
+                )
+            )
+        )
+    );
+}// ---------- КОМПОНЕНТЫ ONBOARDING ----------
+
+// 1. Concept Screen
 function ConceptScreen({ onComplete }) {
     const [step, setStep] = useState(0);
     
     const slides = [
-        {
-            title: 'Добро пожаловать в DAY 33',
-            content: 'DAY 33 помогает постепенно внедрять новые привычки, лучше понимать себя и создавать устойчивые изменения.'
-        },
-        {
-            title: 'Маленькие действия → Большие изменения',
-            content: 'Привычки формируются через повторение. Мозгу легче выполнять небольшие действия, чем большие задачи.'
-        },
-        {
-            title: 'Consistency > Perfection',
-            content: 'Главная цель — постоянство, а не идеальность. Пропуск одного дня не означает провал.'
-        },
-        {
-            title: 'Как формируется привычка',
-            content: 'Триггер → Действие → Вознаграждение. Понимание этого цикла помогает создать устойчивую привычку.'
-        },
-        {
-            title: 'Готовы начать?',
-            content: 'Сейчас мы пройдём небольшой onboarding, который поможет выбрать цель и привычки для вашего пути.'
-        }
+        { title: 'Добро пожаловать в DAY 33', content: 'DAY 33 помогает постепенно внедрять новые привычки, лучше понимать себя и создавать устойчивые изменения.' },
+        { title: 'Маленькие действия → Большие изменения', content: 'Привычки формируются через повторение. Мозгу легче выполнять небольшие действия, чем большие задачи.' },
+        { title: 'Consistency > Perfection', content: 'Главная цель — постоянство, а не идеальность. Пропуск одного дня не означает провал.' },
+        { title: 'Как формируется привычка', content: 'Триггер → Действие → Вознаграждение. Понимание этого цикла помогает создать устойчивую привычку.' },
+        { title: 'Готовы начать?', content: 'Сейчас мы пройдём небольшой onboarding, который поможет выбрать цель и привычки для вашего пути.' }
     ];
 
-    const handleNext = () => {
-        if (step < slides.length - 1) {
-            setStep(step + 1);
-        } else {
-            onComplete();
-        }
-    };
-
     return (
-        <div className="concept-container">
-            <div className="concept-card">
-                <div className="concept-step-indicator">
-                    {slides.map((_, i) => (
-                        <div key={i} className={`concept-dot ${i === step ? 'active' : ''}`} />
-                    ))}
-                </div>
-                
-                <h2 className="concept-title">{slides[step].title}</h2>
-                <p className="concept-content">{slides[step].content}</p>
-                
-                <button className="concept-btn" onClick={handleNext}>
-                    {step < slides.length - 1 ? 'Далее →' : 'Выбрать сферу →'}
-                </button>
-            </div>
-        </div>
+        React.createElement('div', { className: 'concept-container' },
+            React.createElement('div', { className: 'concept-card' },
+                React.createElement('div', { className: 'concept-step-indicator' },
+                    slides.map((_, i) => 
+                        React.createElement('div', { key: i, className: `concept-dot ${i === step ? 'active' : ''}` })
+                    )
+                ),
+                React.createElement('h2', { className: 'concept-title' }, slides[step].title),
+                React.createElement('p', { className: 'concept-content' }, slides[step].content),
+                React.createElement('button', { className: 'concept-btn', onClick: () => step < slides.length - 1 ? setStep(step + 1) : onComplete() },
+                    step < slides.length - 1 ? 'Далее →' : 'Выбрать сферу →'
+                )
+            )
+        )
     );
 }
 
-// 2. Choose Sphere - выбор сферы
+// 2. Choose Sphere
 function ChooseSphere({ onSelect }) {
     const [selected, setSelected] = useState(null);
 
     return (
-        <div className="onboarding-container">
-            <div className="onboarding-card">
-                <h2 className="onboarding-title">Что ты хочешь изменить?</h2>
-                <p className="onboarding-subtitle">Выбери сферу, в которой хочешь развиваться</p>
-                
-                <div className="sphere-grid">
-                    {SPHERES.map(sphere => (
-                        <button
-                            key={sphere.id}
-                            className={`sphere-card ${selected === sphere.id ? 'selected' : ''}`}
-                            onClick={() => setSelected(sphere.id)}
-                        >
-                            <span className="sphere-icon">{sphere.icon}</span>
-                            <span className="sphere-label">{sphere.label}</span>
-                        </button>
-                    ))}
-                </div>
-
-                <button 
-                    className="onboarding-btn" 
-                    onClick={() => selected && onSelect(selected)}
-                    disabled={!selected}
-                >
-                    Далее →
-                </button>
-            </div>
-        </div>
+        React.createElement('div', { className: 'onboarding-container' },
+            React.createElement('div', { className: 'onboarding-card' },
+                React.createElement('h2', { className: 'onboarding-title' }, 'Что ты хочешь изменить?'),
+                React.createElement('p', { className: 'onboarding-subtitle' }, 'Выбери сферу, в которой хочешь развиваться'),
+                React.createElement('div', { className: 'sphere-grid' },
+                    SPHERES.map(sphere =>
+                        React.createElement('button', {
+                            key: sphere.id,
+                            className: `sphere-card ${selected === sphere.id ? 'selected' : ''}`,
+                            onClick: () => setSelected(sphere.id)
+                        },
+                            React.createElement('span', { className: 'sphere-icon' }, sphere.icon),
+                            React.createElement('span', { className: 'sphere-label' }, sphere.label)
+                        )
+                    )
+                ),
+                React.createElement('button', { className: 'onboarding-btn', onClick: () => selected && onSelect(selected), disabled: !selected },
+                    'Далее →'
+                )
+            )
+        )
     );
 }
 
-// 3. Choose Habits - выбор привычек
+// 3. Choose Habits
 function ChooseHabits({ sphereId, onSelect }) {
     const [selected, setSelected] = useState([]);
     const sphere = SPHERES.find(s => s.id === sphereId);
@@ -335,99 +408,83 @@ function ChooseHabits({ sphereId, onSelect }) {
     };
 
     return (
-        <div className="onboarding-container">
-            <div className="onboarding-card">
-                <h2 className="onboarding-title">Выбери привычки</h2>
-                <p className="onboarding-subtitle">Выбери привычки, которые хочешь внедрить в сфере {sphere?.label}</p>
-                
-                <div className="habits-grid-onboarding">
-                    {habits.map(habit => (
-                        <button
-                            key={habit}
-                            className={`habit-option ${selected.includes(habit) ? 'selected' : ''}`}
-                            onClick={() => toggleHabit(habit)}
-                        >
-                            <span className="habit-check">{selected.includes(habit) ? '✓' : '○'}</span>
-                            <span>{habit}</span>
-                        </button>
-                    ))}
-                </div>
-
-                <button 
-                    className="onboarding-btn" 
-                    onClick={() => selected.length > 0 && onSelect(selected)}
-                    disabled={selected.length === 0}
-                >
-                    Далее →
-                </button>
-            </div>
-        </div>
+        React.createElement('div', { className: 'onboarding-container' },
+            React.createElement('div', { className: 'onboarding-card' },
+                React.createElement('h2', { className: 'onboarding-title' }, 'Выбери привычки'),
+                React.createElement('p', { className: 'onboarding-subtitle' }, `Выбери привычки, которые хочешь внедрить в сфере ${sphere?.label || ''}`),
+                React.createElement('div', { className: 'habits-grid-onboarding' },
+                    habits.map(habit =>
+                        React.createElement('button', {
+                            key: habit,
+                            className: `habit-option ${selected.includes(habit) ? 'selected' : ''}`,
+                            onClick: () => toggleHabit(habit)
+                        },
+                            React.createElement('span', { className: 'habit-check' }, selected.includes(habit) ? '✓' : '○'),
+                            React.createElement('span', null, habit)
+                        )
+                    )
+                ),
+                React.createElement('button', { className: 'onboarding-btn', onClick: () => selected.length > 0 && onSelect(selected), disabled: selected.length === 0 },
+                    'Далее →'
+                )
+            )
+        )
     );
-}// 4. Personal Goal - личная цель
+}
+
+// 4. Personal Goal
 function PersonalGoal({ onSelect }) {
     const [goal, setGoal] = useState('');
 
     return (
-        <div className="onboarding-container">
-            <div className="onboarding-card">
-                <h2 className="onboarding-title">Почему ты хочешь это изменить?</h2>
-                <p className="onboarding-subtitle">Сформулируй свою личную цель</p>
-                
-                <textarea
-                    className="onboarding-textarea"
-                    placeholder="Например: Хочу чувствовать себя энергичнее, стать более дисциплинированной, меньше зависеть от телефона..."
-                    value={goal}
-                    onChange={(e) => setGoal(e.target.value)}
-                    rows="4"
-                />
-
-                <button 
-                    className="onboarding-btn" 
-                    onClick={() => goal.trim() && onSelect(goal.trim())}
-                    disabled={!goal.trim()}
-                >
-                    Далее →
-                </button>
-            </div>
-        </div>
+        React.createElement('div', { className: 'onboarding-container' },
+            React.createElement('div', { className: 'onboarding-card' },
+                React.createElement('h2', { className: 'onboarding-title' }, 'Почему ты хочешь это изменить?'),
+                React.createElement('p', { className: 'onboarding-subtitle' }, 'Сформулируй свою личную цель'),
+                React.createElement('textarea', {
+                    className: 'onboarding-textarea',
+                    placeholder: 'Например: Хочу чувствовать себя энергичнее, стать более дисциплинированной...',
+                    value: goal,
+                    onChange: (e) => setGoal(e.target.value),
+                    rows: 4
+                }),
+                React.createElement('button', { className: 'onboarding-btn', onClick: () => goal.trim() && onSelect(goal.trim()), disabled: !goal.trim() },
+                    'Далее →'
+                )
+            )
+        )
     );
 }
 
-// 5. Brain Goal - цель мозга
+// 5. Brain Goal
 function ChooseBrainGoal({ onSelect }) {
     const [selected, setSelected] = useState(null);
 
     return (
-        <div className="onboarding-container">
-            <div className="onboarding-card">
-                <h2 className="onboarding-title">Выбери цель мозга</h2>
-                <p className="onboarding-subtitle">Что ты хочешь развить в себе?</p>
-                
-                <div className="brain-goal-grid">
-                    {BRAIN_GOALS.map(goal => (
-                        <button
-                            key={goal}
-                            className={`brain-goal-card ${selected === goal ? 'selected' : ''}`}
-                            onClick={() => setSelected(goal)}
-                        >
-                            {goal}
-                        </button>
-                    ))}
-                </div>
-
-                <button 
-                    className="onboarding-btn" 
-                    onClick={() => selected && onSelect(selected)}
-                    disabled={!selected}
-                >
-                    Создать план →
-                </button>
-            </div>
-        </div>
+        React.createElement('div', { className: 'onboarding-container' },
+            React.createElement('div', { className: 'onboarding-card' },
+                React.createElement('h2', { className: 'onboarding-title' }, 'Выбери цель мозга'),
+                React.createElement('p', { className: 'onboarding-subtitle' }, 'Что ты хочешь развить в себе?'),
+                React.createElement('div', { className: 'brain-goal-grid' },
+                    BRAIN_GOALS.map(goal =>
+                        React.createElement('button', {
+                            key: goal,
+                            className: `brain-goal-card ${selected === goal ? 'selected' : ''}`,
+                            onClick: () => setSelected(goal)
+                        },
+                            goal
+                        )
+                    )
+                ),
+                React.createElement('button', { className: 'onboarding-btn', onClick: () => selected && onSelect(selected), disabled: !selected },
+                    'Создать план →'
+                )
+            )
+        )
     );
 }
 
-// 6. Plan Ready - план готов
+// 6. Plan Ready
 function PlanReady({ data, onStart }) {
     const sphere = SPHERES.find(s => s.id === data.user?.selectedSphere);
     const habits = data.user?.selectedHabits || [];
@@ -435,79 +492,104 @@ function PlanReady({ data, onStart }) {
     const brainGoal = data.user?.brainGoal || '';
 
     return (
-        <div className="plan-ready-container">
-            <div className="plan-ready-card">
-                <div className="plan-ready-icon">🎯</div>
-                <h2 className="plan-ready-title">План готов!</h2>
-                <p className="plan-ready-subtitle">
-                    Ты не должен менять всё сразу. Мы будем внедрять привычки шаг за шагом.
-                </p>
-
-                <div className="plan-ready-summary">
-                    <div className="plan-ready-item">
-                        <span className="plan-ready-label">Сфера</span>
-                        <span className="plan-ready-value">{sphere?.label || 'Не выбрана'}</span>
-                    </div>
-                    <div className="plan-ready-item">
-                        <span className="plan-ready-label">Привычки</span>
-                        <span className="plan-ready-value">{habits.join(', ') || 'Не выбраны'}</span>
-                    </div>
-                    <div className="plan-ready-item">
-                        <span className="plan-ready-label">Цель</span>
-                        <span className="plan-ready-value">{goal || 'Не указана'}</span>
-                    </div>
-                    <div className="plan-ready-item">
-                        <span className="plan-ready-label">Цель мозга</span>
-                        <span className="plan-ready-value">{brainGoal || 'Не выбрана'}</span>
-                    </div>
-                </div>
-
-                <button className="plan-ready-btn" onClick={onStart}>
-                    Посмотреть план по неделям →
-                </button>
-            </div>
-        </div>
+        React.createElement('div', { className: 'plan-ready-container' },
+            React.createElement('div', { className: 'plan-ready-card' },
+                React.createElement('div', { className: 'plan-ready-icon' }, '🎯'),
+                React.createElement('h2', { className: 'plan-ready-title' }, 'План готов!'),
+                React.createElement('p', { className: 'plan-ready-subtitle' }, 'Ты не должен менять всё сразу. Мы будем внедрять привычки шаг за шагом.'),
+                React.createElement('div', { className: 'plan-ready-summary' },
+                    React.createElement('div', { className: 'plan-ready-item' },
+                        React.createElement('span', { className: 'plan-ready-label' }, 'Сфера'),
+                        React.createElement('span', { className: 'plan-ready-value' }, sphere?.label || 'Не выбрана')
+                    ),
+                    React.createElement('div', { className: 'plan-ready-item' },
+                        React.createElement('span', { className: 'plan-ready-label' }, 'Привычки'),
+                        React.createElement('span', { className: 'plan-ready-value' }, habits.join(', ') || 'Не выбраны')
+                    ),
+                    React.createElement('div', { className: 'plan-ready-item' },
+                        React.createElement('span', { className: 'plan-ready-label' }, 'Цель'),
+                        React.createElement('span', { className: 'plan-ready-value' }, goal || 'Не указана')
+                    ),
+                    React.createElement('div', { className: 'plan-ready-item' },
+                        React.createElement('span', { className: 'plan-ready-label' }, 'Цель мозга'),
+                        React.createElement('span', { className: 'plan-ready-value' }, brainGoal || 'Не выбрана')
+                    )
+                ),
+                React.createElement('button', { className: 'plan-ready-btn', onClick: onStart },
+                    'Посмотреть план по неделям →'
+                )
+            )
+        )
     );
 }
 
-// 7. Weeks Plan - план по неделям
+// 7. Weeks Plan
 function WeeksPlan({ onStart }) {
     return (
-        <div className="weeks-plan-container">
-            <div className="weeks-plan-card">
-                <h2 className="weeks-plan-title">📅 Твой план по неделям</h2>
-                <p className="weeks-plan-subtitle">Каждая неделя — это шаг к твоей цели</p>
-
-                {WEEKLY_PLANS.map((week) => (
-                    <div key={week.week} className="week-plan-item">
-                        <div className="week-plan-header">
-                            <span className="week-plan-number">Week {week.week}</span>
-                            <span className="week-plan-title-badge">{week.title}</span>
-                        </div>
-                        <p className="week-plan-goal">{week.goal}</p>
-                        <p className="week-plan-action">→ {week.action}</p>
-                    </div>
-                ))}
-
-                <button className="weeks-plan-btn" onClick={onStart}>
-                    Начать путь 🚀
-                </button>
-            </div>
-        </div>
+        React.createElement('div', { className: 'weeks-plan-container' },
+            React.createElement('div', { className: 'weeks-plan-card' },
+                React.createElement('h2', { className: 'weeks-plan-title' }, '📅 Твой план по неделям'),
+                React.createElement('p', { className: 'weeks-plan-subtitle' }, 'Каждая неделя — это шаг к твоей цели'),
+                WEEKLY_PLANS.map((week) =>
+                    React.createElement('div', { key: week.week, className: 'week-plan-item' },
+                        React.createElement('div', { className: 'week-plan-header' },
+                            React.createElement('span', { className: 'week-plan-number' }, `Week ${week.week}`),
+                            React.createElement('span', { className: 'week-plan-title-badge' }, week.title)
+                        ),
+                        React.createElement('p', { className: 'week-plan-goal' }, week.goal),
+                        React.createElement('p', { className: 'week-plan-action' }, `→ ${week.action}`)
+                    )
+                ),
+                React.createElement('button', { className: 'weeks-plan-btn', onClick: onStart },
+                    'Начать путь 🚀'
+                )
+            )
+        )
     );
-}// ---------- ОСНОВНОЕ ПРИЛОЖЕНИЕ ----------
+}// ---------- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ----------
+function getCompletionPercent(data) {
+    const habits = data.habits || [];
+    if (habits.length === 0) return 0;
+    const today = new Date().toISOString().split('T')[0];
+    const completed = habits.filter(h => (h.completions || []).includes(today)).length;
+    return Math.round((completed / habits.length) * 100);
+}
+
+function getLongestStreak(data) {
+    const habits = data.habits || [];
+    let maxStreak = 0;
+    habits.forEach(h => {
+        const completions = (h.completions || []).sort();
+        let streak = 0;
+        let currentStreak = 0;
+        for (let i = 0; i < completions.length; i++) {
+            const date = new Date(completions[i]);
+            const prevDate = i > 0 ? new Date(completions[i-1]) : null;
+            if (prevDate) {
+                const diff = (date - prevDate) / (1000 * 60 * 60 * 24);
+                if (diff === 1) {
+                    currentStreak++;
+                } else {
+                    currentStreak = 1;
+                }
+            } else {
+                currentStreak = 1;
+            }
+            streak = Math.max(streak, currentStreak);
+        }
+        maxStreak = Math.max(maxStreak, streak);
+    });
+    return maxStreak;
+}
+
+// ---------- ОСНОВНОЕ ПРИЛОЖЕНИЕ ----------
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
     const [data, setData] = useState(null);
     const [page, setPage] = useState('landing');
-    const [onboardingStep, setOnboardingStep] = useState('concept'); // concept, sphere, habits, goal, braingoal, planready, weeks
-    const [tempSphere, setTempSphere] = useState(null);
-    const [tempHabits, setTempHabits] = useState([]);
-    const [tempGoal, setTempGoal] = useState('');
-    const [tempBrainGoal, setTempBrainGoal] = useState('');
+    const [onboardingStep, setOnboardingStep] = useState('concept');
 
-    // Проверка авторизации при загрузке
     useEffect(() => {
         const user = AuthSystem.getCurrentUser();
         if (user) {
@@ -515,7 +597,6 @@ function App() {
             const userData = AuthSystem.getUserData(user.id);
             if (userData) {
                 setData(userData);
-                // Определяем, где находится пользователь в onboarding
                 if (!userData.user?.conceptViewed) {
                     setOnboardingStep('concept');
                 } else if (!userData.user?.selectedSphere) {
@@ -538,14 +619,33 @@ function App() {
         }
     }, []);
 
-    // Сохранение данных при изменении
     useEffect(() => {
         if (isAuthenticated && currentUser && data) {
             AuthSystem.saveUserData(currentUser.id, data);
         }
     }, [data, isAuthenticated, currentUser]);
 
-    // Обработчики onboarding
+    const handleLogin = () => {
+        const user = AuthSystem.getCurrentUser();
+        if (user) {
+            setCurrentUser(user);
+            const userData = AuthSystem.getUserData(user.id);
+            if (userData) {
+                setData(userData);
+            }
+            setIsAuthenticated(true);
+        }
+    };
+
+    const handleLogout = () => {
+        AuthSystem.logout();
+        setIsAuthenticated(false);
+        setCurrentUser(null);
+        setData(null);
+        setOnboardingStep('concept');
+        setPage('landing');
+    };
+
     const handleConceptComplete = () => {
         setData(prev => ({
             ...prev,
@@ -555,7 +655,6 @@ function App() {
     };
 
     const handleSphereSelect = (sphereId) => {
-        setTempSphere(sphereId);
         setData(prev => ({
             ...prev,
             user: { ...prev.user, selectedSphere: sphereId }
@@ -564,14 +663,13 @@ function App() {
     };
 
     const handleHabitsSelect = (habits) => {
-        setTempHabits(habits);
         setData(prev => ({
             ...prev,
             user: { ...prev.user, selectedHabits: habits },
             habits: habits.map(h => ({
                 id: generateId(),
                 name: h,
-                category: data.user?.selectedSphere || 'self',
+                category: prev.user?.selectedSphere || 'self',
                 completions: []
             }))
         }));
@@ -579,7 +677,6 @@ function App() {
     };
 
     const handleGoalSelect = (goal) => {
-        setTempGoal(goal);
         setData(prev => ({
             ...prev,
             user: { ...prev.user, personalGoal: goal }
@@ -588,7 +685,6 @@ function App() {
     };
 
     const handleBrainGoalSelect = (brainGoal) => {
-        setTempBrainGoal(brainGoal);
         setData(prev => ({
             ...prev,
             user: { ...prev.user, brainGoal: brainGoal }
@@ -608,8 +704,8 @@ function App() {
         const startDate = new Date().toISOString();
         setData(prev => ({
             ...prev,
-            user: { 
-                ...prev.user, 
+            user: {
+                ...prev.user,
                 journeyStartDate: startDate,
                 journeyStarted: true,
                 onboardingCompleted: true
@@ -621,61 +717,35 @@ function App() {
         setPage('landing');
     };
 
-    // Обработчик входа
-    const handleLogin = () => {
-        const user = AuthSystem.getCurrentUser();
-        if (user) {
-            setCurrentUser(user);
-            const userData = AuthSystem.getUserData(user.id);
-            if (userData) {
-                setData(userData);
-            }
-            setIsAuthenticated(true);
-        }
-    };
-
-    // Обработчик выхода
-    const handleLogout = () => {
-        AuthSystem.logout();
-        setIsAuthenticated(false);
-        setCurrentUser(null);
-        setData(null);
-        setOnboardingStep('concept');
-        setPage('landing');
-    };
-
-    // Если не авторизован
     if (!isAuthenticated) {
-        return <AuthScreen onLogin={handleLogin} />;
+        return React.createElement(AuthScreen, { onLogin: handleLogin });
     }
 
     if (!data) {
-        return <div className="loading-screen">Загрузка...</div>;
+        return React.createElement('div', { className: 'loading-screen' }, 'Загрузка...');
     }
 
-    // Onboarding flow
     if (!data.user?.onboardingCompleted) {
         switch (onboardingStep) {
             case 'concept':
-                return <ConceptScreen onComplete={handleConceptComplete} />;
+                return React.createElement(ConceptScreen, { onComplete: handleConceptComplete });
             case 'sphere':
-                return <ChooseSphere onSelect={handleSphereSelect} />;
+                return React.createElement(ChooseSphere, { onSelect: handleSphereSelect });
             case 'habits':
-                return <ChooseHabits sphereId={data.user?.selectedSphere} onSelect={handleHabitsSelect} />;
+                return React.createElement(ChooseHabits, { sphereId: data.user?.selectedSphere, onSelect: handleHabitsSelect });
             case 'goal':
-                return <PersonalGoal onSelect={handleGoalSelect} />;
+                return React.createElement(PersonalGoal, { onSelect: handleGoalSelect });
             case 'braingoal':
-                return <ChooseBrainGoal onSelect={handleBrainGoalSelect} />;
+                return React.createElement(ChooseBrainGoal, { onSelect: handleBrainGoalSelect });
             case 'planready':
-                return <PlanReady data={data} onStart={handlePlanReady} />;
+                return React.createElement(PlanReady, { data: data, onStart: handlePlanReady });
             case 'weeks':
-                return <WeeksPlan onStart={handleStartJourney} />;
+                return React.createElement(WeeksPlan, { onStart: handleStartJourney });
             default:
-                return <div>Loading...</div>;
+                return React.createElement('div', null, 'Loading...');
         }
     }
 
-    // Основное приложение
     const renderPage = () => {
         const pageProps = {
             data,
@@ -758,52 +828,12 @@ function App() {
         }
     };
 
-    return (
-        <div className="app-container">
-            <div className="app-content">
-                {renderPage()}
-            </div>
-            <Navbar page={page} setPage={setPage} />
-        </div>
+    return React.createElement('div', { className: 'app-container' },
+        React.createElement('div', { className: 'app-content' }, renderPage()),
+        React.createElement(Navbar, { page: page, setPage: setPage })
     );
 }
 
-// ---------- Вспомогательные функции ----------
-function getCompletionPercent(data) {
-    const habits = data.habits || [];
-    if (habits.length === 0) return 0;
-    const today = new Date().toISOString().split('T')[0];
-    const completed = habits.filter(h => (h.completions || []).includes(today)).length;
-    return Math.round((completed / habits.length) * 100);
-}
-
-function getLongestStreak(data) {
-    const habits = data.habits || [];
-    let maxStreak = 0;
-    habits.forEach(h => {
-        const completions = (h.completions || []).sort();
-        let streak = 0;
-        let currentStreak = 0;
-        for (let i = 0; i < completions.length; i++) {
-            const date = new Date(completions[i]);
-            const prevDate = i > 0 ? new Date(completions[i-1]) : null;
-            if (prevDate) {
-                const diff = (date - prevDate) / (1000 * 60 * 60 * 24);
-                if (diff === 1) {
-                    currentStreak++;
-                } else {
-                    currentStreak = 1;
-                }
-            } else {
-                currentStreak = 1;
-            }
-            streak = Math.max(streak, currentStreak);
-        }
-        maxStreak = Math.max(maxStreak, streak);
-    });
-    return maxStreak;
-}
-
-// ---------- Запуск приложения ----------
+// ---------- ЗАПУСК ----------
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(App));
