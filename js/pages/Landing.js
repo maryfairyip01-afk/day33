@@ -1,86 +1,111 @@
 // ========================================
-// Landing.js — Главный экран
+// Landing.js — Главная страница (Home)
 // ========================================
 
-function Landing({ setPage }) {
-    const [currentDay, setCurrentDay] = React.useState(() => {
-        const saved = localStorage.getItem('day33_currentDay');
-        return saved ? parseInt(saved) : 1;
-    });
+function Landing({ data, setData, page, setPage }) {
+    const currentDay = data.currentDay || 1;
+    const currentWeek = data.week || 1;
+    const journeyStartDate = data.user?.journeyStartDate;
+    const brainGoal = data.user?.brainGoal || 'Не выбрана';
+    const success = data.success || 0;
+    const isComplete = data.journeyComplete || false;
 
-    const [todayAffirmation, setTodayAffirmation] = React.useState('');
-
-    // Массив аффирмаций
+    // Аффирмация на основе дня
     const affirmations = [
-        "I am becoming the person I want to be.",
-        "Every day I grow stronger and wiser.",
-        "I am worthy of my dreams.",
-        "Small steps lead to big changes.",
-        "I choose progress over perfection.",
-        "I am capable of amazing things.",
-        "Today I am closer to my goals.",
-        "I trust my journey.",
-        "I am enough, just as I am.",
-        "My potential is limitless.",
-        "I embrace change with an open heart.",
-        "I am proud of who I am becoming.",
-        "Every day is a new beginning.",
-        "I have the power to create my life.",
-        "I am resilient and strong.",
-        "My future is bright and full of possibilities.",
-        "I believe in myself.",
-        "I am constantly evolving.",
-        "I deserve happiness and success.",
-        "I am in charge of my own happiness."
+        'Я выбираю маленькие шаги к большим изменениям',
+        'Каждый день я становлюсь лучше, чем вчера',
+        'Маленькие действия создают большие результаты',
+        'Я доверяю процессу и своему пути',
+        'Сегодня я делаю выбор в пользу себя',
+        'Мои привычки формируют мою жизнь',
+        'Я благодарен(а) себе за каждое усилие',
+        'Постоянство важнее идеальности',
+        'Каждое утро — это новый шанс',
+        'Я строю свою жизнь осознанно'
     ];
+    
+    const affirmationIndex = (currentDay - 1) % affirmations.length;
+    const affirmation = affirmations[affirmationIndex];
 
-    // Выбор аффирмации по дню
-    React.useEffect(() => {
-        const today = new Date().toDateString();
-        const savedDate = localStorage.getItem('day33_affirmation_date');
-        const savedAffirmation = localStorage.getItem('day33_affirmation');
-
-        if (savedDate === today && savedAffirmation) {
-            setTodayAffirmation(savedAffirmation);
-        } else {
-            const dayIndex = (currentDay - 1) % affirmations.length;
-            const affirmation = affirmations[dayIndex];
-            setTodayAffirmation(affirmation);
-            localStorage.setItem('day33_affirmation', affirmation);
-            localStorage.setItem('day33_affirmation_date', today);
-        }
-    }, [currentDay]);
-
-    // Сохраняем день при изменении
-    React.useEffect(() => {
-        localStorage.setItem('day33_currentDay', currentDay);
-    }, [currentDay]);
-
-    const handleStartDay = () => {
-        setPage('dashboard');
+    // Форматирование даты
+    const formatDate = (dateString) => {
+        if (!dateString) return 'Не начат';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('ru-RU', { 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric' 
+        });
     };
 
     return (
         <div className="landing-container">
-            <div className="landing-content">
-                {/* Главный заголовок DAY 33 */}
+            <div className="landing-header">
                 <h1 className="landing-title">DAY 33</h1>
+                <p className="landing-subtitle">
+                    {isComplete ? '🎉 Путь завершён!' : `${DayCalculator.formatDay(currentDay)}`}
+                </p>
+            </div>
 
-                {/* Кнопка + индикатор дня */}
-                <div className="landing-actions">
-                    <button className="btn-start-day" onClick={handleStartDay}>
-                        Начать день
-                    </button>
-                    <div className="day-indicator">
-                        <span className="day-label">DAY</span>
-                        <span className="day-number">{currentDay}</span>
-                    </div>
+            {/* Информационная карточка */}
+            <div className="landing-info-card">
+                <div className="landing-info-row">
+                    <span className="landing-info-label">Текущий день</span>
+                    <span className="landing-info-value">{DayCalculator.formatDay(currentDay)}</span>
                 </div>
+                <div className="landing-info-row">
+                    <span className="landing-info-label">Текущая неделя</span>
+                    <span className="landing-info-value">{DayCalculator.formatWeek(currentWeek)}</span>
+                </div>
+                <div className="landing-info-row">
+                    <span className="landing-info-label">Дата начала</span>
+                    <span className="landing-info-value">{formatDate(journeyStartDate)}</span>
+                </div>
+                <div className="landing-info-row">
+                    <span className="landing-info-label">Цель мозга</span>
+                    <span className="landing-info-value">{brainGoal}</span>
+                </div>
+                <div className="landing-info-row">
+                    <span className="landing-info-label">Успех</span>
+                    <span className="landing-info-value">{success}%</span>
+                </div>
+                {isComplete && (
+                    <div className="landing-complete-badge">
+                        🎉 Поздравляем! Вы завершили 75-дневный путь!
+                    </div>
+                )}
+            </div>
 
-                {/* Аффирмация дня */}
-                <div className="affirmation-block">
-                    <p className="affirmation-label">Аффирмация дня</p>
-                    <p className="affirmation-text">“{todayAffirmation}”</p>
+            {/* Аффирмация */}
+            <div className="landing-affirmation">
+                <p className="affirmation-icon">✨</p>
+                <p className="affirmation-text">"{affirmation}"</p>
+            </div>
+
+            {/* Кнопка Start Day */}
+            <button 
+                className="landing-start-btn"
+                onClick={() => setPage('habits')}
+            >
+                {isComplete ? 'Начать новый путь' : 'Start Day 🚀'}
+            </button>
+
+            {/* Прогресс-бар 75 дней */}
+            <div className="landing-progress">
+                <div className="landing-progress-header">
+                    <span>Прогресс 75-дневного пути</span>
+                    <span>{Math.min(Math.round((currentDay / 75) * 100), 100)}%</span>
+                </div>
+                <div className="landing-progress-bar">
+                    <div 
+                        className="landing-progress-fill"
+                        style={{ width: `${Math.min(Math.round((currentDay / 75) * 100), 100)}%` }}
+                    />
+                </div>
+                <div className="landing-progress-days">
+                    <span>День 1</span>
+                    <span>День {Math.min(currentDay, 75)}</span>
+                    <span>День 75</span>
                 </div>
             </div>
         </div>

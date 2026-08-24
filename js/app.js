@@ -1,11 +1,10 @@
 // ========================================
-// app.js — Главный файл приложения
+// app.js — Главный файл приложения Day 33
 // ========================================
 
-// ---------- Импорт компонентов ----------
 const { useState, useEffect } = React;
 
-// ---------- Данные ----------
+// ---------- Константы ----------
 const STORAGE_KEY = 'day33_data';
 const AUTH_KEY = 'day33_auth';
 const USERS_KEY = 'day33_users';
@@ -28,77 +27,152 @@ function generateId() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
 
-// ---------- Авторизация ----------
+// ---------- Система расчёта дней и недель ----------
+const DayCalculator = {
+    getCurrentDay(startDate) {
+        if (!startDate) return 1;
+        const start = new Date(startDate);
+        const today = new Date();
+        start.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+        const diffTime = today - start;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays + 1;
+    },
+
+    getCurrentWeek(day) {
+        return Math.ceil(day / 7);
+    },
+
+    isJourneyComplete(day) {
+        return day >= 75;
+    },
+
+    getJourneyProgress(day) {
+        return Math.min(Math.round((day / 75) * 100), 100);
+    },
+
+    formatDay(day) {
+        return `Day ${day}`;
+    },
+
+    formatWeek(week) {
+        return `Week ${week}`;
+    }
+};
+
+// ---------- Система расчёта Success % ----------
+const SuccessCalculator = {
+    calculate(habits, startDate) {
+        if (!habits || habits.length === 0) return 0;
+        if (!startDate) return 0;
+
+        const currentDay = DayCalculator.getCurrentDay(startDate);
+        if (currentDay < 1) return 0;
+
+        let totalPlanned = 0;
+        let totalCompleted = 0;
+
+        habits.forEach(habit => {
+            const completions = habit.completions || [];
+            const plannedDays = currentDay;
+            const completedDays = completions.length;
+            totalPlanned += plannedDays;
+            totalCompleted += Math.min(completedDays, plannedDays);
+        });
+
+        if (totalPlanned === 0) return 0;
+        return Math.round((totalCompleted / totalPlanned) * 100);
+    }
+};
+
+// ---------- Данные для onboarding ----------
+const SPHERES = [
+    { id: 'mind', label: 'Mind / Мышление', icon: '🧠', habits: ['Чтение', 'Медитация', 'Digital detox', 'Концентрация', 'Обучение'] },
+    { id: 'body', label: 'Body / Тело', icon: '💪', habits: ['Тренировки', 'Прогулки', 'Stretching', 'Сон', 'Движение'] },
+    { id: 'nutrition', label: 'Nutrition / Питание', icon: '🥗', habits: ['Вода', 'Регулярное питание', 'Осознанное питание', 'Полезные продукты'] },
+    { id: 'self', label: 'Self / Саморазвитие', icon: '🌱', habits: ['Дневник', 'Рефлексия', 'Благодарность', 'Self-awareness'] }
+];
+
+const BRAIN_GOALS = ['Focus', 'Discipline', 'Consistency', 'Calm', 'Learning', 'Self-awareness'];
+
+const WEEKLY_PLANS = [
+    { week: 1, title: 'START', goal: 'Познакомиться с новой привычкой и сделать её максимально простой', action: 'Выполняй минимальную версию привычки' },
+    { week: 2, title: 'REPEAT', goal: 'Закрепить повторение', action: 'Фокус на регулярности' },
+    { week: 3, title: 'BUILD', goal: 'Постепенно увеличить устойчивость поведения', action: 'Увеличивай сложность постепенно' },
+    { week: 4, title: 'STRENGTHEN', goal: 'Сделать привычку более естественной частью дня', action: 'Интегрируй в ежедневный распорядок' },
+    { week: 5, title: 'INTEGRATE', goal: 'Интегрировать привычку в образ жизни', action: 'Привычка стала частью тебя' }
+];
+
+// ---------- Система авторизации ----------
 const AuthSystem = {
-    // Регистрация
     register(username, email, password, confirmPassword) {
-        // Проверка полей
         if (!username || !email || !password || !confirmPassword) {
             return { success: false, error: 'Заполните все поля' };
         }
 
-        // Проверка email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             return { success: false, error: 'Некорректный email' };
         }
 
-        // Проверка пароля (мин 6 символов)
         if (password.length < 6) {
             return { success: false, error: 'Пароль должен быть не менее 6 символов' };
         }
 
-        // Проверка совпадения паролей
         if (password !== confirmPassword) {
             return { success: false, error: 'Пароли не совпадают' };
         }
 
-        // Получаем всех пользователей
         const users = loadData(USERS_KEY, {});
-        
-        // Проверка на существующий email
         const existingUser = Object.values(users).find(u => u.email === email);
         if (existingUser) {
             return { success: false, error: 'Пользователь с таким email уже существует' };
         }
 
-        // Создаём нового пользователя
         const userId = generateId();
         const userData = {
             id: userId,
             username,
             email,
-            password, // В реальном проекте нужно хешировать!
+            password,
             createdAt: new Date().toISOString()
         };
 
-        // Сохраняем пользователя
         users[userId] = userData;
         saveData(USERS_KEY, users);
 
-        // Создаём пустые данные для пользователя
         const initialUserData = {
             habits: [],
             journal: [],
             goals: [],
             reflections: [],
             currentDay: 1,
+            week: 1,
             mood: 'good',
             user: {
                 name: username,
                 email: email,
-                startDate: new Date().toISOString()
-            }
+                startDate: new Date().toISOString(),
+                journeyStartDate: null,
+                brainGoal: null,
+                selectedSphere: null,
+                selectedHabits: [],
+                personalGoal: '',
+                onboardingCompleted: false,
+                conceptViewed: false,
+                planCreated: false,
+                journeyStarted: false
+            },
+            success: 0,
+            journeyComplete: false
         };
         saveData(`${STORAGE_KEY}_${userId}`, initialUserData);
 
-        // Автоматически входим
         this.login(email, password);
-
         return { success: true, userId };
     },
 
-    // Вход
     login(email, password) {
         if (!email || !password) {
             return { success: false, error: 'Заполните все поля' };
@@ -111,21 +185,17 @@ const AuthSystem = {
             return { success: false, error: 'Неверный email или пароль' };
         }
 
-        // Сохраняем сессию
         saveData(AUTH_KEY, { userId: user.id, email: user.email, username: user.username });
         return { success: true, user };
     },
 
-    // Выход
     logout() {
         localStorage.removeItem(AUTH_KEY);
     },
 
-    // Проверка авторизации
     getCurrentUser() {
         const auth = loadData(AUTH_KEY, null);
         if (!auth) return null;
-        
         const users = loadData(USERS_KEY, {});
         const user = users[auth.userId];
         if (!user) {
@@ -135,145 +205,307 @@ const AuthSystem = {
         return user;
     },
 
-    // Получение данных пользователя
     getUserData(userId) {
-        return loadData(`${STORAGE_KEY}_${userId}`, null);
+        const data = loadData(`${STORAGE_KEY}_${userId}`, null);
+        if (!data) return null;
+        if (data.user && data.user.journeyStartDate) {
+            const currentDay = DayCalculator.getCurrentDay(data.user.journeyStartDate);
+            data.currentDay = currentDay;
+            data.week = DayCalculator.getCurrentWeek(currentDay);
+            data.journeyComplete = DayCalculator.isJourneyComplete(currentDay);
+            data.success = SuccessCalculator.calculate(data.habits, data.user.journeyStartDate);
+        }
+        return data;
     },
 
-    // Сохранение данных пользователя
     saveUserData(userId, data) {
+        if (data.user && data.user.journeyStartDate) {
+            const currentDay = DayCalculator.getCurrentDay(data.user.journeyStartDate);
+            data.currentDay = currentDay;
+            data.week = DayCalculator.getCurrentWeek(currentDay);
+            data.journeyComplete = DayCalculator.isJourneyComplete(currentDay);
+            data.success = SuccessCalculator.calculate(data.habits, data.user.journeyStartDate);
+        }
         saveData(`${STORAGE_KEY}_${userId}`, data);
     }
-};
+};// ---------- КОМПОНЕНТЫ ONBOARDING ----------
 
-// ---------- Компонент авторизации ----------
-function AuthScreen({ onLogin, onSwitchToRegister }) {
-    const [isLogin, setIsLogin] = useState(true);
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+// 1. Concept Screen - знакомство с концепцией
+function ConceptScreen({ onComplete }) {
+    const [step, setStep] = useState(0);
+    
+    const slides = [
+        {
+            title: 'Добро пожаловать в DAY 33',
+            content: 'DAY 33 помогает постепенно внедрять новые привычки, лучше понимать себя и создавать устойчивые изменения.'
+        },
+        {
+            title: 'Маленькие действия → Большие изменения',
+            content: 'Привычки формируются через повторение. Мозгу легче выполнять небольшие действия, чем большие задачи.'
+        },
+        {
+            title: 'Consistency > Perfection',
+            content: 'Главная цель — постоянство, а не идеальность. Пропуск одного дня не означает провал.'
+        },
+        {
+            title: 'Как формируется привычка',
+            content: 'Триггер → Действие → Вознаграждение. Понимание этого цикла помогает создать устойчивую привычку.'
+        },
+        {
+            title: 'Готовы начать?',
+            content: 'Сейчас мы пройдём небольшой onboarding, который поможет выбрать цель и привычки для вашего пути.'
+        }
+    ];
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setError('');
-        setLoading(true);
-
-        setTimeout(() => {
-            let result;
-            if (isLogin) {
-                result = AuthSystem.login(email, password);
-            } else {
-                result = AuthSystem.register(username, email, password, confirmPassword);
-            }
-
-            if (result.success) {
-                onLogin();
-            } else {
-                setError(result.error || 'Что-то пошло не так');
-            }
-            setLoading(false);
-        }, 300);
-    };
-
-    const switchMode = () => {
-        setIsLogin(!isLogin);
-        setError('');
-        setUsername('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
+    const handleNext = () => {
+        if (step < slides.length - 1) {
+            setStep(step + 1);
+        } else {
+            onComplete();
+        }
     };
 
     return (
-        <div className="auth-container">
-            <div className="auth-card">
-                <h1 className="auth-title">DAY 33</h1>
-                <p className="auth-subtitle">
-                    {isLogin ? 'Войди в свой аккаунт' : 'Создай новый аккаунт'}
-                </p>
-
-                <form onSubmit={handleSubmit} className="auth-form">
-                    {!isLogin && (
-                        <div className="auth-field">
-                            <label>Имя пользователя</label>
-                            <input
-                                type="text"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                placeholder="Введите имя"
-                                required
-                            />
-                        </div>
-                    )}
-
-                    <div className="auth-field">
-                        <label>Email</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Введите email"
-                            required
-                        />
-                    </div>
-
-                    <div className="auth-field">
-                        <label>Пароль</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Введите пароль"
-                            required
-                        />
-                        {!isLogin && (
-                            <span className="auth-hint">Минимум 6 символов</span>
-                        )}
-                    </div>
-
-                    {!isLogin && (
-                        <div className="auth-field">
-                            <label>Подтверждение пароля</label>
-                            <input
-                                type="password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                placeholder="Повторите пароль"
-                                required
-                            />
-                        </div>
-                    )}
-
-                    {error && <div className="auth-error">{error}</div>}
-
-                    <button type="submit" className="auth-btn" disabled={loading}>
-                        {loading ? '⏳ Загрузка...' : (isLogin ? 'Войти' : 'Зарегистрироваться')}
-                    </button>
-                </form>
-
-                <div className="auth-switch">
-                    <span>
-                        {isLogin ? 'Нет аккаунта?' : 'Уже есть аккаунт?'}
-                    </span>
-                    <button onClick={switchMode} className="auth-switch-btn">
-                        {isLogin ? 'Зарегистрироваться' : 'Войти'}
-                    </button>
+        <div className="concept-container">
+            <div className="concept-card">
+                <div className="concept-step-indicator">
+                    {slides.map((_, i) => (
+                        <div key={i} className={`concept-dot ${i === step ? 'active' : ''}`} />
+                    ))}
                 </div>
+                
+                <h2 className="concept-title">{slides[step].title}</h2>
+                <p className="concept-content">{slides[step].content}</p>
+                
+                <button className="concept-btn" onClick={handleNext}>
+                    {step < slides.length - 1 ? 'Далее →' : 'Выбрать сферу →'}
+                </button>
             </div>
         </div>
     );
 }
 
-// ---------- Основное приложение ----------
+// 2. Choose Sphere - выбор сферы
+function ChooseSphere({ onSelect }) {
+    const [selected, setSelected] = useState(null);
+
+    return (
+        <div className="onboarding-container">
+            <div className="onboarding-card">
+                <h2 className="onboarding-title">Что ты хочешь изменить?</h2>
+                <p className="onboarding-subtitle">Выбери сферу, в которой хочешь развиваться</p>
+                
+                <div className="sphere-grid">
+                    {SPHERES.map(sphere => (
+                        <button
+                            key={sphere.id}
+                            className={`sphere-card ${selected === sphere.id ? 'selected' : ''}`}
+                            onClick={() => setSelected(sphere.id)}
+                        >
+                            <span className="sphere-icon">{sphere.icon}</span>
+                            <span className="sphere-label">{sphere.label}</span>
+                        </button>
+                    ))}
+                </div>
+
+                <button 
+                    className="onboarding-btn" 
+                    onClick={() => selected && onSelect(selected)}
+                    disabled={!selected}
+                >
+                    Далее →
+                </button>
+            </div>
+        </div>
+    );
+}
+
+// 3. Choose Habits - выбор привычек
+function ChooseHabits({ sphereId, onSelect }) {
+    const [selected, setSelected] = useState([]);
+    const sphere = SPHERES.find(s => s.id === sphereId);
+    const habits = sphere ? sphere.habits : [];
+
+    const toggleHabit = (habit) => {
+        setSelected(prev => 
+            prev.includes(habit) 
+                ? prev.filter(h => h !== habit)
+                : [...prev, habit]
+        );
+    };
+
+    return (
+        <div className="onboarding-container">
+            <div className="onboarding-card">
+                <h2 className="onboarding-title">Выбери привычки</h2>
+                <p className="onboarding-subtitle">Выбери привычки, которые хочешь внедрить в сфере {sphere?.label}</p>
+                
+                <div className="habits-grid-onboarding">
+                    {habits.map(habit => (
+                        <button
+                            key={habit}
+                            className={`habit-option ${selected.includes(habit) ? 'selected' : ''}`}
+                            onClick={() => toggleHabit(habit)}
+                        >
+                            <span className="habit-check">{selected.includes(habit) ? '✓' : '○'}</span>
+                            <span>{habit}</span>
+                        </button>
+                    ))}
+                </div>
+
+                <button 
+                    className="onboarding-btn" 
+                    onClick={() => selected.length > 0 && onSelect(selected)}
+                    disabled={selected.length === 0}
+                >
+                    Далее →
+                </button>
+            </div>
+        </div>
+    );
+}// 4. Personal Goal - личная цель
+function PersonalGoal({ onSelect }) {
+    const [goal, setGoal] = useState('');
+
+    return (
+        <div className="onboarding-container">
+            <div className="onboarding-card">
+                <h2 className="onboarding-title">Почему ты хочешь это изменить?</h2>
+                <p className="onboarding-subtitle">Сформулируй свою личную цель</p>
+                
+                <textarea
+                    className="onboarding-textarea"
+                    placeholder="Например: Хочу чувствовать себя энергичнее, стать более дисциплинированной, меньше зависеть от телефона..."
+                    value={goal}
+                    onChange={(e) => setGoal(e.target.value)}
+                    rows="4"
+                />
+
+                <button 
+                    className="onboarding-btn" 
+                    onClick={() => goal.trim() && onSelect(goal.trim())}
+                    disabled={!goal.trim()}
+                >
+                    Далее →
+                </button>
+            </div>
+        </div>
+    );
+}
+
+// 5. Brain Goal - цель мозга
+function ChooseBrainGoal({ onSelect }) {
+    const [selected, setSelected] = useState(null);
+
+    return (
+        <div className="onboarding-container">
+            <div className="onboarding-card">
+                <h2 className="onboarding-title">Выбери цель мозга</h2>
+                <p className="onboarding-subtitle">Что ты хочешь развить в себе?</p>
+                
+                <div className="brain-goal-grid">
+                    {BRAIN_GOALS.map(goal => (
+                        <button
+                            key={goal}
+                            className={`brain-goal-card ${selected === goal ? 'selected' : ''}`}
+                            onClick={() => setSelected(goal)}
+                        >
+                            {goal}
+                        </button>
+                    ))}
+                </div>
+
+                <button 
+                    className="onboarding-btn" 
+                    onClick={() => selected && onSelect(selected)}
+                    disabled={!selected}
+                >
+                    Создать план →
+                </button>
+            </div>
+        </div>
+    );
+}
+
+// 6. Plan Ready - план готов
+function PlanReady({ data, onStart }) {
+    const sphere = SPHERES.find(s => s.id === data.user?.selectedSphere);
+    const habits = data.user?.selectedHabits || [];
+    const goal = data.user?.personalGoal || '';
+    const brainGoal = data.user?.brainGoal || '';
+
+    return (
+        <div className="plan-ready-container">
+            <div className="plan-ready-card">
+                <div className="plan-ready-icon">🎯</div>
+                <h2 className="plan-ready-title">План готов!</h2>
+                <p className="plan-ready-subtitle">
+                    Ты не должен менять всё сразу. Мы будем внедрять привычки шаг за шагом.
+                </p>
+
+                <div className="plan-ready-summary">
+                    <div className="plan-ready-item">
+                        <span className="plan-ready-label">Сфера</span>
+                        <span className="plan-ready-value">{sphere?.label || 'Не выбрана'}</span>
+                    </div>
+                    <div className="plan-ready-item">
+                        <span className="plan-ready-label">Привычки</span>
+                        <span className="plan-ready-value">{habits.join(', ') || 'Не выбраны'}</span>
+                    </div>
+                    <div className="plan-ready-item">
+                        <span className="plan-ready-label">Цель</span>
+                        <span className="plan-ready-value">{goal || 'Не указана'}</span>
+                    </div>
+                    <div className="plan-ready-item">
+                        <span className="plan-ready-label">Цель мозга</span>
+                        <span className="plan-ready-value">{brainGoal || 'Не выбрана'}</span>
+                    </div>
+                </div>
+
+                <button className="plan-ready-btn" onClick={onStart}>
+                    Посмотреть план по неделям →
+                </button>
+            </div>
+        </div>
+    );
+}
+
+// 7. Weeks Plan - план по неделям
+function WeeksPlan({ onStart }) {
+    return (
+        <div className="weeks-plan-container">
+            <div className="weeks-plan-card">
+                <h2 className="weeks-plan-title">📅 Твой план по неделям</h2>
+                <p className="weeks-plan-subtitle">Каждая неделя — это шаг к твоей цели</p>
+
+                {WEEKLY_PLANS.map((week) => (
+                    <div key={week.week} className="week-plan-item">
+                        <div className="week-plan-header">
+                            <span className="week-plan-number">Week {week.week}</span>
+                            <span className="week-plan-title-badge">{week.title}</span>
+                        </div>
+                        <p className="week-plan-goal">{week.goal}</p>
+                        <p className="week-plan-action">→ {week.action}</p>
+                    </div>
+                ))}
+
+                <button className="weeks-plan-btn" onClick={onStart}>
+                    Начать путь 🚀
+                </button>
+            </div>
+        </div>
+    );
+}// ---------- ОСНОВНОЕ ПРИЛОЖЕНИЕ ----------
 function App() {
-    // Состояние
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
     const [data, setData] = useState(null);
     const [page, setPage] = useState('landing');
+    const [onboardingStep, setOnboardingStep] = useState('concept'); // concept, sphere, habits, goal, braingoal, planready, weeks
+    const [tempSphere, setTempSphere] = useState(null);
+    const [tempHabits, setTempHabits] = useState([]);
+    const [tempGoal, setTempGoal] = useState('');
+    const [tempBrainGoal, setTempBrainGoal] = useState('');
 
     // Проверка авторизации при загрузке
     useEffect(() => {
@@ -283,29 +515,26 @@ function App() {
             const userData = AuthSystem.getUserData(user.id);
             if (userData) {
                 setData(userData);
-            } else {
-                // Создаём начальные данные если их нет
-                const initialData = {
-                    habits: [],
-                    journal: [],
-                    goals: [],
-                    reflections: [],
-                    currentDay: 1,
-                    mood: 'good',
-                    user: {
-                        name: user.username,
-                        email: user.email,
-                        startDate: new Date().toISOString()
-                    }
-                };
-                AuthSystem.saveUserData(user.id, initialData);
-                setData(initialData);
+                // Определяем, где находится пользователь в onboarding
+                if (!userData.user?.conceptViewed) {
+                    setOnboardingStep('concept');
+                } else if (!userData.user?.selectedSphere) {
+                    setOnboardingStep('sphere');
+                } else if (!userData.user?.selectedHabits || userData.user.selectedHabits.length === 0) {
+                    setOnboardingStep('habits');
+                } else if (!userData.user?.personalGoal) {
+                    setOnboardingStep('goal');
+                } else if (!userData.user?.brainGoal) {
+                    setOnboardingStep('braingoal');
+                } else if (!userData.user?.planCreated) {
+                    setOnboardingStep('planready');
+                } else if (!userData.user?.journeyStarted) {
+                    setOnboardingStep('weeks');
+                } else {
+                    setOnboardingStep('complete');
+                }
             }
             setIsAuthenticated(true);
-        } else {
-            setIsAuthenticated(false);
-            setCurrentUser(null);
-            setData(null);
         }
     }, []);
 
@@ -316,6 +545,82 @@ function App() {
         }
     }, [data, isAuthenticated, currentUser]);
 
+    // Обработчики onboarding
+    const handleConceptComplete = () => {
+        setData(prev => ({
+            ...prev,
+            user: { ...prev.user, conceptViewed: true }
+        }));
+        setOnboardingStep('sphere');
+    };
+
+    const handleSphereSelect = (sphereId) => {
+        setTempSphere(sphereId);
+        setData(prev => ({
+            ...prev,
+            user: { ...prev.user, selectedSphere: sphereId }
+        }));
+        setOnboardingStep('habits');
+    };
+
+    const handleHabitsSelect = (habits) => {
+        setTempHabits(habits);
+        setData(prev => ({
+            ...prev,
+            user: { ...prev.user, selectedHabits: habits },
+            habits: habits.map(h => ({
+                id: generateId(),
+                name: h,
+                category: data.user?.selectedSphere || 'self',
+                completions: []
+            }))
+        }));
+        setOnboardingStep('goal');
+    };
+
+    const handleGoalSelect = (goal) => {
+        setTempGoal(goal);
+        setData(prev => ({
+            ...prev,
+            user: { ...prev.user, personalGoal: goal }
+        }));
+        setOnboardingStep('braingoal');
+    };
+
+    const handleBrainGoalSelect = (brainGoal) => {
+        setTempBrainGoal(brainGoal);
+        setData(prev => ({
+            ...prev,
+            user: { ...prev.user, brainGoal: brainGoal }
+        }));
+        setOnboardingStep('planready');
+    };
+
+    const handlePlanReady = () => {
+        setData(prev => ({
+            ...prev,
+            user: { ...prev.user, planCreated: true }
+        }));
+        setOnboardingStep('weeks');
+    };
+
+    const handleStartJourney = () => {
+        const startDate = new Date().toISOString();
+        setData(prev => ({
+            ...prev,
+            user: { 
+                ...prev.user, 
+                journeyStartDate: startDate,
+                journeyStarted: true,
+                onboardingCompleted: true
+            },
+            currentDay: 1,
+            week: 1
+        }));
+        setOnboardingStep('complete');
+        setPage('landing');
+    };
+
     // Обработчик входа
     const handleLogin = () => {
         const user = AuthSystem.getCurrentUser();
@@ -324,25 +629,8 @@ function App() {
             const userData = AuthSystem.getUserData(user.id);
             if (userData) {
                 setData(userData);
-            } else {
-                const initialData = {
-                    habits: [],
-                    journal: [],
-                    goals: [],
-                    reflections: [],
-                    currentDay: 1,
-                    mood: 'good',
-                    user: {
-                        name: user.username,
-                        email: user.email,
-                        startDate: new Date().toISOString()
-                    }
-                };
-                AuthSystem.saveUserData(user.id, initialData);
-                setData(initialData);
             }
             setIsAuthenticated(true);
-            setPage('landing');
         }
     };
 
@@ -352,26 +640,50 @@ function App() {
         setIsAuthenticated(false);
         setCurrentUser(null);
         setData(null);
+        setOnboardingStep('concept');
         setPage('landing');
     };
 
-    // Если не авторизован — показываем экран авторизации
+    // Если не авторизован
     if (!isAuthenticated) {
         return <AuthScreen onLogin={handleLogin} />;
     }
 
-    // Если данные ещё не загружены
     if (!data) {
         return <div className="loading-screen">Загрузка...</div>;
     }
 
-    // Обёртка для страниц с данными пользователя
+    // Onboarding flow
+    if (!data.user?.onboardingCompleted) {
+        switch (onboardingStep) {
+            case 'concept':
+                return <ConceptScreen onComplete={handleConceptComplete} />;
+            case 'sphere':
+                return <ChooseSphere onSelect={handleSphereSelect} />;
+            case 'habits':
+                return <ChooseHabits sphereId={data.user?.selectedSphere} onSelect={handleHabitsSelect} />;
+            case 'goal':
+                return <PersonalGoal onSelect={handleGoalSelect} />;
+            case 'braingoal':
+                return <ChooseBrainGoal onSelect={handleBrainGoalSelect} />;
+            case 'planready':
+                return <PlanReady data={data} onStart={handlePlanReady} />;
+            case 'weeks':
+                return <WeeksPlan onStart={handleStartJourney} />;
+            default:
+                return <div>Loading...</div>;
+        }
+    }
+
+    // Основное приложение
     const renderPage = () => {
         const pageProps = {
             data,
             setData,
             page,
-            setPage
+            setPage,
+            onLogout: handleLogout,
+            user: currentUser
         };
 
         switch (page) {
