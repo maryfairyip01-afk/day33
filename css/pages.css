@@ -1,1377 +1,44 @@
 /* ========================================
-   pages.css — Стили для страниц/экранов
+   pages.css — Все стили DAY 33
    ======================================== */
 
-/* ---------- Основная страница ---------- */
-.page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1.5rem 1rem 6rem;
+/* ---------- БАЗОВЫЕ СТИЛИ ---------- */
+* {
+    box-sizing: border-box;
 }
 
-/* ========================================
-   LANDING — Главный экран
-   ======================================== */
-
-.landing-container {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1rem;
-}
-
-.landing-content {
-    text-align: center;
-    max-width: 600px;
-    width: 100%;
-}
-
-/* Заголовок DAY 33 — розовый, шрифт Symphony */
-.landing-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 5rem;
-    font-weight: 600;
-    color: #eccacb;
-    letter-spacing: 0.02em;
-    margin-bottom: 0.5rem;
-    line-height: 1.1;
-}
-
-@media (min-width: 768px) {
-    .landing-title {
-        font-size: 8rem;
-    }
-}
-
-/* Кнопка + индикатор дня */
-.landing-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin: 2rem 0 2.5rem;
-}
-
-@media (min-width: 480px) {
-    .landing-actions {
-        flex-direction: row;
-        justify-content: center;
-        gap: 1.5rem;
-    }
-}
-
-.btn-start-day {
-    background: #3b3b3b;
-    color: #fcfafa;
-    border: none;
-    border-radius: 60px;
-    padding: 0.8rem 2.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: 'Inter', sans-serif;
-}
-
-.btn-start-day:hover {
-    background: #eccacb;
-    color: #3b3b3b;
-    transform: scale(0.97);
-}
-
-.day-indicator {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-family: 'Inter', sans-serif;
-}
-
-.day-indicator .day-label {
-    font-size: 0.9rem;
-    color: #3b3b3b;
-    opacity: 0.6;
-    font-weight: 400;
-}
-
-.day-indicator .day-number {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #3b3b3b;
-    font-family: 'Playfair Display', serif;
-}
-
-/* Аффирмация */
-.affirmation-block {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: rgba(236, 202, 203, 0.15);
-    border-radius: 20px;
-    border: 1px solid rgba(236, 202, 203, 0.3);
-}
-
-.affirmation-label {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: #3b3b3b;
-    opacity: 0.5;
-    margin-bottom: 0.5rem;
-    font-family: 'Inter', sans-serif;
-}
-
-.affirmation-text {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.2rem;
-    color: #3b3b3b;
-    line-height: 1.6;
-}
-
-@media (min-width: 768px) {
-    .affirmation-text {
-        font-size: 1.5rem;
-    }
-}
-
-/* ========================================
-   DASHBOARD — Экран пользователя
-   ======================================== */
-
-.dashboard-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 1rem 0;
-}
-
-/* Заголовок с DAY и Week */
-.dashboard-header {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #ececec;
-}
-
-.day-header {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-}
-
-.day-header .day-label {
-    font-size: 1.2rem;
-    color: #3b3b3b;
-    opacity: 0.6;
-    font-family: 'Inter', sans-serif;
-}
-
-.day-header .day-number {
-    font-size: 3rem;
-    font-weight: 700;
-    color: #3b3b3b;
-    font-family: 'Playfair Display', serif;
-}
-
-.week-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-}
-
-.week-label {
-    font-size: 0.9rem;
-    color: #3b3b3b;
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
-}
-
-.week-progress {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-}
-
-.week-progress-bar {
-    flex: 1;
-    height: 4px;
-    background: #ececec;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.week-progress-fill {
-    height: 100%;
-    background: #eccacb;
-    border-radius: 10px;
-    transition: width 0.5s ease;
-}
-
-.week-progress-text {
-    font-size: 0.8rem;
-    color: #3b3b3b;
-    opacity: 0.6;
-    font-family: 'Inter', sans-serif;
-    white-space: nowrap;
-}
-
-/* Привычки */
-.dashboard-habits {
-    margin-bottom: 2rem;
-}
-
-.habits-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    color: #3b3b3b;
-    margin-bottom: 1rem;
-}
-
-.habits-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.habit-item {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 0.7rem 1rem;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 12px;
-    border: 1px solid #ececec;
-    transition: all 0.2s ease;
-}
-
-.habit-item:hover {
-    background: #f8f4f0;
-}
-
-.habit-check {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: 2px solid #3b3b3b;
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-    font-size: 14px;
-    color: #fcfafa;
-}
-
-.habit-check.done {
-    background: #3b3b3b;
-    border-color: #3b3b3b;
-}
-
-.habit-check.done span {
-    color: #fcfafa;
-}
-
-.habit-name {
-    font-size: 0.95rem;
-    color: #3b3b3b;
-    font-family: 'Inter', sans-serif;
-    flex: 1;
-}
-
-.habit-name.done {
-    text-decoration: line-through;
-    opacity: 0.5;
-}
-
-.habit-category {
-    font-size: 0.7rem;
-    color: #3b3b3b;
-    opacity: 0.5;
-    font-family: 'Inter', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.no-habits {
-    color: #3b3b3b;
-    opacity: 0.5;
-    font-size: 0.9rem;
-    text-align: center;
-    padding: 1rem;
-    font-family: 'Inter', sans-serif;
-}
-
-/* Настроение */
-.dashboard-mood {
-    margin-bottom: 1.5rem;
-}
-
-.mood-title {
-    font-size: 0.85rem;
-    color: #3b3b3b;
-    opacity: 0.6;
-    margin-bottom: 0.5rem;
-    font-family: 'Inter', sans-serif;
-}
-
-.mood-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-}
-
-.mood-btn {
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    border: 1px solid #ececec;
-    background: rgba(255, 255, 255, 0.6);
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.2s ease;
-    font-family: 'Inter', sans-serif;
-    color: #3b3b3b;
-}
-
-.mood-btn:hover {
-    background: #eccacb;
-}
-
-.mood-btn.active {
-    background: #eccacb;
-    border-color: #3b3b3b;
-}
-
-/* Цитата */
-.dashboard-quote {
-    text-align: center;
-    padding: 1rem 0;
-}
-
-.quote-text {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.1rem;
-    color: #3b3b3b;
-    opacity: 0.7;
-}/* ========================================
-   НОВЫЕ СТИЛИ — Карточки, график, навигация
-   ======================================== */
-
-/* ---------- Заголовок страницы ---------- */
-.page-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    color: #3b3b3b;
-    margin-bottom: 1.5rem;
-}
-/* ---------- Карточки и блоки ---------- */
-.habits-container,
-.journal-container,
-.profile-container,
-.progress-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 0 0 5rem 0;
-}
-
-/* ---------- Insight-блок ---------- */
-.habits-insight,
-.journal-insight {
-    background: rgba(236, 202, 203, 0.15);
-    border-radius: 16px;
-    padding: 1rem 1.2rem;
-    border-left: 4px solid #eccacb;
-    margin-bottom: 1.5rem;
-}
-
-.insight-label {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #3b3b3b;
-    opacity: 0.5;
-    font-weight: 600;
-    margin-bottom: 0.2rem;
-}
-
-.insight-text {
-    font-size: 0.9rem;
-    color: #3b3b3b;
-    opacity: 0.8;
-    line-height: 1.5;
-}
-
-/* ---------- Привычки (карточки) ---------- */
-.habits-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    margin-bottom: 1.5rem;
-}
-
-.habit-card-item {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 0.9rem 1.2rem;
-    transition: all 0.2s ease;
-}
-
-.habit-card-item:hover {
-    background: #f8f4f0;
-}
-
-.habit-card-check {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: 2px solid #3b3b3b;
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-    font-size: 14px;
-    color: #fcfafa;
-}
-
-.habit-card-check.done {
-    background: #3b3b3b;
-    border-color: #3b3b3b;
-}
-
-.habit-card-check.done span {
-    color: #fcfafa;
-}
-
-.habit-card-info {
-    flex: 1;
-}
-
-.habit-card-name {
-    font-size: 0.95rem;
-    color: #3b3b3b;
-    display: block;
-}
-
-.habit-card-name.done {
-    text-decoration: line-through;
-    opacity: 0.5;
-}
-
-.habit-card-category {
-    font-size: 0.65rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.habit-card-streak {
-    font-size: 0.8rem;
-    color: #3b3b3b;
-    opacity: 0.6;
-    white-space: nowrap;
-}
-
-.btn-add-habit {
-    width: 100%;
-    padding: 0.9rem;
-    border: 2px dashed #ececec;
-    border-radius: 16px;
-    background: transparent;
-    color: #3b3b3b;
-    opacity: 0.5;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: 'Inter', sans-serif;
-}
-
-.btn-add-habit:hover {
-    border-color: #eccacb;
-    opacity: 1;
-}
-
-/* ---------- Дневник ---------- */
-.journal-entry-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 1.2rem;
-    margin-bottom: 1.5rem;
-}
-
-.journal-input {
-    width: 100%;
-    min-height: 80px;
-    border: none;
-    background: transparent;
-    font-size: 0.95rem;
-    color: #3b3b3b;
-    resize: vertical;
-    font-family: 'Inter', sans-serif;
-    outline: none;
-}
-
-.journal-input::placeholder {
-    color: #3b3b3b;
-    opacity: 0.3;
-}
-
-.btn-save-entry {
-    width: 100%;
-    padding: 0.7rem;
-    border: none;
-    border-radius: 12px;
-    background: #3b3b3b;
-    color: #fcfafa;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-top: 0.5rem;
-    font-family: 'Inter', sans-serif;
-}
-
-.btn-save-entry:hover {
-    background: #eccacb;
-    color: #3b3b3b;
-}
-
-.journal-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-}
-
-.journal-item {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 1rem 1.2rem;
-}
-
-.journal-item-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.4rem;
-}
-
-.journal-item-date {
-    font-size: 0.75rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-}
-
-.journal-item-mood {
-    font-size: 0.75rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-}
-
-.journal-item-content {
-    font-size: 0.9rem;
-    color: #3b3b3b;
-    line-height: 1.5;
-}
-
-.no-entries {
-    text-align: center;
-    color: #3b3b3b;
-    opacity: 0.3;
-    padding: 2rem 0;
-    font-size: 0.9rem;
-}
-
-/* ---------- Прогресс ---------- */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.7rem;
-    margin-bottom: 1.5rem;
-}
-
-.stat-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 1rem 0.5rem;
-    text-align: center;
-}
-
-.stat-value {
-    display: block;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    color: #3b3b3b;
-    font-weight: 600;
-}
-
-.stat-label {
-    font-size: 0.6rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-/* ---------- График ---------- */
-.chart-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 1.2rem;
-    margin-bottom: 1.5rem;
-}
-
-.chart-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: #3b3b3b;
-    margin-bottom: 1rem;
-}
-
-.chart-container {
-    width: 100%;
-    height: 160px;
-}
-
-.chart-svg {
-    width: 100%;
-    height: 100%;
-}
-
-.chart-empty {
-    text-align: center;
-    color: #3b3b3b;
-    opacity: 0.3;
-    padding: 2rem 0;
-    font-size: 0.9rem;
-}
-
-/* ---------- 75-дневный путь ---------- */
-.journey-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 1.2rem;
-    margin-bottom: 1.5rem;
-}
-
-.journey-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: #3b3b3b;
-    margin-bottom: 1rem;
-}
-
-.journey-grid {
-    display: grid;
-    grid-template-columns: repeat(15, 1fr);
-    gap: 0.3rem;
-}
-
-.journey-dot {
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: #ececec;
-    transition: all 0.3s ease;
-}
-
-.journey-dot.completed {
-    background: #3b3b3b;
-}
-
-.journey-dot.current {
-    background: #eccacb;
-    border: 2px solid #eccacb;
-    transform: scale(1.1);
-}
-
-.journey-text {
-    text-align: center;
-    font-size: 0.8rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-    margin-top: 0.8rem;
-}
-
-/* ---------- Цели ---------- */
-.goals-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 1.2rem;
-}
-
-.goals-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: #3b3b3b;
-    margin-bottom: 1rem;
-}
-
-.goal-item {
-    margin-bottom: 0.8rem;
-}
-
-.goal-item:last-child {
-    margin-bottom: 0;
-}
-
-.goal-name {
-    font-size: 0.85rem;
-    color: #3b3b3b;
-    display: block;
-    margin-bottom: 0.2rem;
-}
-
-.goal-progress {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.goal-progress-bar {
-    flex: 1;
-    height: 4px;
-    background: #ececec;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.goal-progress-fill {
-    height: 100%;
-    background: #eccacb;
-    border-radius: 10px;
-    transition: width 0.5s ease;
-}
-
-.goal-percent {
-    font-size: 0.75rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-    white-space: nowrap;
-}
-
-.no-goals {
-    text-align: center;
-    color: #3b3b3b;
-    opacity: 0.3;
-    padding: 1rem 0;
-    font-size: 0.9rem;
-}
-
-/* ---------- Профиль ---------- */
-.profile-user-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.profile-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #eccacb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    font-family: 'Playfair Display', serif;
-    color: #3b3b3b;
-    flex-shrink: 0;
-}
-
-.profile-user-info {
-    flex: 1;
-}
-
-.profile-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    color: #3b3b3b;
-}
-
-.profile-since {
-    font-size: 0.75rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-}
-
-.btn-edit-profile {
-    background: none;
-    border: none;
-    color: #3b3b3b;
-    opacity: 0.4;
-    font-size: 0.75rem;
-    cursor: pointer;
+body {
+    margin: 0;
     padding: 0;
-    font-family: 'Inter', sans-serif;
-    transition: opacity 0.2s ease;
-}
-
-.btn-edit-profile:hover {
-    opacity: 1;
-}
-
-.profile-edit {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-}
-
-.profile-name-input {
-    border: 1px solid #ececec;
-    border-radius: 8px;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.9rem;
-    font-family: 'Inter', sans-serif;
-    color: #3b3b3b;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: #fcfafa;
-    outline: none;
-    flex: 1;
-    min-width: 120px;
-}
-
-.profile-name-input:focus {
-    border-color: #eccacb;
-}
-
-.btn-save-name {
-    padding: 0.3rem 1rem;
-    border: none;
-    border-radius: 20px;
-    background: #3b3b3b;
-    color: #fcfafa;
-    font-size: 0.75rem;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-}
-
-.btn-save-name:hover {
-    background: #eccacb;
     color: #3b3b3b;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-.btn-cancel-edit {
-    padding: 0.3rem 1rem;
-    border: 1px solid #ececec;
-    border-radius: 20px;
-    background: transparent;
-    color: #3b3b3b;
-    font-size: 0.75rem;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
+.app-container {
+    min-height: 100vh;
+    background: #fcfafa;
+    transition: background 0.3s ease;
 }
 
-.profile-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.7rem;
-    margin-bottom: 1.5rem;
-}
-
-.profile-stat-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 1rem 0.5rem;
-    text-align: center;
-}
-
-.profile-stat-value {
-    display: block;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    color: #3b3b3b;
-}
-/* ========================================
-   НИЖНЯЯ НАВИГАЦИЯ
-   ======================================== */
-
-.navbar-bottom {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-top: 1px solid rgba(236, 236, 236, 0.5);
-    padding: 8px 0 12px 0;
-    height: 68px;
-    z-index: 1000;
-    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.04);
-}
-
-.nav-item-bottom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    background: none;
-    border: none;
-    padding: 4px 12px;
-    cursor: pointer;
-    flex: 1;
-    max-width: 72px;
-    transition: all 0.2s ease;
-    position: relative;
-    font-family: 'Inter', sans-serif;
-}
-
-.nav-icon {
-    font-size: 22px;
-    line-height: 1;
-    transition: transform 0.2s ease;
-    opacity: 0.5;
-}
-
-.nav-item-bottom.active .nav-icon {
-    opacity: 1;
-    transform: scale(1.05);
-}
-
-.nav-label {
-    font-size: 10px;
-    font-weight: 500;
-    color: #3b3b3b;
-    opacity: 0.4;
-    letter-spacing: 0.02em;
-    transition: all 0.2s ease;
-}
-
-.nav-item-bottom.active .nav-label {
-    opacity: 1;
-    font-weight: 600;
-    color: #3b3b3b;
-}
-
-/* Активный индикатор (точка под иконкой) */
-.nav-item-bottom.active::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 16px;
-    height: 3px;
-    border-radius: 10px;
-    background: #eccacb;
-    transition: all 0.3s ease;
-}
-
-/* Hover-эффект */
-.nav-item-bottom:hover .nav-icon {
-    opacity: 0.8;
-    transform: scale(1.02);
-}
-
-.nav-item-bottom:hover .nav-label {
-    opacity: 0.7;
-}
-
-.nav-item-bottom.active:hover .nav-icon {
-    opacity: 1;
-    transform: scale(1.05);
-}
-
-.nav-item-bottom.active:hover .nav-label {
-    opacity: 1;
-}
-
-/* Отступ для контента, чтобы не перекрывался навигацией */
-.habits-container,
-.journal-container,
-.profile-container,
-.progress-container,
-.landing-container {
+.app-content {
     padding-bottom: 80px;
 }
 
-/* Адаптивность для маленьких экранов */
-@media (max-width: 380px) {
-    .navbar-bottom {
-        padding: 6px 0 10px 0;
-        height: 62px;
-    }
-    
-    .nav-item-bottom {
-        padding: 2px 6px;
-        max-width: 60px;
-    }
-    
-    .nav-icon {
-        font-size: 19px;
-    }
-    
-    .nav-label {
-        font-size: 9px;
-    }
-}
-
-/* Адаптивность для планшетов */
-@media (min-width: 768px) {
-    .navbar-bottom {
-        display: none;
-    }
-}/* ========================================
-   ПРОФИЛЬ — Стили для страницы Profile
-   ======================================== */
-
-.profile-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 0 16px 80px 16px;
-}
-
-/* Карточка пользователя */
-.profile-user-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.profile-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #eccacb;
+/* ---------- ЗАГРУЗОЧНЫЙ ЭКРАН ---------- */
+.loading-screen {
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
-    font-family: 'Playfair Display', serif;
-    color: #3b3b3b;
-    flex-shrink: 0;
-}
-
-.profile-user-info {
-    flex: 1;
-}
-
-.profile-name {
     font-family: 'Playfair Display', serif;
     font-size: 1.2rem;
     color: #3b3b3b;
-    margin: 0;
-}
-
-.profile-since {
-    font-size: 0.75rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-    margin: 4px 0 0 0;
-}
-
-.btn-edit-profile {
-    background: none;
-    border: none;
-    color: #3b3b3b;
-    opacity: 0.4;
-    font-size: 0.75rem;
-    cursor: pointer;
-    padding: 0;
-    font-family: 'Inter', sans-serif;
-    transition: opacity 0.2s ease;
-    margin-top: 4px;
-}
-
-.btn-edit-profile:hover {
-    opacity: 1;
-}
-
-.profile-edit {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-}
-
-.profile-name-input {
-    border: 1px solid #ececec;
-    border-radius: 8px;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.9rem;
-    font-family: 'Inter', sans-serif;
-    color: #3b3b3b;
-    background: #fcfafa;
-    outline: none;
-    flex: 1;
-    min-width: 120px;
-}
-
-.profile-name-input:focus {
-    border-color: #eccacb;
-}
-
-.btn-save-name {
-    padding: 0.3rem 1rem;
-    border: none;
-    border-radius: 20px;
-    background: #3b3b3b;
-    color: #fcfafa;
-    font-size: 0.75rem;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: all 0.2s ease;
-}
-
-.btn-save-name:hover {
-    background: #eccacb;
-    color: #3b3b3b;
-}
-
-.btn-cancel-edit {
-    padding: 0.3rem 1rem;
-    border: 1px solid #ececec;
-    border-radius: 20px;
-    background: transparent;
-    color: #3b3b3b;
-    font-size: 0.75rem;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: all 0.2s ease;
-}
-
-.btn-cancel-edit:hover {
-    background: #f5f0ed;
-}
-
-/* 4 информационных блока - ГОРИЗОНТАЛЬНО, НЕЖНО-РОЗОВЫЕ */
-.profile-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.7rem;
-    margin-bottom: 1.5rem;
-}
-
-.profile-stat-card {
-    background: #fcf5f4;
-    border: 1px solid rgba(236, 202, 203, 0.3);
-    border-radius: 16px;
-    padding: 1rem 0.5rem;
-    text-align: center;
-    transition: all 0.2s ease;
-}
-
-.profile-stat-card:hover {
-    background: #faf0ee;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(236, 202, 203, 0.15);
-}
-
-.profile-stat-value {
-    display: block;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    color: #3b3b3b;
-    font-weight: 600;
-    line-height: 1.2;
-}
-
-.profile-stat-label {
-    font-size: 0.6rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    display: block;
-    margin-top: 2px;
-}
-
-/* Настройки */
-.profile-settings-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 1.2rem;
-    margin-bottom: 1.5rem;
-}
-
-.profile-settings-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: #3b3b3b;
-    margin-bottom: 1rem;
-}
-
-.profile-setting-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.8rem 0;
-    border-bottom: 1px solid rgba(236, 202, 203, 0.2);
-}
-
-.profile-setting-item:last-child {
-    border-bottom: none;
-}
-
-.profile-setting-name {
-    font-size: 0.9rem;
-    color: #3b3b3b;
-    font-weight: 500;
-    margin: 0;
-}
-
-.profile-setting-desc {
-    font-size: 0.7rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-    margin: 2px 0 0 0;
-}
-
-.profile-toggle {
-    width: 44px;
-    height: 24px;
-    border-radius: 12px;
-    background: #ececec;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-}
-
-.profile-toggle.active {
-    background: #3b3b3b;
-}
-
-.profile-toggle.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.profile-toggle-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: white;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    transition: all 0.3s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.profile-toggle.active .profile-toggle-thumb {
-    left: 22px;
-}
-
-.profile-setting-value {
-    font-size: 0.9rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-}
-
-/* Опасная зона */
-.profile-danger-card {
-    background: rgba(255, 245, 245, 0.6);
-    border: 1px solid rgba(236, 202, 203, 0.3);
-    border-radius: 16px;
-    padding: 1.2rem;
-    margin-bottom: 1.5rem;
-}
-
-.profile-danger-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: #3b3b3b;
-    margin-bottom: 0.5rem;
-}
-
-.profile-danger-desc {
-    font-size: 0.8rem;
-    color: #3b3b3b;
     opacity: 0.5;
-    line-height: 1.5;
-    margin-bottom: 1rem;
 }
 
-.btn-reset-progress {
-    width: 100%;
-    padding: 0.7rem;
-    border: 1px solid #eccacb;
-    border-radius: 12px;
-    background: transparent;
-    color: #3b3b3b;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: 'Inter', sans-serif;
-}
-
-.btn-reset-progress:hover {
-    background: #eccacb;
-    color: #fcfafa;
-}
-
-/* Адаптивность для маленьких экранов */
-@media (max-width: 480px) {
-    .profile-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
-    }
-    
-    .profile-stat-card {
-        padding: 0.8rem 0.3rem;
-    }
-    
-    .profile-stat-value {
-        font-size: 1.3rem;
-    }
-    
-    .profile-stat-label {
-        font-size: 0.55rem;
-    }
-}
-
-@media (max-width: 380px) {
-    .profile-stat-value {
-        font-size: 1.1rem;
-    }
-    
-    .profile-user-card {
-        padding: 1rem;
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .profile-avatar {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-    }
-}
-/* ========================================
-   АВТОРИЗАЦИЯ — Стили для входа/регистрации
-   ======================================== */
-
+/* ---------- АВТОРИЗАЦИЯ ---------- */
 .auth-container {
     min-height: 100vh;
     display: flex;
@@ -1520,246 +187,6 @@
     opacity: 1;
     color: #eccacb;
 }
-
-/* Стили для кнопки выхода */
-.btn-logout {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.4rem 1rem;
-    border: 1px solid rgba(231, 76, 60, 0.2);
-    border-radius: 20px;
-    background: transparent;
-    color: #e74c3c;
-    font-size: 0.75rem;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: all 0.2s ease;
-}
-
-.btn-logout:hover {
-    background: #e74c3c;
-    color: #fcfafa;
-    border-color: #e74c3c;
-}
-
-/* Email в профиле */
-.profile-email {
-    font-size: 0.75rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-    margin: 2px 0 0 0;
-}
-
-/* Загрузочный экран */
-.loading-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    color: #3b3b3b;
-    opacity: 0.5;
-}/* ========================================
-   ПРОФИЛЬ — Новые стили для основных блоков
-   ======================================== */
-
-/* Основные 4 блока: Day, Week, Brain Goal, Success */
-.profile-main-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.7rem;
-    margin-bottom: 1.5rem;
-}
-
-.profile-main-card {
-    background: #fcf5f4;
-    border: 1px solid rgba(236, 202, 203, 0.3);
-    border-radius: 16px;
-    padding: 1rem 0.5rem;
-    text-align: center;
-    transition: all 0.2s ease;
-}
-
-.profile-main-card:hover {
-    background: #faf0ee;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(236, 202, 203, 0.15);
-}
-
-.profile-main-icon {
-    display: block;
-    font-size: 1.5rem;
-    margin-bottom: 0.3rem;
-}
-
-.profile-main-value {
-    display: block;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    color: #3b3b3b;
-    font-weight: 600;
-}
-
-.profile-main-label {
-    display: block;
-    font-size: 0.6rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-top: 2px;
-}
-
-/* Карточка путешествия */
-.profile-journey-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 1.2rem;
-    margin-bottom: 1.5rem;
-}
-
-.profile-journey-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: #3b3b3b;
-    margin-bottom: 1rem;
-}
-
-.profile-journey-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.profile-journey-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.3rem 0;
-    border-bottom: 1px solid rgba(236, 202, 203, 0.1);
-}
-
-.profile-journey-label {
-    font-size: 0.8rem;
-    color: #3b3b3b;
-    opacity: 0.5;
-}
-
-.profile-journey-value {
-    font-size: 0.8rem;
-    color: #3b3b3b;
-    font-weight: 500;
-}
-
-.profile-journey-progress {
-    margin-top: 0.5rem;
-}
-
-.profile-journey-bar {
-    width: 100%;
-    height: 6px;
-    background: #ececec;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.profile-journey-fill {
-    height: 100%;
-    background: #eccacb;
-    border-radius: 10px;
-    transition: width 0.5s ease;
-}
-
-.profile-journey-days {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.6rem;
-    color: #3b3b3b;
-    opacity: 0.3;
-    margin-top: 0.2rem;
-}
-
-.profile-journey-complete {
-    background: rgba(236, 202, 203, 0.2);
-    border-radius: 12px;
-    padding: 0.8rem;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #3b3b3b;
-    margin-top: 0.5rem;
-}
-
-/* Статистика */
-.profile-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.7rem;
-    margin-bottom: 1.5rem;
-}
-
-.profile-stat-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 1rem 0.5rem;
-    text-align: center;
-}
-
-.profile-stat-value {
-    display: block;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: #3b3b3b;
-    font-weight: 600;
-}
-
-.profile-stat-label {
-    display: block;
-    font-size: 0.55rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-/* Адаптивность для телефонов */
-@media (max-width: 480px) {
-    .profile-main-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
-    }
-    
-    .profile-main-card {
-        padding: 0.8rem 0.3rem;
-    }
-    
-    .profile-main-value {
-        font-size: 1.2rem;
-    }
-    
-    .profile-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
-    }
-    
-    .profile-stat-value {
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 380px) {
-    .profile-main-value {
-        font-size: 1rem;
-    }
-    
-    .profile-main-icon {
-        font-size: 1.2rem;
-    }
-}/* ========================================
-   ONBOARDING — Стили для всех этапов
-   ======================================== */
 
 /* ---------- CONCEPT SCREEN ---------- */
 .concept-container {
@@ -1930,7 +357,9 @@
     opacity: 0.3;
     cursor: not-allowed;
     transform: none;
-}/* ---------- SPHERE GRID ---------- */
+}
+
+/* ---------- SPHERE GRID ---------- */
 .sphere-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2019,6 +448,124 @@
 .habit-option.selected .habit-check {
     opacity: 1;
     color: #eccacb;
+}
+
+/* ---------- CUSTOM HABIT ---------- */
+.custom-habit-btn {
+    width: 100%;
+    padding: 12px;
+    border: 2px dashed #ececec;
+    border-radius: 12px;
+    background: transparent;
+    color: #3b3b3b;
+    opacity: 0.6;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+    margin-top: 8px;
+}
+
+.custom-habit-btn:hover {
+    border-color: #eccacb;
+    opacity: 1;
+}
+
+.custom-habit-form {
+    margin-top: 12px;
+    padding: 16px;
+    background: rgba(236, 202, 203, 0.05);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.custom-habit-input,
+.custom-habit-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    background: #fcfafa;
+    color: #3b3b3b;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.custom-habit-input:focus,
+.custom-habit-textarea:focus {
+    border-color: #eccacb;
+}
+
+.custom-habit-add {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #3b3b3b;
+    color: #fcfafa;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.custom-habit-add:hover:not(:disabled) {
+    background: #eccacb;
+    color: #3b3b3b;
+}
+
+.custom-habit-add:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.selected-habits-summary {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: rgba(236, 202, 203, 0.05);
+    border-radius: 10px;
+}
+
+.selected-habits-label {
+    font-size: 0.7rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    margin: 0 0 6px 0;
+}
+
+.selected-habits-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.selected-habit-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: #eccacb;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #3b3b3b;
+}
+
+.selected-habit-remove {
+    background: none;
+    border: none;
+    color: #3b3b3b;
+    opacity: 0.5;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0 2px;
+}
+
+.selected-habit-remove:hover {
+    opacity: 1;
 }
 
 /* ---------- BRAIN GOAL GRID ---------- */
@@ -2149,7 +696,9 @@
     color: #3b3b3b;
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(236, 202, 203, 0.2);
-}/* ---------- WEEKS PLAN ---------- */
+}
+
+/* ---------- WEEKS PLAN ---------- */
 .weeks-plan-container {
     min-height: 100vh;
     display: flex;
@@ -2270,242 +819,7 @@
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-/* ---------- АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ ---------- */
-@media (max-width: 480px) {
-    .concept-card,
-    .onboarding-card,
-    .plan-ready-card,
-    .weeks-plan-card {
-        padding: 1.5rem 1rem;
-    }
-
-    .concept-title,
-    .plan-ready-title,
-    .weeks-plan-title {
-        font-size: 1.4rem;
-    }
-
-    .onboarding-title {
-        font-size: 1.3rem;
-    }
-
-    .sphere-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
-    }
-
-    .sphere-card {
-        padding: 0.8rem 0.5rem;
-    }
-
-    .sphere-icon {
-        font-size: 1.6rem;
-    }
-
-    .sphere-label {
-        font-size: 0.7rem;
-    }
-
-    .brain-goal-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
-    }
-
-    .brain-goal-card {
-        font-size: 0.8rem;
-        padding: 0.6rem;
-    }
-
-    .habits-grid-onboarding {
-        gap: 0.4rem;
-    }
-
-    .habit-option {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.85rem;
-    }
-
-    .plan-ready-item {
-        flex-direction: column;
-        gap: 0.2rem;
-    }
-
-    .plan-ready-value {
-        max-width: 100%;
-        text-align: left;
-    }
-
-    .week-plan-item {
-        padding: 0.8rem;
-    }
-
-    .week-plan-goal {
-        font-size: 0.8rem;
-    }
-
-    .week-plan-action {
-        font-size: 0.75rem;
-    }
-
-    .concept-content {
-        font-size: 0.9rem;
-    }
-
-    .onboarding-textarea {
-        min-height: 80px;
-        font-size: 0.85rem;
-    }
-
-    .concept-btn,
-    .onboarding-btn,
-    .plan-ready-btn,
-    .weeks-plan-btn {
-        padding: 0.8rem;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 380px) {
-    .sphere-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.4rem;
-    }
-
-    .sphere-card {
-        padding: 0.6rem 0.3rem;
-    }
-
-    .sphere-icon {
-        font-size: 1.4rem;
-    }
-
-    .sphere-label {
-        font-size: 0.65rem;
-    }
-
-    .brain-goal-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.4rem;
-    }
-
-    .brain-goal-card {
-        font-size: 0.7rem;
-        padding: 0.5rem;
-    }
-
-    .concept-title,
-    .plan-ready-title,
-    .weeks-plan-title {
-        font-size: 1.2rem;
-    }
-
-    .onboarding-title {
-        font-size: 1.1rem;
-    }
-
-    .plan-ready-icon {
-        font-size: 2.5rem;
-    }
-}/* ========================================
-   НОВЫЕ СТИЛИ — Night Mode, Avatar, Custom Habit
-   ======================================== */
-
-/* ---------- NIGHT MODE ---------- */
-.dark-mode {
-    background-color: #1a1a1a;
-    color: #e8e8e8;
-}
-
-.dark-mode .auth-card,
-.dark-mode .concept-card,
-.dark-mode .onboarding-card,
-.dark-mode .plan-ready-card,
-.dark-mode .weeks-plan-card {
-    background: rgba(30, 30, 30, 0.95);
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-.dark-mode .auth-title,
-.dark-mode .concept-title,
-.dark-mode .onboarding-title,
-.dark-mode .plan-ready-title,
-.dark-mode .weeks-plan-title,
-.dark-mode .page-title {
-    color: #e8e8e8;
-}
-
-.dark-mode .auth-subtitle,
-.dark-mode .concept-content,
-.dark-mode .onboarding-subtitle,
-.dark-mode .plan-ready-subtitle,
-.dark-mode .weeks-plan-subtitle {
-    color: #a0a0a0;
-}
-
-.dark-mode .auth-field input,
-.dark-mode .onboarding-textarea,
-.dark-mode .custom-habit-input,
-.dark-mode .custom-habit-textarea {
-    background: #2a2a2a;
-    border-color: rgba(255, 255, 255, 0.1);
-    color: #e8e8e8;
-}
-
-.dark-mode .auth-field input::placeholder,
-.dark-mode .onboarding-textarea::placeholder {
-    color: #666;
-}
-
-.dark-mode .sphere-card,
-.dark-mode .habit-option,
-.dark-mode .brain-goal-card {
-    border-color: rgba(255, 255, 255, 0.1);
-    color: #e8e8e8;
-}
-
-.dark-mode .sphere-card:hover,
-.dark-mode .habit-option:hover,
-.dark-mode .brain-goal-card:hover {
-    border-color: #eccacb;
-    background: rgba(236, 202, 203, 0.05);
-}
-
-.dark-mode .sphere-card.selected,
-.dark-mode .habit-option.selected,
-.dark-mode .brain-goal-card.selected {
-    border-color: #eccacb;
-    background: rgba(236, 202, 203, 0.1);
-}
-
-.dark-mode .plan-ready-summary {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.dark-mode .plan-ready-item {
-    border-color: rgba(255, 255, 255, 0.05);
-}
-
-.dark-mode .plan-ready-label {
-    color: #a0a0a0;
-}
-
-.dark-mode .plan-ready-value {
-    color: #e8e8e8;
-}
-
-.dark-mode .week-plan-item {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.dark-mode .week-plan-goal {
-    color: #a0a0a0;
-}
-
-.dark-mode .week-plan-action {
-    color: #888;
-}
-
-/* ---------- LANDING VERTICAL ---------- */
+/* ---------- HOME (LANDING) ---------- */
 .landing-container {
     max-width: 420px;
     margin: 0 auto;
@@ -2522,13 +836,12 @@
 
 .landing-title {
     font-family: 'Playfair Display', serif;
-    font-size: 2.4rem;
-    color: #3b3b3b;
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #eccacb;
     margin: 0;
-}
-
-.dark-mode .landing-title {
-    color: #e8e8e8;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 20px rgba(236, 202, 203, 0.2);
 }
 
 .landing-subtitle {
@@ -2536,10 +849,6 @@
     color: #3b3b3b;
     opacity: 0.5;
     margin: 4px 0 0 0;
-}
-
-.dark-mode .landing-subtitle {
-    color: #a0a0a0;
 }
 
 .landing-day-card {
@@ -2552,21 +861,12 @@
     gap: 16px;
 }
 
-.dark-mode .landing-day-card {
-    background: rgba(30, 30, 30, 0.8);
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
 .landing-day-number {
     font-family: 'Playfair Display', serif;
     font-size: 2.8rem;
     font-weight: 600;
     color: #3b3b3b;
     line-height: 1;
-}
-
-.dark-mode .landing-day-number {
-    color: #e8e8e8;
 }
 
 .landing-day-info {
@@ -2582,49 +882,32 @@
     letter-spacing: 0.05em;
 }
 
-.dark-mode .landing-day-label {
-    color: #a0a0a0;
-}
-
 .landing-day-week {
     font-size: 0.9rem;
     color: #3b3b3b;
     opacity: 0.6;
 }
 
-.dark-mode .landing-day-week {
-    color: #a0a0a0;
-}
-
 .landing-start-btn {
-    width: 100%;
-    padding: 16px;
+    width: auto;
+    padding: 10px 28px;
     border: none;
-    border-radius: 16px;
-    background: #3b3b3b;
-    color: #fcfafa;
-    font-size: 1.1rem;
+    border-radius: 30px;
+    background: #eccacb;
+    color: #3b3b3b;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     font-family: 'Inter', sans-serif;
+    align-self: center;
+    box-shadow: 0 4px 16px rgba(236, 202, 203, 0.3);
 }
 
 .landing-start-btn:hover {
-    background: #eccacb;
-    color: #3b3b3b;
+    background: #dfb8b9;
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(236, 202, 203, 0.2);
-}
-
-.dark-mode .landing-start-btn {
-    background: #3b3b3b;
-    color: #e8e8e8;
-}
-
-.dark-mode .landing-start-btn:hover {
-    background: #eccacb;
-    color: #3b3b3b;
+    box-shadow: 0 6px 24px rgba(236, 202, 203, 0.4);
 }
 
 .landing-affirmation {
@@ -2633,10 +916,6 @@
     padding: 16px 20px;
     text-align: center;
     border-left: 4px solid #eccacb;
-}
-
-.dark-mode .landing-affirmation {
-    background: rgba(236, 202, 203, 0.05);
 }
 
 .affirmation-icon {
@@ -2652,67 +931,6 @@
     margin: 4px 0 0 0;
 }
 
-.dark-mode .affirmation-text {
-    color: #a0a0a0;
-}
-
-.landing-progress {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ececec;
-    border-radius: 16px;
-    padding: 16px 20px;
-}
-
-.dark-mode .landing-progress {
-    background: rgba(30, 30, 30, 0.8);
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-.landing-progress-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    color: #3b3b3b;
-    opacity: 0.6;
-    margin-bottom: 8px;
-}
-
-.dark-mode .landing-progress-header {
-    color: #a0a0a0;
-}
-
-.landing-progress-bar {
-    width: 100%;
-    height: 6px;
-    background: #ececec;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.dark-mode .landing-progress-bar {
-    background: #2a2a2a;
-}
-
-.landing-progress-fill {
-    height: 100%;
-    background: #eccacb;
-    border-radius: 10px;
-    transition: width 0.5s ease;
-}
-
-.landing-progress-days {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.6rem;
-    color: #3b3b3b;
-    opacity: 0.3;
-    margin-top: 4px;
-}
-
-.dark-mode .landing-progress-days {
-    color: #888;
-}
-
 .landing-start-date {
     display: flex;
     justify-content: space-between;
@@ -2722,71 +940,14 @@
     font-size: 0.8rem;
 }
 
-.dark-mode .landing-start-date {
-    background: rgba(30, 30, 30, 0.5);
-}
-
 .landing-start-date-label {
     color: #3b3b3b;
     opacity: 0.4;
 }
 
-.dark-mode .landing-start-date-label {
-    color: #a0a0a0;
-}
-
 .landing-start-date-value {
     color: #3b3b3b;
     font-weight: 500;
-}
-
-.dark-mode .landing-start-date-value {
-    color: #e8e8e8;
-}
-
-.landing-success-card {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
-    background: rgba(236, 202, 203, 0.1);
-    border-radius: 16px;
-}
-
-.dark-mode .landing-success-card {
-    background: rgba(236, 202, 203, 0.05);
-}
-
-.landing-success-icon {
-    font-size: 1.8rem;
-}
-
-.landing-success-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.landing-success-label {
-    font-size: 0.7rem;
-    color: #3b3b3b;
-    opacity: 0.4;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.dark-mode .landing-success-label {
-    color: #a0a0a0;
-}
-
-.landing-success-value {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: #3b3b3b;
-}
-
-.dark-mode .landing-success-value {
-    color: #e8e8e8;
 }
 
 .landing-complete-badge {
@@ -2798,14 +959,48 @@
     color: #3b3b3b;
 }
 
-.dark-mode .landing-complete-badge {
-    color: #e8e8e8;
+/* ---------- ПРОФИЛЬ ---------- */
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 16px 80px 16px;
 }
 
-/* ---------- PROFILE AVATAR ---------- */
+.page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: #3b3b3b;
+    margin-bottom: 1.5rem;
+}
+
+/* Карточка пользователя */
+.profile-user-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
 .profile-avatar-wrapper {
     position: relative;
     flex-shrink: 0;
+}
+
+.profile-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #eccacb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-family: 'Playfair Display', serif;
+    color: #3b3b3b;
 }
 
 .profile-avatar-img {
@@ -2839,15 +1034,110 @@
     transform: scale(1.1);
 }
 
-.dark-mode .profile-avatar-change {
-    border-color: #1a1a1a;
-}
-
 .profile-avatar-input {
     display: none;
 }
 
-/* ---------- PROFILE MAIN GRID (3 blocks) ---------- */
+.profile-user-info {
+    flex: 1;
+}
+
+.profile-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: #3b3b3b;
+    margin: 0;
+}
+
+.profile-email {
+    font-size: 0.75rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    margin: 2px 0 0 0;
+}
+
+.profile-since {
+    font-size: 0.75rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    margin: 4px 0 0 0;
+}
+
+.btn-edit-profile {
+    background: none;
+    border: none;
+    color: #3b3b3b;
+    opacity: 0.4;
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    transition: opacity 0.2s ease;
+    margin-top: 4px;
+}
+
+.btn-edit-profile:hover {
+    opacity: 1;
+}
+
+.profile-edit {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.profile-name-input {
+    border: 1px solid #ececec;
+    border-radius: 8px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    color: #3b3b3b;
+    background: #fcfafa;
+    outline: none;
+    flex: 1;
+    min-width: 120px;
+}
+
+.profile-name-input:focus {
+    border-color: #eccacb;
+}
+
+.btn-save-name {
+    padding: 0.3rem 1rem;
+    border: none;
+    border-radius: 20px;
+    background: #3b3b3b;
+    color: #fcfafa;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.btn-save-name:hover {
+    background: #eccacb;
+    color: #3b3b3b;
+}
+
+.btn-cancel-edit {
+    padding: 0.3rem 1rem;
+    border: 1px solid #ececec;
+    border-radius: 20px;
+    background: transparent;
+    color: #3b3b3b;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel-edit:hover {
+    background: #f5f0ed;
+}
+
+/* Основные блоки профиля (3 блока) */
 .profile-main-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -2864,19 +1154,10 @@
     transition: all 0.2s ease;
 }
 
-.dark-mode .profile-main-card {
-    background: rgba(30, 30, 30, 0.8);
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
 .profile-main-card:hover {
     background: #faf0ee;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(236, 202, 203, 0.15);
-}
-
-.dark-mode .profile-main-card:hover {
-    background: rgba(50, 50, 50, 0.8);
 }
 
 .profile-main-icon {
@@ -2893,10 +1174,6 @@
     font-weight: 600;
 }
 
-.dark-mode .profile-main-value {
-    color: #e8e8e8;
-}
-
 .profile-main-label {
     display: block;
     font-size: 0.6rem;
@@ -2907,11 +1184,88 @@
     margin-top: 2px;
 }
 
-.dark-mode .profile-main-label {
-    color: #a0a0a0;
+/* Статистика */
+.profile-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
 }
 
-/* ---------- THEME TOGGLE ---------- */
+.profile-stat-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1rem 0.5rem;
+    text-align: center;
+}
+
+.profile-stat-value {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: #3b3b3b;
+    font-weight: 600;
+}
+
+.profile-stat-label {
+    display: block;
+    font-size: 0.55rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Настройки */
+.profile-settings-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-settings-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: #3b3b3b;
+    margin-bottom: 1rem;
+}
+
+.profile-setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(236, 202, 203, 0.2);
+}
+
+.profile-setting-item:last-child {
+    border-bottom: none;
+}
+
+.profile-setting-name {
+    font-size: 0.9rem;
+    color: #3b3b3b;
+    font-weight: 500;
+    margin: 0;
+}
+
+.profile-setting-desc {
+    font-size: 0.7rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    margin: 2px 0 0 0;
+}
+
+.profile-setting-value {
+    font-size: 0.9rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+}
+
+/* Переключатель темы */
 .profile-theme-toggle {
     width: 48px;
     height: 26px;
@@ -2946,155 +1300,606 @@
     background: #eccacb;
 }
 
-/* ---------- CUSTOM HABIT ---------- */
-.custom-habit-btn {
+/* Переключатель (обычный) */
+.profile-toggle {
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    background: #ececec;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.profile-toggle.active {
+    background: #3b3b3b;
+}
+
+.profile-toggle.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.profile-toggle-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.profile-toggle.active .profile-toggle-thumb {
+    left: 22px;
+}
+
+/* Опасная зона */
+.profile-danger-card {
+    background: rgba(255, 245, 245, 0.6);
+    border: 1px solid rgba(236, 202, 203, 0.3);
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-danger-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: #3b3b3b;
+    margin-bottom: 0.5rem;
+}
+
+.profile-danger-desc {
+    font-size: 0.8rem;
+    color: #3b3b3b;
+    opacity: 0.5;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.btn-reset-progress {
     width: 100%;
-    padding: 12px;
-    border: 2px dashed #ececec;
+    padding: 0.7rem;
+    border: 1px solid #eccacb;
     border-radius: 12px;
     background: transparent;
     color: #3b3b3b;
-    opacity: 0.6;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.2s ease;
     font-family: 'Inter', sans-serif;
-    margin-top: 8px;
 }
 
-.custom-habit-btn:hover {
+.btn-reset-progress:hover {
+    background: #eccacb;
+    color: #fcfafa;
+}
+
+/* Кнопка выхода */
+.btn-logout {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(231, 76, 60, 0.2);
+    border-radius: 20px;
+    background: transparent;
+    color: #e74c3c;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+    background: #e74c3c;
+    color: #fcfafa;
+    border-color: #e74c3c;
+}
+
+/* ---------- НИЖНЯЯ НАВИГАЦИЯ ---------- */
+.navbar-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(236, 236, 236, 0.5);
+    padding: 8px 0 12px 0;
+    height: 68px;
+    z-index: 1000;
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.04);
+}
+
+.nav-item-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    background: none;
+    border: none;
+    padding: 4px 12px;
+    cursor: pointer;
+    flex: 1;
+    max-width: 72px;
+    transition: all 0.2s ease;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+}
+
+.nav-icon {
+    font-size: 22px;
+    line-height: 1;
+    transition: transform 0.2s ease;
+    opacity: 0.5;
+}
+
+.nav-item-bottom.active .nav-icon {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.nav-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: #3b3b3b;
+    opacity: 0.4;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+}
+
+.nav-item-bottom.active .nav-label {
+    opacity: 1;
+    font-weight: 600;
+    color: #3b3b3b;
+}
+
+.nav-item-bottom.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 3px;
+    border-radius: 10px;
+    background: #eccacb;
+    transition: all 0.3s ease;
+}
+
+.nav-item-bottom:hover .nav-icon {
+    opacity: 0.8;
+    transform: scale(1.02);
+}
+
+.nav-item-bottom:hover .nav-label {
+    opacity: 0.7;
+}
+
+.nav-item-bottom.active:hover .nav-icon {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.nav-item-bottom.active:hover .nav-label {
+    opacity: 1;
+}
+
+/* ---------- СТИЛИ ДЛЯ ПРИВЫЧЕК ---------- */
+.habits-container,
+.journal-container,
+.profile-container,
+.progress-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 16px 80px 16px;
+}
+
+.habits-insight,
+.journal-insight {
+    background: rgba(236, 202, 203, 0.15);
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
+    border-left: 4px solid #eccacb;
+    margin-bottom: 1.5rem;
+}
+
+.insight-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #3b3b3b;
+    opacity: 0.5;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.insight-text {
+    font-size: 0.9rem;
+    color: #3b3b3b;
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+.habits-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+}
+
+.habit-card-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 0.9rem 1.2rem;
+    transition: all 0.2s ease;
+}
+
+.habit-card-item:hover {
+    background: #f8f4f0;
+}
+
+.habit-card-check {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #3b3b3b;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    font-size: 14px;
+    color: #fcfafa;
+}
+
+.habit-card-check.done {
+    background: #3b3b3b;
+    border-color: #3b3b3b;
+}
+
+.habit-card-check.done span {
+    color: #fcfafa;
+}
+
+.habit-card-info {
+    flex: 1;
+}
+
+.habit-card-name {
+    font-size: 0.95rem;
+    color: #3b3b3b;
+    display: block;
+}
+
+.habit-card-name.done {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.habit-card-category {
+    font-size: 0.65rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.habit-card-streak {
+    font-size: 0.8rem;
+    color: #3b3b3b;
+    opacity: 0.6;
+    white-space: nowrap;
+}
+
+.btn-add-habit {
+    width: 100%;
+    padding: 0.9rem;
+    border: 2px dashed #ececec;
+    border-radius: 16px;
+    background: transparent;
+    color: #3b3b3b;
+    opacity: 0.5;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-add-habit:hover {
     border-color: #eccacb;
     opacity: 1;
 }
 
-.dark-mode .custom-habit-btn {
-    border-color: rgba(255, 255, 255, 0.1);
-    color: #e8e8e8;
-}
-
-.dark-mode .custom-habit-btn:hover {
-    border-color: #eccacb;
-}
-
-.custom-habit-form {
-    margin-top: 12px;
-    padding: 16px;
-    background: rgba(236, 202, 203, 0.05);
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.dark-mode .custom-habit-form {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.custom-habit-input,
-.custom-habit-textarea {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ececec;
-    border-radius: 10px;
-    font-size: 0.9rem;
-    font-family: 'Inter', sans-serif;
-    background: #fcfafa;
+.no-habits {
+    text-align: center;
     color: #3b3b3b;
-    outline: none;
-    transition: all 0.2s ease;
+    opacity: 0.3;
+    padding: 2rem 0;
+    font-size: 0.9rem;
 }
 
-.dark-mode .custom-habit-input,
-.dark-mode .custom-habit-textarea {
-    background: #2a2a2a;
-    border-color: rgba(255, 255, 255, 0.1);
-    color: #e8e8e8;
+/* ---------- ДНЕВНИК ---------- */
+.journal-entry-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
 }
 
-.custom-habit-input:focus,
-.custom-habit-textarea:focus {
-    border-color: #eccacb;
-}
-
-.custom-habit-add {
-    padding: 10px;
+.journal-input {
+    width: 100%;
+    min-height: 80px;
     border: none;
-    border-radius: 10px;
+    background: transparent;
+    font-size: 0.95rem;
+    color: #3b3b3b;
+    resize: vertical;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+}
+
+.journal-input::placeholder {
+    color: #3b3b3b;
+    opacity: 0.3;
+}
+
+.btn-save-entry {
+    width: 100%;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 12px;
     background: #3b3b3b;
     color: #fcfafa;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    margin-top: 0.5rem;
     font-family: 'Inter', sans-serif;
 }
 
-.custom-habit-add:hover:not(:disabled) {
+.btn-save-entry:hover {
     background: #eccacb;
     color: #3b3b3b;
 }
 
-.custom-habit-add:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
+.journal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
 }
 
-.selected-habits-summary {
-    margin-top: 12px;
-    padding: 10px 12px;
-    background: rgba(236, 202, 203, 0.05);
-    border-radius: 10px;
+.journal-item {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
 }
 
-.selected-habits-label {
-    font-size: 0.7rem;
+.journal-item-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+}
+
+.journal-item-date {
+    font-size: 0.75rem;
     color: #3b3b3b;
     opacity: 0.4;
-    margin: 0 0 6px 0;
 }
 
-.dark-mode .selected-habits-label {
-    color: #a0a0a0;
+.journal-item-mood {
+    font-size: 0.75rem;
+    color: #3b3b3b;
+    opacity: 0.4;
 }
 
-.selected-habits-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+.journal-item-content {
+    font-size: 0.9rem;
+    color: #3b3b3b;
+    line-height: 1.5;
 }
 
-.selected-habit-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 10px;
+.no-entries {
+    text-align: center;
+    color: #3b3b3b;
+    opacity: 0.3;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+}
+
+/* ---------- ПРОГРЕСС ---------- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1rem 0.5rem;
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: #3b3b3b;
+    font-weight: 600;
+}
+
+.stat-label {
+    font-size: 0.6rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.chart-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.chart-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: #3b3b3b;
+    margin-bottom: 1rem;
+}
+
+.chart-container {
+    width: 100%;
+    height: 160px;
+}
+
+.chart-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.chart-empty {
+    text-align: center;
+    color: #3b3b3b;
+    opacity: 0.3;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+}
+
+.journey-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.journey-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: #3b3b3b;
+    margin-bottom: 1rem;
+}
+
+.journey-grid {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    gap: 0.3rem;
+}
+
+.journey-dot {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #ececec;
+    transition: all 0.3s ease;
+}
+
+.journey-dot.completed {
+    background: #3b3b3b;
+}
+
+.journey-dot.current {
     background: #eccacb;
-    border-radius: 20px;
+    transform: scale(1.1);
+    box-shadow: 0 0 0 2px #eccacb;
+}
+
+.journey-text {
+    text-align: center;
     font-size: 0.8rem;
     color: #3b3b3b;
+    opacity: 0.4;
+    margin-top: 0.8rem;
 }
 
-.dark-mode .selected-habit-tag {
-    background: rgba(236, 202, 203, 0.2);
-    color: #e8e8e8;
+.goals-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1.2rem;
 }
 
-.selected-habit-remove {
-    background: none;
-    border: none;
-    color: #3b3b3b;
-    opacity: 0.5;
-    cursor: pointer;
+.goals-title {
+    font-family: 'Playfair Display', serif;
     font-size: 1rem;
-    padding: 0 2px;
+    color: #3b3b3b;
+    margin-bottom: 1rem;
 }
 
-.dark-mode .selected-habit-remove {
-    color: #e8e8e8;
+.goal-item {
+    margin-bottom: 0.8rem;
 }
 
-.selected-habit-remove:hover {
-    opacity: 1;
+.goal-item:last-child {
+    margin-bottom: 0;
+}
+
+.goal-name {
+    font-size: 0.85rem;
+    color: #3b3b3b;
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.goal-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.goal-progress-bar {
+    flex: 1;
+    height: 4px;
+    background: #ececec;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.goal-progress-fill {
+    height: 100%;
+    background: #eccacb;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.goal-percent {
+    font-size: 0.75rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    white-space: nowrap;
+}
+
+.no-goals {
+    text-align: center;
+    color: #3b3b3b;
+    opacity: 0.3;
+    padding: 1rem 0;
+    font-size: 0.9rem;
 }
 
 /* ---------- АДАПТИВНОСТЬ ---------- */
@@ -3112,11 +1917,541 @@
         font-size: 1.2rem;
     }
     
+    .profile-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .profile-stat-value {
+        font-size: 1.1rem;
+    }
+    
     .landing-title {
-        font-size: 2rem;
+        font-size: 2.8rem;
     }
     
     .landing-day-number {
         font-size: 2.2rem;
     }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .sphere-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+    
+    .sphere-card {
+        padding: 0.8rem 0.5rem;
+    }
+    
+    .sphere-icon {
+        font-size: 1.6rem;
+    }
+    
+    .sphere-label {
+        font-size: 0.7rem;
+    }
+    
+    .brain-goal-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+    
+    .brain-goal-card {
+        font-size: 0.8rem;
+        padding: 0.6rem;
+    }
+    
+    .habit-option {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    
+    .journey-grid {
+        grid-template-columns: repeat(10, 1fr);
+        gap: 0.2rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .profile-main-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.4rem;
+    }
+    
+    .profile-main-value {
+        font-size: 1rem;
+    }
+    
+    .profile-main-icon {
+        font-size: 1.2rem;
+    }
+    
+    .landing-title {
+        font-size: 2.4rem;
+    }
+    
+    .landing-day-number {
+        font-size: 1.8rem;
+    }
+    
+    .sphere-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem;
+    }
+    
+    .sphere-card {
+        padding: 0.6rem 0.3rem;
+    }
+    
+    .sphere-icon {
+        font-size: 1.4rem;
+    }
+    
+    .sphere-label {
+        font-size: 0.65rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-bottom {
+        display: none;
+    }
+}
+
+/* ---------- NIGHT MODE (ТЁМНАЯ ТЕМА) ---------- */
+.dark-mode {
+    background-color: #121212;
+    color: #e8e8e8;
+}
+
+.dark-mode .app-container {
+    background: #121212;
+}
+
+/* Все карточки в тёмной теме */
+.dark-mode .auth-card,
+.dark-mode .concept-card,
+.dark-mode .onboarding-card,
+.dark-mode .plan-ready-card,
+.dark-mode .weeks-plan-card,
+.dark-mode .profile-user-card,
+.dark-mode .profile-main-card,
+.dark-mode .profile-stat-card,
+.dark-mode .profile-settings-card,
+.dark-mode .profile-danger-card,
+.dark-mode .landing-day-card,
+.dark-mode .landing-affirmation,
+.dark-mode .landing-start-date,
+.dark-mode .journal-entry-card,
+.dark-mode .journal-item,
+.dark-mode .habit-card-item,
+.dark-mode .chart-card,
+.dark-mode .journey-card,
+.dark-mode .goals-card,
+.dark-mode .stat-card,
+.dark-mode .profile-settings-card,
+.dark-mode .landing-complete-badge {
+    background: rgba(30, 30, 30, 0.85) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Текст в тёмной теме */
+.dark-mode .auth-title,
+.dark-mode .concept-title,
+.dark-mode .onboarding-title,
+.dark-mode .plan-ready-title,
+.dark-mode .weeks-plan-title,
+.dark-mode .page-title,
+.dark-mode .profile-name,
+.dark-mode .profile-setting-name,
+.dark-mode .profile-settings-title,
+.dark-mode .profile-danger-title,
+.dark-mode .landing-start-date-value,
+.dark-mode .journal-item-content,
+.dark-mode .habit-card-name,
+.dark-mode .profile-stat-value,
+.dark-mode .profile-main-value,
+.dark-mode .landing-day-number,
+.dark-mode .landing-day-week,
+.dark-mode .affirmation-text,
+.dark-mode .week-plan-goal,
+.dark-mode .week-plan-action,
+.dark-mode .chart-title,
+.dark-mode .journey-title,
+.dark-mode .goals-title,
+.dark-mode .stat-value,
+.dark-mode .journey-text,
+.dark-mode .habit-card-name,
+.dark-mode .plan-ready-value,
+.dark-mode .landing-subtitle,
+.dark-mode .landing-complete-badge {
+    color: #e8e8e8 !important;
+}
+
+/* Вторичный текст в тёмной теме */
+.dark-mode .auth-subtitle,
+.dark-mode .concept-content,
+.dark-mode .onboarding-subtitle,
+.dark-mode .plan-ready-subtitle,
+.dark-mode .weeks-plan-subtitle,
+.dark-mode .profile-since,
+.dark-mode .profile-email,
+.dark-mode .profile-setting-desc,
+.dark-mode .profile-danger-desc,
+.dark-mode .landing-start-date-label,
+.dark-mode .landing-day-label,
+.dark-mode .stat-label,
+.dark-mode .profile-stat-label,
+.dark-mode .profile-main-label,
+.dark-mode .journal-item-date,
+.dark-mode .journal-item-mood,
+.dark-mode .habit-card-category,
+.dark-mode .habit-card-streak,
+.dark-mode .plan-ready-label,
+.dark-mode .week-plan-number,
+.dark-mode .goal-percent,
+.dark-mode .goal-name,
+.dark-mode .profile-setting-value,
+.dark-mode .insight-label,
+.dark-mode .insight-text,
+.dark-mode .chart-empty,
+.dark-mode .no-entries,
+.dark-mode .no-habits,
+.dark-mode .no-goals,
+.dark-mode .journey-text,
+.dark-mode .landing-progress-days {
+    color: #a0a0a0 !important;
+}
+
+/* Поля ввода в тёмной теме */
+.dark-mode .auth-field input,
+.dark-mode .onboarding-textarea,
+.dark-mode .custom-habit-input,
+.dark-mode .custom-habit-textarea,
+.dark-mode .journal-input,
+.dark-mode .profile-name-input {
+    background: #1e1e1e !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #e8e8e8 !important;
+}
+
+.dark-mode .auth-field input::placeholder,
+.dark-mode .onboarding-textarea::placeholder,
+.dark-mode .journal-input::placeholder,
+.dark-mode .custom-habit-input::placeholder,
+.dark-mode .custom-habit-textarea::placeholder {
+    color: #666 !important;
+}
+
+.dark-mode .auth-field input:focus,
+.dark-mode .onboarding-textarea:focus,
+.dark-mode .custom-habit-input:focus,
+.dark-mode .custom-habit-textarea:focus {
+    border-color: #eccacb !important;
+}
+
+/* Границы и разделители в тёмной теме */
+.dark-mode .plan-ready-item,
+.dark-mode .profile-setting-item,
+.dark-mode .landing-progress-days,
+.dark-mode .journal-item-header {
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Кнопки в тёмной теме */
+.dark-mode .concept-btn,
+.dark-mode .onboarding-btn,
+.dark-mode .plan-ready-btn,
+.dark-mode .weeks-plan-btn,
+.dark-mode .btn-save-entry,
+.dark-mode .btn-add-habit,
+.dark-mode .custom-habit-add,
+.dark-mode .btn-save-name,
+.dark-mode .auth-btn {
+    background: #3b3b3b !important;
+    color: #e8e8e8 !important;
+}
+
+.dark-mode .concept-btn:hover,
+.dark-mode .onboarding-btn:hover,
+.dark-mode .plan-ready-btn:hover,
+.dark-mode .weeks-plan-btn:hover,
+.dark-mode .btn-save-entry:hover,
+.dark-mode .custom-habit-add:hover,
+.dark-mode .btn-save-name:hover,
+.dark-mode .auth-btn:hover {
+    background: #eccacb !important;
+    color: #3b3b3b !important;
+}
+
+/* Сферы и опции в тёмной теме */
+.dark-mode .sphere-card,
+.dark-mode .habit-option,
+.dark-mode .brain-goal-card {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #e8e8e8 !important;
+    background: transparent !important;
+}
+
+.dark-mode .sphere-card:hover,
+.dark-mode .habit-option:hover,
+.dark-mode .brain-goal-card:hover {
+    border-color: #eccacb !important;
+    background: rgba(236, 202, 203, 0.05) !important;
+}
+
+.dark-mode .sphere-card.selected,
+.dark-mode .habit-option.selected,
+.dark-mode .brain-goal-card.selected {
+    border-color: #eccacb !important;
+    background: rgba(236, 202, 203, 0.1) !important;
+}
+
+/* План готов в тёмной теме */
+.dark-mode .plan-ready-summary {
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Недели в тёмной теме */
+.dark-mode .week-plan-item {
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Прогресс-бар в тёмной теме */
+.dark-mode .goal-progress-bar,
+.dark-mode .journey-dot,
+.dark-mode .landing-progress-bar {
+    background: #2a2a2a !important;
+}
+
+.dark-mode .journey-dot.completed {
+    background: #eccacb !important;
+}
+
+.dark-mode .journey-dot.current {
+    background: #eccacb !important;
+}
+
+/* Чарты и графики в тёмной теме */
+.dark-mode .chart-svg line,
+.dark-mode .chart-svg polyline {
+    stroke: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-mode .chart-svg text {
+    fill: #a0a0a0 !important;
+}
+
+/* Аватар в тёмной теме */
+.dark-mode .profile-avatar {
+    background: #2a2a2a !important;
+    color: #e8e8e8 !important;
+}
+
+.dark-mode .profile-avatar-change {
+    background: #2a2a2a !important;
+    color: #e8e8e8 !important;
+    border-color: #121212 !important;
+}
+
+.dark-mode .profile-avatar-change:hover {
+    background: #eccacb !important;
+    color: #3b3b3b !important;
+}
+
+/* Кнопка выхода в тёмной теме */
+.dark-mode .btn-logout {
+    border-color: rgba(231, 76, 60, 0.3) !important;
+    color: #e74c3c !important;
+}
+
+.dark-mode .btn-logout:hover {
+    background: #e74c3c !important;
+    color: #fcfafa !important;
+}
+
+/* Опасная зона в тёмной теме */
+.dark-mode .profile-danger-card {
+    background: rgba(231, 76, 60, 0.05) !important;
+    border-color: rgba(231, 76, 60, 0.1) !important;
+}
+
+.dark-mode .btn-reset-progress {
+    border-color: rgba(231, 76, 60, 0.2) !important;
+    color: #e8e8e8 !important;
+}
+
+.dark-mode .btn-reset-progress:hover {
+    background: rgba(231, 76, 60, 0.2) !important;
+    color: #e8e8e8 !important;
+}
+
+/* Переключатель темы в тёмной теме */
+.dark-mode .profile-theme-toggle {
+    background: #3b3b3b !important;
+}
+
+.dark-mode .profile-theme-toggle.dark {
+    background: #3b3b3b !important;
+}
+
+.dark-mode .profile-theme-toggle-thumb {
+    background: #eccacb !important;
+}
+
+.dark-mode .profile-toggle {
+    background: #2a2a2a !important;
+}
+
+.dark-mode .profile-toggle.active {
+    background: #3b3b3b !important;
+}
+
+.dark-mode .profile-toggle-thumb {
+    background: #e8e8e8 !important;
+}
+
+/* Чекбоксы привычек в тёмной теме */
+.dark-mode .habit-card-check {
+    border-color: #a0a0a0 !important;
+}
+
+.dark-mode .habit-card-check.done {
+    background: #eccacb !important;
+    border-color: #eccacb !important;
+}
+
+.dark-mode .habit-card-check.done span {
+    color: #3b3b3b !important;
+}
+
+/* Habit card hover */
+.dark-mode .habit-card-item:hover {
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* ---------- NIGHT MODE — НИЖНЯЯ НАВИГАЦИЯ ---------- */
+.dark-mode .navbar-bottom {
+    background: rgba(20, 20, 20, 0.95) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-mode .nav-item-bottom .nav-label {
+    color: #a0a0a0 !important;
+    opacity: 0.5 !important;
+}
+
+.dark-mode .nav-item-bottom.active .nav-label {
+    color: #eccacb !important;
+    opacity: 1 !important;
+}
+
+.dark-mode .nav-item-bottom .nav-icon {
+    opacity: 0.4 !important;
+}
+
+.dark-mode .nav-item-bottom.active .nav-icon {
+    opacity: 1 !important;
+}
+
+.dark-mode .nav-item-bottom.active::after {
+    background: #eccacb !important;
+}
+
+.dark-mode .nav-item-bottom:hover .nav-icon {
+    opacity: 0.7 !important;
+}
+
+.dark-mode .nav-item-bottom:hover .nav-label {
+    opacity: 0.7 !important;
+    color: #e8e8e8 !important;
+}
+
+.dark-mode .nav-item-bottom.active:hover .nav-icon {
+    opacity: 1 !important;
+}
+
+.dark-mode .nav-item-bottom.active:hover .nav-label {
+    opacity: 1 !important;
+    color: #eccacb !important;
+}
+
+/* ---------- СТИЛИ ДЛЯ НЕДЕЛЬ В HABITS ---------- */
+.habits-week-card {
+    background: rgba(236, 202, 203, 0.1);
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #eccacb;
+}
+
+.habits-week-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.habits-week-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #3b3b3b;
+}
+
+.habits-week-badge {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #3b3b3b;
+    background: #eccacb;
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.habits-week-goal {
+    font-size: 0.9rem;
+    color: #3b3b3b;
+    opacity: 0.7;
+    margin: 0.3rem 0 0.2rem 0;
+}
+
+.habits-week-action {
+    font-size: 0.8rem;
+    color: #3b3b3b;
+    opacity: 0.5;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Тёмная тема для недель в Habits */
+.dark-mode .habits-week-card {
+    background: rgba(236, 202, 203, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-mode .habits-week-number {
+    color: #e8e8e8;
+}
+
+.dark-mode .habits-week-badge {
+    background: #eccacb;
+    color: #3b3b3b;
+}
+
+.dark-mode .habits-week-goal {
+    color: #a0a0a0;
+}
+
+.dark-mode .habits-week-action {
+    color: #888;
 }

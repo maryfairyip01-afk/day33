@@ -24,10 +24,16 @@ function Profile({ data, setData, onLogout, user, isDarkMode, onToggleTheme }) {
         const reader = new FileReader();
         reader.onload = (event) => {
             const avatarData = event.target.result;
-            // Сохраняем аватар
+            // Сохраняем аватар через AuthSystem
             const userId = user?.id;
             if (userId) {
-                AuthSystem.saveUserAvatar(userId, avatarData);
+                // Сохраняем в users
+                const users = loadData('day33_users', {});
+                if (users[userId]) {
+                    users[userId].avatar = avatarData;
+                    saveData('day33_users', users);
+                }
+                // Сохраняем в данных пользователя
                 setData(prev => ({
                     ...prev,
                     user: { ...prev.user, avatar: avatarData }
@@ -59,6 +65,12 @@ function Profile({ data, setData, onLogout, user, isDarkMode, onToggleTheme }) {
         });
     };
 
+    // Обработчик для file input
+    const handleFileInputClick = () => {
+        const input = document.getElementById('avatar-input');
+        if (input) input.click();
+    };
+
     return React.createElement('div', { className: 'profile-container' },
         React.createElement('h2', { className: 'page-title' }, 'Profile'),
 
@@ -76,16 +88,16 @@ function Profile({ data, setData, onLogout, user, isDarkMode, onToggleTheme }) {
                       ),
                 React.createElement('button', { 
                     className: 'profile-avatar-change',
-                    onClick: () => setShowAvatarUpload(!showAvatarUpload)
+                    onClick: handleFileInputClick
                 },
                     '📷'
                 ),
-                showAvatarUpload && React.createElement('input', {
+                React.createElement('input', {
+                    id: 'avatar-input',
                     type: 'file',
                     accept: 'image/*',
                     className: 'profile-avatar-input',
-                    onChange: handleAvatarUpload,
-                    ref: (input) => input && input.click()
+                    onChange: handleAvatarUpload
                 })
             ),
             React.createElement('div', { className: 'profile-user-info' },
