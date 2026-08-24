@@ -2,9 +2,10 @@
 // Profile.js — Профиль с карточками
 // ========================================
 
-function Profile({ data, setData, onLogout, user }) {
-    const [isEditing, setIsEditing] = React.useState(false);
-    const [tempName, setTempName] = React.useState(data.user?.name || '');
+function Profile({ data, setData, onLogout, user, isDarkMode, onToggleTheme }) {
+    const [isEditing, setIsEditing] = useState(false);
+    const [tempName, setTempName] = useState(data.user?.name || '');
+    const [showAvatarUpload, setShowAvatarUpload] = useState(false);
 
     const handleSaveName = () => {
         if (tempName.trim()) {
@@ -16,18 +17,38 @@ function Profile({ data, setData, onLogout, user }) {
         }
     };
 
+    const handleAvatarUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const avatarData = event.target.result;
+            // Сохраняем аватар
+            const userId = user?.id;
+            if (userId) {
+                AuthSystem.saveUserAvatar(userId, avatarData);
+                setData(prev => ({
+                    ...prev,
+                    user: { ...prev.user, avatar: avatarData }
+                }));
+            }
+            setShowAvatarUpload(false);
+        };
+        reader.readAsDataURL(file);
+    };
+
     // Данные из аккаунта
     const currentDay = data.currentDay || 1;
     const currentWeek = data.week || 1;
-    const brainGoal = data.user?.brainGoal || 'Не выбрана';
     const success = data.success || 0;
     const totalHabits = data.habits?.length || 0;
     const completedHabits = data.habits?.filter(h => h.completions?.length > 0).length || 0;
     const totalJournalEntries = data.journal?.length || 0;
     const isComplete = data.journeyComplete || false;
     const journeyStartDate = data.user?.journeyStartDate;
+    const avatar = data.user?.avatar || null;
 
-    // Форматирование даты
     const formatDate = (dateString) => {
         if (!dateString) return 'Не начат';
         const date = new Date(dateString);
@@ -38,213 +59,207 @@ function Profile({ data, setData, onLogout, user }) {
         });
     };
 
-    return (
-        <div className="profile-container">
-            <h2 className="page-title">Profile</h2>
+    return React.createElement('div', { className: 'profile-container' },
+        React.createElement('h2', { className: 'page-title' }, 'Profile'),
 
-            {/* Карточка пользователя */}
-            <div className="profile-user-card">
-                <div className="profile-avatar">
-                    {data.user?.name?.charAt(0) || '?'}
-                </div>
-                <div className="profile-user-info">
-                    {isEditing ? (
-                        <div className="profile-edit">
-                            <input
-                                className="profile-name-input"
-                                value={tempName}
-                                onChange={(e) => setTempName(e.target.value)}
-                                onKeyPress={(e) => { if (e.key === 'Enter') handleSaveName(); }}
-                                autoFocus
-                            />
-                            <button className="btn-save-name" onClick={handleSaveName}>
-                                Сохранить
-                            </button>
-                            <button
-                                className="btn-cancel-edit"
-                                onClick={() => {
-                                    setIsEditing(false);
-                                    setTempName(data.user?.name || '');
-                                }}
-                            >
-                                Отмена
-                            </button>
-                        </div>
-                    ) : (
-                        <>
-                            <h3 className="profile-name">{data.user?.name || 'Пользователь'}</h3>
-                            <p className="profile-email">{user?.email || ''}</p>
-                            <p className="profile-since">
-                                В DAY 33 с {data.user?.startDate ? new Date(data.user.startDate).toLocaleDateString('ru-RU') : 'недавнего времени'}
-                            </p>
-                            <button className="btn-edit-profile" onClick={() => setIsEditing(true)}>
-                                ✏️ Редактировать
-                            </button>
-                        </>
-                    )}
-                </div>
-            </div>
+        // Карточка пользователя с аватаром
+        React.createElement('div', { className: 'profile-user-card' },
+            React.createElement('div', { className: 'profile-avatar-wrapper' },
+                avatar 
+                    ? React.createElement('img', { 
+                        src: avatar, 
+                        className: 'profile-avatar-img',
+                        alt: 'Avatar'
+                      })
+                    : React.createElement('div', { className: 'profile-avatar' },
+                        data.user?.name?.charAt(0) || '?'
+                      ),
+                React.createElement('button', { 
+                    className: 'profile-avatar-change',
+                    onClick: () => setShowAvatarUpload(!showAvatarUpload)
+                },
+                    '📷'
+                ),
+                showAvatarUpload && React.createElement('input', {
+                    type: 'file',
+                    accept: 'image/*',
+                    className: 'profile-avatar-input',
+                    onChange: handleAvatarUpload,
+                    ref: (input) => input && input.click()
+                })
+            ),
+            React.createElement('div', { className: 'profile-user-info' },
+                isEditing ? (
+                    React.createElement('div', { className: 'profile-edit' },
+                        React.createElement('input', {
+                            className: 'profile-name-input',
+                            value: tempName,
+                            onChange: (e) => setTempName(e.target.value),
+                            onKeyPress: (e) => { if (e.key === 'Enter') handleSaveName(); },
+                            autoFocus: true
+                        }),
+                        React.createElement('button', { className: 'btn-save-name', onClick: handleSaveName },
+                            'Сохранить'
+                        ),
+                        React.createElement('button', {
+                            className: 'btn-cancel-edit',
+                            onClick: () => {
+                                setIsEditing(false);
+                                setTempName(data.user?.name || '');
+                            }
+                        },
+                            'Отмена'
+                        )
+                    )
+                ) : (
+                    React.createElement(React.Fragment, null,
+                        React.createElement('h3', { className: 'profile-name' }, data.user?.name || 'Пользователь'),
+                        React.createElement('p', { className: 'profile-email' }, user?.email || ''),
+                        React.createElement('p', { className: 'profile-since' },
+                            `В DAY 33 с ${data.user?.startDate ? new Date(data.user.startDate).toLocaleDateString('ru-RU') : 'недавнего времени'}`
+                        ),
+                        React.createElement('button', { className: 'btn-edit-profile', onClick: () => setIsEditing(true) },
+                            '✏️ Редактировать'
+                        )
+                    )
+                )
+            )
+        ),
 
-            {/* 4 ОСНОВНЫХ БЛОКА: Day, Week, Brain Goal, Success */}
-            <div className="profile-main-grid">
-                <div className="profile-main-card">
-                    <span className="profile-main-icon">📅</span>
-                    <span className="profile-main-value">{currentDay}</span>
-                    <span className="profile-main-label">Текущий день</span>
-                </div>
-                <div className="profile-main-card">
-                    <span className="profile-main-icon">📆</span>
-                    <span className="profile-main-value">{currentWeek}</span>
-                    <span className="profile-main-label">Текущая неделя</span>
-                </div>
-                <div className="profile-main-card">
-                    <span className="profile-main-icon">🧠</span>
-                    <span className="profile-main-value">{brainGoal}</span>
-                    <span className="profile-main-label">Цель мозга</span>
-                </div>
-                <div className="profile-main-card">
-                    <span className="profile-main-icon">🏆</span>
-                    <span className="profile-main-value">{success}%</span>
-                    <span className="profile-main-label">Успех</span>
-                </div>
-            </div>
+        // 3 основных блока (без Brain Goal)
+        React.createElement('div', { className: 'profile-main-grid' },
+            React.createElement('div', { className: 'profile-main-card' },
+                React.createElement('span', { className: 'profile-main-icon' }, '📅'),
+                React.createElement('span', { className: 'profile-main-value' }, currentDay),
+                React.createElement('span', { className: 'profile-main-label' }, 'Текущий день')
+            ),
+            React.createElement('div', { className: 'profile-main-card' },
+                React.createElement('span', { className: 'profile-main-icon' }, '📆'),
+                React.createElement('span', { className: 'profile-main-value' }, currentWeek),
+                React.createElement('span', { className: 'profile-main-label' }, 'Текущая неделя')
+            ),
+            React.createElement('div', { className: 'profile-main-card' },
+                React.createElement('span', { className: 'profile-main-icon' }, '🏆'),
+                React.createElement('span', { className: 'profile-main-value' }, `${success}%`),
+                React.createElement('span', { className: 'profile-main-label' }, 'Успех')
+            )
+        ),
 
-            {/* Дополнительная информация о путешествии */}
-            <div className="profile-journey-card">
-                <h3 className="profile-journey-title">🗺️ Ваш путь</h3>
-                <div className="profile-journey-info">
-                    <div className="profile-journey-row">
-                        <span className="profile-journey-label">Дата начала</span>
-                        <span className="profile-journey-value">{formatDate(journeyStartDate)}</span>
-                    </div>
-                    <div className="profile-journey-row">
-                        <span className="profile-journey-label">Прогресс пути</span>
-                        <span className="profile-journey-value">
-                            {isComplete ? '🎉 Завершён!' : `${Math.min(Math.round((currentDay / 75) * 100), 100)}%`}
-                        </span>
-                    </div>
-                    <div className="profile-journey-progress">
-                        <div className="profile-journey-bar">
-                            <div 
-                                className="profile-journey-fill"
-                                style={{ width: `${Math.min(Math.round((currentDay / 75) * 100), 100)}%` }}
-                            />
-                        </div>
-                        <div className="profile-journey-days">
-                            <span>День 1</span>
-                            <span>День {Math.min(currentDay, 75)}</span>
-                            <span>День 75</span>
-                        </div>
-                    </div>
-                    {isComplete && (
-                        <div className="profile-journey-complete">
-                            🎉 Поздравляем! Вы завершили 75-дневный путь!
-                        </div>
-                    )}
-                </div>
-            </div>            {/* Статистика привычек и дневника */}
-            <div className="profile-stats-grid">
-                <div className="profile-stat-card">
-                    <span className="profile-stat-value">{totalHabits}</span>
-                    <span className="profile-stat-label">Всего привычек</span>
-                </div>
-                <div className="profile-stat-card">
-                    <span className="profile-stat-value">{completedHabits}</span>
-                    <span className="profile-stat-label">Активных привычек</span>
-                </div>
-                <div className="profile-stat-card">
-                    <span className="profile-stat-value">{totalJournalEntries}</span>
-                    <span className="profile-stat-label">Записей в дневнике</span>
-                </div>
-                <div className="profile-stat-card">
-                    <span className="profile-stat-value">{data.habits?.reduce((sum, h) => sum + (h.completions?.length || 0), 0) || 0}</span>
-                    <span className="profile-stat-label">Всего выполнений</span>
-                </div>
-            </div>
+        // Статистика
+        React.createElement('div', { className: 'profile-stats-grid' },
+            React.createElement('div', { className: 'profile-stat-card' },
+                React.createElement('span', { className: 'profile-stat-value' }, totalHabits),
+                React.createElement('span', { className: 'profile-stat-label' }, 'Всего привычек')
+            ),
+            React.createElement('div', { className: 'profile-stat-card' },
+                React.createElement('span', { className: 'profile-stat-value' }, completedHabits),
+                React.createElement('span', { className: 'profile-stat-label' }, 'Активных привычек')
+            ),
+            React.createElement('div', { className: 'profile-stat-card' },
+                React.createElement('span', { className: 'profile-stat-value' }, totalJournalEntries),
+                React.createElement('span', { className: 'profile-stat-label' }, 'Записей в дневнике')
+            ),
+            React.createElement('div', { className: 'profile-stat-card' },
+                React.createElement('span', { className: 'profile-stat-value' }, 
+                    data.habits?.reduce((sum, h) => sum + (h.completions?.length || 0), 0) || 0
+                ),
+                React.createElement('span', { className: 'profile-stat-label' }, 'Всего выполнений')
+            )
+        ),
 
-            {/* Настройки */}
-            <div className="profile-settings-card">
-                <h3 className="profile-settings-title">⚙️ Настройки</h3>
+        // Настройки с Night Mode
+        React.createElement('div', { className: 'profile-settings-card' },
+            React.createElement('h3', { className: 'profile-settings-title' }, '⚙️ Настройки'),
 
-                <div className="profile-setting-item">
-                    <div>
-                        <p className="profile-setting-name">Тёмная тема</p>
-                        <p className="profile-setting-desc">Скоро будет доступно</p>
-                    </div>
-                    <div className="profile-toggle disabled">
-                        <div className="profile-toggle-thumb"></div>
-                    </div>
-                </div>
+            // Night Mode
+            React.createElement('div', { className: 'profile-setting-item' },
+                React.createElement('div', null,
+                    React.createElement('p', { className: 'profile-setting-name' }, 
+                        isDarkMode ? '🌙 Ночная тема' : '☀️ Светлая тема'
+                    ),
+                    React.createElement('p', { className: 'profile-setting-desc' }, 
+                        isDarkMode ? 'Тёмный режим включён' : 'Светлый режим включён'
+                    )
+                ),
+                React.createElement('button', { 
+                    className: `profile-theme-toggle ${isDarkMode ? 'dark' : 'light'}`,
+                    onClick: onToggleTheme
+                },
+                    React.createElement('span', { className: 'profile-theme-toggle-thumb' })
+                )
+            ),
 
-                <div className="profile-setting-item">
-                    <div>
-                        <p className="profile-setting-name">Уведомления</p>
-                        <p className="profile-setting-desc">Напоминания о привычках</p>
-                    </div>
-                    <div className="profile-toggle active">
-                        <div className="profile-toggle-thumb"></div>
-                    </div>
-                </div>
+            // Уведомления
+            React.createElement('div', { className: 'profile-setting-item' },
+                React.createElement('div', null,
+                    React.createElement('p', { className: 'profile-setting-name' }, 'Уведомления'),
+                    React.createElement('p', { className: 'profile-setting-desc' }, 'Напоминания о привычках')
+                ),
+                React.createElement('div', { className: 'profile-toggle active' },
+                    React.createElement('div', { className: 'profile-toggle-thumb' })
+                )
+            ),
 
-                <div className="profile-setting-item">
-                    <div>
-                        <p className="profile-setting-name">Язык</p>
-                        <p className="profile-setting-desc">Русский</p>
-                    </div>
-                    <span className="profile-setting-value">🇷🇺</span>
-                </div>
+            // Язык
+            React.createElement('div', { className: 'profile-setting-item' },
+                React.createElement('div', null,
+                    React.createElement('p', { className: 'profile-setting-name' }, 'Язык'),
+                    React.createElement('p', { className: 'profile-setting-desc' }, 'Русский')
+                ),
+                React.createElement('span', { className: 'profile-setting-value' }, '🇷🇺')
+            ),
 
-                <div className="profile-setting-item">
-                    <div>
-                        <p className="profile-setting-name">Версия</p>
-                        <p className="profile-setting-desc">DAY 33 v2.0</p>
-                    </div>
-                    <span className="profile-setting-value">2.0.0</span>
-                </div>
+            // Версия
+            React.createElement('div', { className: 'profile-setting-item' },
+                React.createElement('div', null,
+                    React.createElement('p', { className: 'profile-setting-name' }, 'Версия'),
+                    React.createElement('p', { className: 'profile-setting-desc' }, 'DAY 33 v2.0')
+                ),
+                React.createElement('span', { className: 'profile-setting-value' }, '2.0.0')
+            ),
 
-                {/* Кнопка выхода */}
-                <div className="profile-setting-item" style={{ borderTop: '1px solid rgba(236,202,203,0.3)', paddingTop: '1rem', marginTop: '0.5rem' }}>
-                    <div>
-                        <p className="profile-setting-name" style={{ color: '#e74c3c' }}>Выйти из аккаунта</p>
-                        <p className="profile-setting-desc">Выйти и вернуться на экран входа</p>
-                    </div>
-                    <button className="btn-logout" onClick={onLogout}>
-                        <i className="fas fa-sign-out-alt"></i> Выйти
-                    </button>
-                </div>
-            </div>
+            // Выход
+            React.createElement('div', { className: 'profile-setting-item', style: { borderTop: '1px solid rgba(236,202,203,0.3)', paddingTop: '1rem', marginTop: '0.5rem' } },
+                React.createElement('div', null,
+                    React.createElement('p', { className: 'profile-setting-name', style: { color: '#e74c3c' } }, 'Выйти из аккаунта'),
+                    React.createElement('p', { className: 'profile-setting-desc' }, 'Выйти и вернуться на экран входа')
+                ),
+                React.createElement('button', { className: 'btn-logout', onClick: onLogout },
+                    'Выйти'
+                )
+            )
+        ),
 
-            {/* Опасная зона */}
-            <div className="profile-danger-card">
-                <h3 className="profile-danger-title">⚠️ Опасная зона</h3>
-                <p className="profile-danger-desc">
-                    Сброс всего прогресса удалит все ваши привычки и записи. Это действие нельзя отменить.
-                </p>
-                <button
-                    className="btn-reset-progress"
-                    onClick={() => {
-                        if (confirm('Вы уверены? Это удалит весь ваш прогресс!')) {
-                            setData(prev => ({
-                                ...prev,
-                                habits: prev.habits.map(h => ({ ...h, completions: [] })),
-                                journal: [],
-                                currentDay: 1,
-                                week: 1,
-                                goals: prev.goals.map(g => ({ ...g, progress: 0 })),
-                                reflections: [],
-                                success: 0,
-                                journeyComplete: false,
-                                user: {
-                                    ...prev.user,
-                                    journeyStartDate: new Date().toISOString()
-                                }
-                            }));
-                        }
-                    }}
-                >
-                    Сбросить весь прогресс
-                </button>
-            </div>
-        </div>
+        // Опасная зона
+        React.createElement('div', { className: 'profile-danger-card' },
+            React.createElement('h3', { className: 'profile-danger-title' }, '⚠️ Опасная зона'),
+            React.createElement('p', { className: 'profile-danger-desc' },
+                'Сброс всего прогресса удалит все ваши привычки и записи. Это действие нельзя отменить.'
+            ),
+            React.createElement('button', {
+                className: 'btn-reset-progress',
+                onClick: () => {
+                    if (confirm('Вы уверены? Это удалит весь ваш прогресс!')) {
+                        setData(prev => ({
+                            ...prev,
+                            habits: prev.habits.map(h => ({ ...h, completions: [] })),
+                            journal: [],
+                            currentDay: 1,
+                            week: 1,
+                            goals: prev.goals.map(g => ({ ...g, progress: 0 })),
+                            reflections: [],
+                            success: 0,
+                            journeyComplete: false,
+                            user: {
+                                ...prev.user,
+                                journeyStartDate: new Date().toISOString()
+                            }
+                        }));
+                    }
+                }
+            },
+                'Сбросить весь прогресс'
+            )
+        )
     );
 }

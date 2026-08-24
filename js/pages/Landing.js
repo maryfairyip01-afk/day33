@@ -2,11 +2,10 @@
 // Landing.js — Главная страница (Home)
 // ========================================
 
-function Landing({ data, setData, page, setPage }) {
+function Landing({ data, setData, page, setPage, isDarkMode }) {
     const currentDay = data.currentDay || 1;
     const currentWeek = data.week || 1;
     const journeyStartDate = data.user?.journeyStartDate;
-    const brainGoal = data.user?.brainGoal || 'Не выбрана';
     const success = data.success || 0;
     const isComplete = data.journeyComplete || false;
 
@@ -38,76 +37,76 @@ function Landing({ data, setData, page, setPage }) {
         });
     };
 
-    return (
-        <div className="landing-container">
-            <div className="landing-header">
-                <h1 className="landing-title">DAY 33</h1>
-                <p className="landing-subtitle">
-                    {isComplete ? '🎉 Путь завершён!' : `${DayCalculator.formatDay(currentDay)}`}
-                </p>
-            </div>
+    return React.createElement('div', { className: 'landing-container' },
+        // Заголовок
+        React.createElement('div', { className: 'landing-header' },
+            React.createElement('h1', { className: 'landing-title' }, 'DAY 33'),
+            React.createElement('p', { className: 'landing-subtitle' },
+                isComplete ? '🎉 Путь завершён!' : `${DayCalculator.formatDay(currentDay)}`
+            )
+        ),
 
-            {/* Информационная карточка */}
-            <div className="landing-info-card">
-                <div className="landing-info-row">
-                    <span className="landing-info-label">Текущий день</span>
-                    <span className="landing-info-value">{DayCalculator.formatDay(currentDay)}</span>
-                </div>
-                <div className="landing-info-row">
-                    <span className="landing-info-label">Текущая неделя</span>
-                    <span className="landing-info-value">{DayCalculator.formatWeek(currentWeek)}</span>
-                </div>
-                <div className="landing-info-row">
-                    <span className="landing-info-label">Дата начала</span>
-                    <span className="landing-info-value">{formatDate(journeyStartDate)}</span>
-                </div>
-                <div className="landing-info-row">
-                    <span className="landing-info-label">Цель мозга</span>
-                    <span className="landing-info-value">{brainGoal}</span>
-                </div>
-                <div className="landing-info-row">
-                    <span className="landing-info-label">Успех</span>
-                    <span className="landing-info-value">{success}%</span>
-                </div>
-                {isComplete && (
-                    <div className="landing-complete-badge">
-                        🎉 Поздравляем! Вы завершили 75-дневный путь!
-                    </div>
-                )}
-            </div>
+        // Текущий день
+        React.createElement('div', { className: 'landing-day-card' },
+            React.createElement('div', { className: 'landing-day-number' }, currentDay),
+            React.createElement('div', { className: 'landing-day-info' },
+                React.createElement('span', { className: 'landing-day-label' }, 'Текущий день'),
+                React.createElement('span', { className: 'landing-day-week' }, `Неделя ${currentWeek}`)
+            )
+        ),
 
-            {/* Аффирмация */}
-            <div className="landing-affirmation">
-                <p className="affirmation-icon">✨</p>
-                <p className="affirmation-text">"{affirmation}"</p>
-            </div>
+        // Кнопка Start Day
+        React.createElement('button', 
+            { 
+                className: 'landing-start-btn',
+                onClick: () => setPage('habits')
+            },
+            isComplete ? 'Начать новый путь' : 'Start Day 🚀'
+        ),
 
-            {/* Кнопка Start Day */}
-            <button 
-                className="landing-start-btn"
-                onClick={() => setPage('habits')}
-            >
-                {isComplete ? 'Начать новый путь' : 'Start Day 🚀'}
-            </button>
+        // Аффирмация
+        React.createElement('div', { className: 'landing-affirmation' },
+            React.createElement('p', { className: 'affirmation-icon' }, '✨'),
+            React.createElement('p', { className: 'affirmation-text' }, `"${affirmation}"`)
+        ),
 
-            {/* Прогресс-бар 75 дней */}
-            <div className="landing-progress">
-                <div className="landing-progress-header">
-                    <span>Прогресс 75-дневного пути</span>
-                    <span>{Math.min(Math.round((currentDay / 75) * 100), 100)}%</span>
-                </div>
-                <div className="landing-progress-bar">
-                    <div 
-                        className="landing-progress-fill"
-                        style={{ width: `${Math.min(Math.round((currentDay / 75) * 100), 100)}%` }}
-                    />
-                </div>
-                <div className="landing-progress-days">
-                    <span>День 1</span>
-                    <span>День {Math.min(currentDay, 75)}</span>
-                    <span>День 75</span>
-                </div>
-            </div>
-        </div>
+        // Прогресс 75 дней
+        React.createElement('div', { className: 'landing-progress' },
+            React.createElement('div', { className: 'landing-progress-header' },
+                React.createElement('span', null, 'Прогресс 75-дневного пути'),
+                React.createElement('span', null, `${Math.min(Math.round((currentDay / 75) * 100), 100)}%`)
+            ),
+            React.createElement('div', { className: 'landing-progress-bar' },
+                React.createElement('div', { 
+                    className: 'landing-progress-fill',
+                    style: { width: `${Math.min(Math.round((currentDay / 75) * 100), 100)}%` }
+                })
+            ),
+            React.createElement('div', { className: 'landing-progress-days' },
+                React.createElement('span', null, 'День 1'),
+                React.createElement('span', null, `День ${Math.min(currentDay, 75)}`),
+                React.createElement('span', null, 'День 75')
+            )
+        ),
+
+        // Дата начала
+        React.createElement('div', { className: 'landing-start-date' },
+            React.createElement('span', { className: 'landing-start-date-label' }, 'Начало пути'),
+            React.createElement('span', { className: 'landing-start-date-value' }, formatDate(journeyStartDate))
+        ),
+
+        // Success
+        React.createElement('div', { className: 'landing-success-card' },
+            React.createElement('span', { className: 'landing-success-icon' }, '🏆'),
+            React.createElement('div', { className: 'landing-success-info' },
+                React.createElement('span', { className: 'landing-success-label' }, 'Успех'),
+                React.createElement('span', { className: 'landing-success-value' }, `${success}%`)
+            )
+        ),
+
+        // Завершение пути
+        isComplete && React.createElement('div', { className: 'landing-complete-badge' },
+            '🎉 Поздравляем! Вы завершили 75-дневный путь!'
+        )
     );
 }
