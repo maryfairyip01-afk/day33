@@ -7,6 +7,7 @@ function Landing({ data, setData, page, setPage, isDarkMode }) {
     const currentWeek = data.week || 1;
     const journeyStartDate = data.user?.journeyStartDate;
     const isComplete = data.journeyComplete || false;
+    const success = data.success || 0;
 
     // Аффирмация на основе дня
     const affirmations = [
@@ -25,36 +26,20 @@ function Landing({ data, setData, page, setPage, isDarkMode }) {
     const affirmationIndex = (currentDay - 1) % affirmations.length;
     const affirmation = affirmations[affirmationIndex];
 
-    // Форматирование даты
-    const formatDate = (dateString) => {
-        if (!dateString) return 'Не начат';
-        const date = new Date(dateString);
-        return date.toLocaleDateString('ru-RU', { 
-            day: 'numeric', 
-            month: 'long', 
-            year: 'numeric' 
-        });
-    };
-
     return React.createElement('div', { className: 'landing-container' },
-        // Заголовок DAY 33 - по центру, большой, нежно-розовый
+        // Заголовок DAY 33 — по центру, большой, нежно-розовый
         React.createElement('div', { className: 'landing-header' },
-            React.createElement('h1', { className: 'landing-title' }, 'DAY 33'),
-            React.createElement('p', { className: 'landing-subtitle' },
-                isComplete ? '🎉 Путь завершён!' : `${DayCalculator.formatDay(currentDay)}`
+            React.createElement('h1', { className: 'landing-title' }, 'DAY 33')
+        ),
+
+        // Day X — без карточки, просто текст
+        React.createElement('div', { className: 'landing-day-display' },
+            React.createElement('span', { className: 'landing-day-text' }, 
+                isComplete ? '🎉 Путь завершён!' : `Day ${currentDay}`
             )
         ),
 
-        // Текущий день
-        React.createElement('div', { className: 'landing-day-card' },
-            React.createElement('div', { className: 'landing-day-number' }, currentDay),
-            React.createElement('div', { className: 'landing-day-info' },
-                React.createElement('span', { className: 'landing-day-label' }, 'Текущий день'),
-                React.createElement('span', { className: 'landing-day-week' }, `Неделя ${currentWeek}`)
-            )
-        ),
-
-        // Кнопка Start Day - маленькая, нежно-розовая
+        // Кнопка Start Day
         React.createElement('button', 
             { 
                 className: 'landing-start-btn',
@@ -69,15 +54,16 @@ function Landing({ data, setData, page, setPage, isDarkMode }) {
             React.createElement('p', { className: 'affirmation-text' }, `"${affirmation}"`)
         ),
 
-        // Дата начала
-        React.createElement('div', { className: 'landing-start-date' },
+        // Дата начала (маленькая подпись)
+        journeyStartDate && React.createElement('div', { className: 'landing-start-date-small' },
             React.createElement('span', { className: 'landing-start-date-label' }, 'Начало пути'),
-            React.createElement('span', { className: 'landing-start-date-value' }, formatDate(journeyStartDate))
-        ),
-
-        // Завершение пути
-        isComplete && React.createElement('div', { className: 'landing-complete-badge' },
-            '🎉 Поздравляем! Вы завершили 75-дневный путь!'
+            React.createElement('span', { className: 'landing-start-date-value' }, 
+                new Date(journeyStartDate).toLocaleDateString('ru-RU', { 
+                    day: 'numeric', 
+                    month: 'long', 
+                    year: 'numeric' 
+                })
+            )
         )
     );
 }

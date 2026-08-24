@@ -2454,4 +2454,369 @@ body {
 
 .dark-mode .habits-week-action {
     color: #888;
+}/* ========================================
+   ВОССТАНОВЛЕНИЕ ПАРОЛЯ
+   ======================================== */
+
+.auth-back-btn {
+    background: none;
+    border: none;
+    color: #3b3b3b;
+    opacity: 0.5;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    padding: 0;
+    margin-bottom: 1rem;
+    transition: opacity 0.2s ease;
+}
+
+.dark-mode .auth-back-btn {
+    color: #e8e8e8;
+}
+
+.auth-back-btn:hover {
+    opacity: 1;
+}
+
+.auth-forgot-link {
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.auth-forgot-btn {
+    background: none;
+    border: none;
+    color: #3b3b3b;
+    opacity: 0.4;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    padding: 0;
+    transition: opacity 0.2s ease;
+    text-decoration: underline;
+}
+
+.dark-mode .auth-forgot-btn {
+    color: #a0a0a0;
+}
+
+.auth-forgot-btn:hover {
+    opacity: 1;
+}
+
+.auth-success-icon,
+.auth-error-icon {
+    font-size: 3rem;
+    text-align: center;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.auth-hint-text {
+    font-size: 0.85rem;
+    color: #3b3b3b;
+    opacity: 0.5;
+    text-align: center;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.dark-mode .auth-hint-text {
+    color: #a0a0a0;
+}
+
+/* ========================================
+   HOME — ОБНОВЛЕННЫЙ ДИЗАЙН
+   ======================================== */
+
+.landing-container {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 40px 16px 80px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.landing-header {
+    text-align: center;
+    padding: 20px 0 10px 0;
+}
+
+.landing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.8rem;
+    font-weight: 700;
+    color: #eccacb;
+    margin: 0;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 30px rgba(236, 202, 203, 0.25);
+}
+
+.dark-mode .landing-title {
+    color: #eccacb;
+    text-shadow: 0 2px 40px rgba(236, 202, 203, 0.15);
+}
+
+/* Day X — без карточки, просто текст */
+.landing-day-display {
+    text-align: center;
+    padding: 8px 0;
+}
+
+.landing-day-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #3b3b3b;
+    opacity: 0.7;
+}
+
+.dark-mode .landing-day-text {
+    color: #e8e8e8;
+}
+
+/* Кнопка Start Day */
+.landing-start-btn {
+    width: auto;
+    padding: 10px 32px;
+    border: none;
+    border-radius: 30px;
+    background: #eccacb;
+    color: #3b3b3b;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 4px 16px rgba(236, 202, 203, 0.3);
+}
+
+.landing-start-btn:hover {
+    background: #dfb8b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(236, 202, 203, 0.4);
+}
+
+.dark-mode .landing-start-btn {
+    background: #eccacb;
+    color: #3b3b3b;
+}
+
+.dark-mode .landing-start-btn:hover {
+    background: #dfb8b9;
+}
+
+/* Аффирмация */
+.landing-affirmation {
+    background: rgba(236, 202, 203, 0.1);
+    border-radius: 16px;
+    padding: 16px 24px;
+    text-align: center;
+    border-left: 4px solid #eccacb;
+    max-width: 100%;
+    width: 100%;
+}
+
+.dark-mode .landing-affirmation {
+    background: rgba(236, 202, 203, 0.05);
+}
+
+.affirmation-icon {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.affirmation-text {
+    font-size: 1rem;
+    color: #3b3b3b;
+    opacity: 0.7;
+    font-style: italic;
+    margin: 4px 0 0 0;
+}
+
+.dark-mode .affirmation-text {
+    color: #a0a0a0;
+}
+
+/* Дата начала — маленькая подпись */
+.landing-start-date-small {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-size: 0.75rem;
+    opacity: 0.4;
+}
+
+.landing-start-date-small .landing-start-date-label {
+    color: #3b3b3b;
+}
+
+.landing-start-date-small .landing-start-date-value {
+    color: #3b3b3b;
+    font-weight: 500;
+}
+
+.dark-mode .landing-start-date-small .landing-start-date-label,
+.dark-mode .landing-start-date-small .landing-start-date-value {
+    color: #a0a0a0;
+}
+
+/* ========================================
+   HABITS — ПЛАН ПО НЕДЕЛЯМ
+   ======================================== */
+
+.habits-weekly-plan {
+    margin-bottom: 1.5rem;
+}
+
+.habits-weekly-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: #3b3b3b;
+    margin-bottom: 1rem;
+}
+
+.dark-mode .habits-weekly-title {
+    color: #e8e8e8;
+}
+
+.habits-week-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.7rem;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.dark-mode .habits-week-card {
+    background: rgba(30, 30, 30, 0.8);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.habits-week-card.active {
+    border-left-color: #eccacb;
+    background: rgba(236, 202, 203, 0.08);
+    box-shadow: 0 2px 12px rgba(236, 202, 203, 0.1);
+}
+
+.dark-mode .habits-week-card.active {
+    background: rgba(236, 202, 203, 0.05);
+}
+
+.habits-week-card.past {
+    opacity: 0.6;
+}
+
+.habits-week-card.future {
+    opacity: 0.5;
+}
+
+.habits-week-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+}
+
+.habits-week-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #3b3b3b;
+}
+
+.dark-mode .habits-week-number {
+    color: #e8e8e8;
+}
+
+.habits-week-badge {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #3b3b3b;
+    background: #eccacb;
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.dark-mode .habits-week-badge {
+    color: #3b3b3b;
+}
+
+.habits-week-current {
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #eccacb;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(236, 202, 203, 0.15);
+    padding: 0.15rem 0.6rem;
+    border-radius: 20px;
+}
+
+.habits-week-goal {
+    font-size: 0.9rem;
+    color: #3b3b3b;
+    opacity: 0.7;
+    margin: 0.2rem 0;
+}
+
+.dark-mode .habits-week-goal {
+    color: #a0a0a0;
+}
+
+.habits-week-action {
+    font-size: 0.8rem;
+    color: #3b3b3b;
+    opacity: 0.5;
+    font-style: italic;
+    margin: 0;
+}
+
+.dark-mode .habits-week-action {
+    color: #888;
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 480px) {
+    .landing-title {
+        font-size: 3rem;
+    }
+    
+    .landing-day-text {
+        font-size: 1.8rem;
+    }
+    
+    .habits-week-header {
+        gap: 0.5rem;
+    }
+    
+    .habits-week-number {
+        font-size: 0.9rem;
+    }
+    
+    .habits-week-goal {
+        font-size: 0.8rem;
+    }
+    
+    .habits-week-action {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .landing-title {
+        font-size: 2.6rem;
+    }
+    
+    .landing-day-text {
+        font-size: 1.6rem;
+    }
 }
