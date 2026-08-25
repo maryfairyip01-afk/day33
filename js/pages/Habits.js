@@ -1,8 +1,9 @@
 // ========================================
-// Habits.js — Привычки с планом по неделям
+// Habits.js — Привычки с аккордеоном по неделям
 // ========================================
 
 function Habits({ data, setData, page, setPage, isDarkMode, todayHabits, today, toggleHabit }) {
+    const [expandedWeek, setExpandedWeek] = useState(null);
     const currentWeek = data.week || 1;
     
     // Данные по неделям
@@ -14,62 +15,133 @@ function Habits({ data, setData, page, setPage, isDarkMode, todayHabits, today, 
         { week: 5, title: 'INTEGRATE', goal: 'Интегрировать привычку в образ жизни', action: 'Привычка стала частью тебя' }
     ];
 
+    // Функция для переключения раскрытия недели
+    const toggleWeek = (weekNumber) => {
+        if (expandedWeek === weekNumber) {
+            setExpandedWeek(null);
+        } else {
+            setExpandedWeek(weekNumber);
+        }
+    };
+
+    // Получаем привычки для отображения в неделе (только выбранные пользователем)
+    const getUserHabits = () => {
+        return data.habits || [];
+    };
+
+    // Проверяем, может ли пользователь отмечать привычки в этой неделе
+    const canMarkHabits = (weekNumber) => {
+        return weekNumber === currentWeek;
+    };
+
+    // Проверяем, является ли неделя прошлой
+    const isPastWeek = (weekNumber) => {
+        return weekNumber < currentWeek;
+    };
+
+    // Проверяем, является ли неделя будущей
+    const isFutureWeek = (weekNumber) => {
+        return weekNumber > currentWeek;
+    };
+
+    // Получаем привычки пользователя
+    const userHabits = getUserHabits();
+
     return React.createElement('div', { className: 'habits-container' },
         React.createElement('h2', { className: 'page-title' }, 'Habits'),
-        
-        // Блок с планом по неделям
-        React.createElement('div', { className: 'habits-weekly-plan' },
-            React.createElement('h3', { className: 'habits-weekly-title' }, '📋 План внедрения привычек'),
-            
+
+        // Информация о текущей неделе
+        React.createElement('div', { className: 'habits-current-info' },
+            React.createElement('span', { className: 'habits-current-label' }, 'Текущая неделя'),
+            React.createElement('span', { className: 'habits-current-week' }, `Week ${currentWeek}`)
+        ),
+
+        // Список недель с аккордеоном
+        React.createElement('div', { className: 'habits-weekly-accordion' },
             WEEKLY_PLANS.map((weekPlan) => {
                 const isActive = weekPlan.week === currentWeek;
-                const isPast = weekPlan.week < currentWeek;
-                const isFuture = weekPlan.week > currentWeek;
-                
-                return React.createElement('div', { 
+                const isPast = isPastWeek(weekPlan.week);
+                const isFuture = isFutureWeek(weekPlan.week);
+                const isExpanded = expandedWeek === weekPlan.week;
+                const canMark = canMarkHabits(weekPlan.week);
+
+                return React.createElement('div', {
                     key: weekPlan.week,
-                    className: `habits-week-card ${isActive ? 'active' : ''} ${isPast ? 'past' : ''} ${isFuture ? 'future' : ''}`
+                    className: `habits-accordion-item ${isActive ? 'active' : ''} ${isPast ? 'past' : ''} ${isFuture ? 'future' : ''} ${isExpanded ? 'expanded' : ''}`
                 },
-                    React.createElement('div', { className: 'habits-week-header' },
-                        React.createElement('span', { className: 'habits-week-number' }, `Week ${weekPlan.week}`),
-                        React.createElement('span', { className: 'habits-week-badge' }, weekPlan.title),
-                        isActive && React.createElement('span', { className: 'habits-week-current' }, 'CURRENT')
+                    // Заголовок карточки (всегда видимый)
+                    React.createElement('div', {
+                        className: 'habits-accordion-header',
+                        onClick: () => toggleWeek(weekPlan.week)
+                    },
+                        React.createElement('div', { className: 'habits-accordion-left' },
+                            React.createElement('span', { className: 'habits-accordion-week' }, `Week ${weekPlan.week}`),
+                            React.createElement('span', { className: 'habits-accordion-badge' }, weekPlan.title),
+                            isActive && React.createElement('span', { className: 'habits-accordion-current' }, 'CURRENT')
+                        ),
+                        React.createElement('div', { className: 'habits-accordion-right' },
+                            isFuture && React.createElement('span', { className: 'habits-accordion-lock' }, '🔒'),
+                            React.createElement('span', { className: `habits-accordion-arrow ${isExpanded ? 'expanded' : ''}` }, 
+                                isExpanded ? '˄' : '˅'
+                            )
+                        )
                     ),
-                    React.createElement('p', { className: 'habits-week-goal' }, weekPlan.goal),
-                    React.createElement('p', { className: 'habits-week-action' }, `→ ${weekPlan.action}`)
+
+                    // Раскрывающееся содержимое
+                    isExpanded && React.createElement('div', { className: 'habits-accordion-content' },
+                        // Цель и действие недели
+                        React.createElement('div', { className: 'habits-accordion-goal' },
+                            React.createElement('p', { className: 'habits-accordion-goal-text' }, weekPlan.goal),
+                            React.createElement('p', { className: 'habits-accordion-action-text' }, `→ ${weekPlan.action}`)
+                        ),
+
+                        // Привычки для текущей недели
+                        React.createElement('div', { className: 'habits-accordion-habits' },
+                            React.createElement('p', { className: 'habits-accordion-habits-label' }, 'Твои привычки'),
+                            
+                            userHabits.length > 0 ? (
+                                React.createElement('div', { className: 'habits-accordion-habits-list' },
+                                    userHabits.map(habit => {
+                                        const done = habit.completions?.includes(today) || false;
+                                        const isDisabled = !canMark;
+
+                                        return React.createElement('div', {
+                                            key: habit.id,
+                                            className: `habits-accordion-habit-item ${done ? 'done' : ''} ${isDisabled ? 'disabled' : ''}`
+                                        },
+                                            React.createElement('button', {
+                                                className: `habits-accordion-habit-check ${done ? 'done' : ''}`,
+                                                onClick: () => {
+                                                    if (!isDisabled) {
+                                                        toggleHabit(habit.id);
+                                                    }
+                                                },
+                                                disabled: isDisabled
+                                            },
+                                                done && React.createElement('span', null, '✓')
+                                            ),
+                                            React.createElement('span', { className: 'habits-accordion-habit-name' }, habit.name),
+                                            !canMark && React.createElement('span', { className: 'habits-accordion-habit-lock' }, '🔒')
+                                        );
+                                    })
+                                )
+                            ) : (
+                                React.createElement('p', { className: 'habits-accordion-no-habits' },
+                                    'Нет привычек. Добавь их через onboarding или в настройках.'
+                                )
+                            ),
+
+                            // Дополнительная информация для будущих недель
+                            isFuture && React.createElement('div', { className: 'habits-accordion-future-info' },
+                                React.createElement('span', null, '🔒 Эта неделя ещё не наступила')
+                            )
+                        )
+                    )
                 );
             })
         ),
 
-        // Привычки
-        React.createElement('div', { className: 'habits-insight' },
-            React.createElement('p', { className: 'insight-label' }, '💡 Твои привычки'),
-            React.createElement('p', { className: 'insight-text' }, 'Отмечай выполненные привычки каждый день')
-        ),
-
-        React.createElement('div', { className: 'habits-grid' },
-            todayHabits.map(h => {
-                const streak = getStreak(h.completions || []);
-                const done = h.completions?.includes(today);
-                return React.createElement('div', { key: h.id, className: 'habit-card-item' },
-                    React.createElement('button', {
-                        onClick: () => toggleHabit(h.id),
-                        className: `habit-card-check ${done ? 'done' : ''}`
-                    },
-                        done && React.createElement('span', null, '✓')
-                    ),
-                    React.createElement('div', { className: 'habit-card-info' },
-                        React.createElement('span', { className: `habit-card-name ${done ? 'done' : ''}` }, h.name),
-                        React.createElement('span', { className: 'habit-card-category' }, h.category || 'self')
-                    ),
-                    React.createElement('span', { className: 'habit-card-streak' }, `🔥 ${streak}д`)
-                );
-            }),
-            !todayHabits.length && React.createElement('p', { className: 'no-habits' }, 
-                'Нет привычек. Добавь первую!'
-            )
-        ),
-
+        // Кнопка добавления привычки (только для текущей недели)
         React.createElement('button', {
             className: 'btn-add-habit',
             onClick: () => {
@@ -90,9 +162,7 @@ function Habits({ data, setData, page, setPage, isDarkMode, todayHabits, today, 
             '+ Добавить привычку'
         )
     );
-}
-
-// Вспомогательная функция для подсчёта streak
+}// Вспомогательная функция для подсчёта streak
 function getStreak(completions) {
     if (!completions || completions.length === 0) return 0;
     const sorted = [...completions].sort();
