@@ -5,7 +5,8 @@
 function Profile({ data, setData, onLogout, user, isDarkMode, onToggleTheme }) {
     const [isEditing, setIsEditing] = useState(false);
     const [tempName, setTempName] = useState(data.user?.name || '');
-    const [showAvatarUpload, setShowAvatarUpload] = useState(false);
+    const [avatar, setAvatar] = useState(data.user?.avatar || null);
+    const [isUploading, setIsUploading] = useState(false);
 
     const handleSaveName = () => {
         if (tempName.trim()) {
@@ -17,14 +18,30 @@ function Profile({ data, setData, onLogout, user, isDarkMode, onToggleTheme }) {
         }
     };
 
-    const handleAvatarUpload = (e) => {
+    // Обработка выбора файла для аватара
+    const handleAvatarSelect = (e) => {
         const file = e.target.files[0];
         if (!file) return;
+
+        // Проверка типа файла
+        if (!file.type.startsWith('image/')) {
+            alert('Пожалуйста, выберите изображение');
+            return;
+        }
+
+        // Проверка размера (максимум 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Изображение слишком большое. Максимальный размер 5MB');
+            return;
+        }
+
+        setIsUploading(true);
 
         const reader = new FileReader();
         reader.onload = (event) => {
             const avatarData = event.target.result;
-            // Сохраняем аватар через AuthSystem
+            
+            // Сохраняем аватар
             const userId = user?.id;
             if (userId) {
                 // Сохраняем в users
@@ -33,15 +50,33 @@ function Profile({ data, setData, onLogout, user, isDarkMode, onToggleTheme }) {
                     users[userId].avatar = avatarData;
                     saveData('day33_users', users);
                 }
-                // Сохраняем в данных пользователя
+                
+                // Обновляем данные пользователя
                 setData(prev => ({
                     ...prev,
                     user: { ...prev.user, avatar: avatarData }
                 }));
+                
+                // Обновляем локальное состояние
+                setAvatar(avatarData);
             }
-            setShowAvatarUpload(false);
+            setIsUploading(false);
         };
+
+        reader.onerror = () => {
+            alert('Ошибка при загрузке изображения');
+            setIsUploading(false);
+        };
+
         reader.readAsDataURL(file);
+        // Очищаем input для возможности повторного выбора того же файла
+        e.target.value = '';
+    };
+
+    // Обработчик клика по аватару для открытия выбора файла
+    const handleAvatarClick = () => {
+        const input = document.getElementById('avatar-input');
+        if (input) input.click();
     };
 
     // Данные из аккаунта
@@ -53,7 +88,7 @@ function Profile({ data, setData, onLogout, user, isDarkMode, onToggleTheme }) {
     const totalJournalEntries = data.journal?.length || 0;
     const isComplete = data.journeyComplete || false;
     const journeyStartDate = data.user?.journeyStartDate;
-    const avatar = data.user?.avatar || null;
+    const currentAvatar = avatar || data.user?.avatar || null;
 
     const formatDate = (dateString) => {
         if (!dateString) return 'Не начат';
@@ -65,40 +100,45 @@ function Profile({ data, setData, onLogout, user, isDarkMode, onToggleTheme }) {
         });
     };
 
-    // Обработчик для file input
-    const handleFileInputClick = () => {
-        const input = document.getElementById('avatar-input');
-        if (input) input.click();
-    };
-
     return React.createElement('div', { className: 'profile-container' },
         React.createElement('h2', { className: 'page-title' }, 'Profile'),
 
         // Карточка пользователя с аватаром
         React.createElement('div', { className: 'profile-user-card' },
             React.createElement('div', { className: 'profile-avatar-wrapper' },
-                avatar 
-                    ? React.createElement('img', { 
-                        src: avatar, 
-                        className: 'profile-avatar-img',
-                        alt: 'Avatar'
-                      })
-                    : React.createElement('div', { className: 'profile-avatar' },
-                        data.user?.name?.charAt(0) || '?'
-                      ),
-                React.createElement('button', { 
-                    className: 'profile-avatar-change',
-                    onClick: handleFileInputClick
+                // Аватар с возможностью клика
+                React.createElement('div', { 
+                    className: 'profile-avatar-clickable',
+                    onClick: handleAvatarClick,
+                    title: 'Нажмите, чтобы изменить аватар'
                 },
-                    '📷'
+                    currentAvatar 
+                        ? React.createElement('img', { 
+                            src: currentAvatar, 
+                            className: 'profile-avatar-img',
+                            alt: 'Avatar'
+                          })
+                        : React.createElement('div', { className: 'profile-avatar' },
+                            data.user?.name?.charAt(0) || '?'
+                          ),
+                    // Иконка редактирования поверх аватара
+                    React.createElement('div', { className: 'profile-avatar-edit-overlay' },
+                        React.createElement('span', { className: 'profile-avatar-edit-icon' }, '✎')
+                    )
                 ),
+                // Скрытый input для выбора файла
                 React.createElement('input', {
                     id: 'avatar-input',
                     type: 'file',
                     accept: 'image/*',
                     className: 'profile-avatar-input',
-                    onChange: handleAvatarUpload
-                })
+                    onChange: handleAvatarSelect,
+                    disabled: isUploading
+                }),
+                // Индикатор загрузки
+                isUploading && React.createElement('div', { className: 'profile-avatar-loading' },
+                    '⏳ Загрузка...'
+                )
             ),
             React.createElement('div', { className: 'profile-user-info' },
                 isEditing ? (
@@ -136,9 +176,7 @@ function Profile({ data, setData, onLogout, user, isDarkMode, onToggleTheme }) {
                     )
                 )
             )
-        ),
-
-        // 3 основных блока (без Brain Goal)
+        ),        // 3 основных блока
         React.createElement('div', { className: 'profile-main-grid' },
             React.createElement('div', { className: 'profile-main-card' },
                 React.createElement('span', { className: 'profile-main-icon' }, '📅'),
