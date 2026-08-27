@@ -27,12 +27,12 @@ function Landing({ data, setData, page, setPage, isDarkMode }) {
     const affirmation = affirmations[affirmationIndex];
 
     return React.createElement('div', { className: 'landing-container' },
-        // Заголовок DAY 33
+        // 1. Заголовок DAY 33 — крупный, элегантный, нежно-розовый
         React.createElement('div', { className: 'landing-header' },
             React.createElement('h1', { className: 'landing-title' }, 'DAY 33')
         ),
 
-        // Карточка WINTER ARC SOON (НОВЫЙ ЭЛЕМЕНТ)
+        // 2. Карточка WINTER ARC SOON — нежно-голубая со свечением
         React.createElement('div', { className: 'winter-arc-card' },
             React.createElement('div', { className: 'winter-arc-content' },
                 React.createElement('span', { className: 'winter-arc-title' }, '❄️ WINTER ARC SOON'),
@@ -40,14 +40,14 @@ function Landing({ data, setData, page, setPage, isDarkMode }) {
             )
         ),
 
-        // Day X — без карточки, просто текст
+        // 3. Текущий день — Day X (автоматически)
         React.createElement('div', { className: 'landing-day-display' },
             React.createElement('span', { className: 'landing-day-text' }, 
                 isComplete ? '🎉 Путь завершён!' : `Day ${currentDay}`
             )
         ),
 
-        // Кнопка Start Day
+        // 4. Кнопка Start Day — широкая, нежно-розовая
         React.createElement('button', 
             { 
                 className: 'landing-start-btn',
@@ -56,13 +56,13 @@ function Landing({ data, setData, page, setPage, isDarkMode }) {
             isComplete ? 'Начать новый путь' : 'Start Day 🚀'
         ),
 
-        // Аффирмация
+        // 5. Аффирмация — светло-розовый блок с ✨
         React.createElement('div', { className: 'landing-affirmation' },
             React.createElement('p', { className: 'affirmation-icon' }, '✨'),
             React.createElement('p', { className: 'affirmation-text' }, `"${affirmation}"`)
         ),
 
-        // Дата начала (маленькая подпись)
+        // 6. Дата начала пути — внизу
         journeyStartDate && React.createElement('div', { className: 'landing-start-date-small' },
             React.createElement('span', { className: 'landing-start-date-label' }, 'Начало пути'),
             React.createElement('span', { className: 'landing-start-date-value' }, 
