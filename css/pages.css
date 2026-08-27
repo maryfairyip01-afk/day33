@@ -3639,4 +3639,123 @@ body {
     .profile-avatar-edit-icon {
         font-size: 1rem;
     }
+}/* ========================================
+   HABITS — НОВЫЕ СТИЛИ ДЛЯ ПЛАНА НЕДЕЛЬ
+   ======================================== */
+
+.habits-principle-card {
+    background: rgba(236, 202, 203, 0.06);
+    border-radius: 16px;
+    padding: 14px 18px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(236, 202, 203, 0.1);
+    text-align: center;
+}
+
+.dark-mode .habits-principle-card {
+    background: rgba(236, 202, 203, 0.03);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.habits-principle-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: #3b3b3b;
+    margin: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.dark-mode .habits-principle-title {
+    color: #e8e8e8;
+}
+
+.habits-principle-desc {
+    font-size: 0.8rem;
+    color: #3b3b3b;
+    opacity: 0.5;
+    margin: 0;
+    font-style: italic;
+}
+
+.dark-mode .habits-principle-desc {
+    color: #a0a0a0;
+}
+
+.habits-accordion-status {
+    font-size: 0.55rem;
+    color: #3b3b3b;
+    opacity: 0.4;
+    font-style: italic;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dark-mode .habits-accordion-status {
+    color: #a0a0a0;
+}
+
+.habits-accordion-item.active .habits-accordion-status {
+    opacity: 0.7;
+    color: #eccacb;
+}
+
+.habits-accordion-section {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(236, 202, 203, 0.06);
+}
+
+.habits-accordion-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.habits-accordion-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    color: #3b3b3b;
+    margin: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.dark-mode .habits-accordion-section-title {
+    color: #e8e8e8;
+}
+
+.habits-accordion-section-text {
+    font-size: 0.85rem;
+    color: #3b3b3b;
+    opacity: 0.7;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.dark-mode .habits-accordion-section-text {
+    color: #b0b0b0;
+}
+
+@media (max-width: 480px) {
+    .habits-accordion-status {
+        max-width: 100px;
+        font-size: 0.5rem;
+    }
+    
+    .habits-principle-title {
+        font-size: 0.85rem;
+    }
+    
+    .habits-principle-desc {
+        font-size: 0.7rem;
+    }
+    
+    .habits-accordion-section-title {
+        font-size: 0.8rem;
+    }
+    
+    .habits-accordion-section-text {
+        font-size: 0.8rem;
+    }
 }
