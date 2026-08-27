@@ -3214,4 +3214,129 @@ body {
     .habits-accordion-habit-name {
         font-size: 0.8rem;
     }
+}/* ========================================
+   WINTER ARC SOON — Карточка на Home
+   ======================================== */
+
+.winter-arc-card {
+    background: rgba(173, 216, 230, 0.15);
+    border: 1px solid rgba(173, 216, 230, 0.3);
+    border-radius: 16px;
+    padding: 12px 20px;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(173, 216, 230, 0.15), 0 0 60px rgba(173, 216, 230, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Деликатное свечение */
+.winter-arc-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(173, 216, 230, 0.08) 0%, transparent 70%);
+    animation: winterGlow 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes winterGlow {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+.winter-arc-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba(173, 216, 230, 0.2), 0 0 80px rgba(173, 216, 230, 0.08);
+}
+
+.winter-arc-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    position: relative;
+    z-index: 1;
+}
+
+.winter-arc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #5b8ba8;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 20px rgba(173, 216, 230, 0.2);
+}
+
+.winter-arc-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    color: #5b8ba8;
+    opacity: 0.5;
+    letter-spacing: 0.3px;
+}
+
+/* Тёмная тема для Winter Arc */
+.dark-mode .winter-arc-card {
+    background: rgba(173, 216, 230, 0.06);
+    border-color: rgba(173, 216, 230, 0.15);
+    box-shadow: 0 0 30px rgba(173, 216, 230, 0.05), 0 0 60px rgba(173, 216, 230, 0.02);
+}
+
+.dark-mode .winter-arc-card::before {
+    background: radial-gradient(ellipse at center, rgba(173, 216, 230, 0.04) 0%, transparent 70%);
+}
+
+.dark-mode .winter-arc-title {
+    color: #7eb3cc;
+    text-shadow: 0 0 20px rgba(173, 216, 230, 0.1);
+}
+
+.dark-mode .winter-arc-date {
+    color: #7eb3cc;
+    opacity: 0.4;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+    .winter-arc-card {
+        padding: 10px 16px;
+        max-width: 280px;
+        border-radius: 14px;
+    }
+    
+    .winter-arc-title {
+        font-size: 0.95rem;
+    }
+    
+    .winter-arc-date {
+        font-size: 0.55rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .winter-arc-card {
+        padding: 8px 14px;
+        max-width: 240px;
+    }
+    
+    .winter-arc-title {
+        font-size: 0.85rem;
+    }
+    
+    .winter-arc-date {
+        font-size: 0.5rem;
+    }
 }

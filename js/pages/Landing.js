@@ -27,9 +27,17 @@ function Landing({ data, setData, page, setPage, isDarkMode }) {
     const affirmation = affirmations[affirmationIndex];
 
     return React.createElement('div', { className: 'landing-container' },
-        // Заголовок DAY 33 — по центру, большой, нежно-розовый
+        // Заголовок DAY 33
         React.createElement('div', { className: 'landing-header' },
             React.createElement('h1', { className: 'landing-title' }, 'DAY 33')
+        ),
+
+        // Карточка WINTER ARC SOON (НОВЫЙ ЭЛЕМЕНТ)
+        React.createElement('div', { className: 'winter-arc-card' },
+            React.createElement('div', { className: 'winter-arc-content' },
+                React.createElement('span', { className: 'winter-arc-title' }, '❄️ WINTER ARC SOON'),
+                React.createElement('span', { className: 'winter-arc-date' }, 'начало 1 октября')
+            )
         ),
 
         // Day X — без карточки, просто текст
